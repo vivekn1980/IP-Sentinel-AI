@@ -4,44 +4,32 @@ All notable changes to **IP Sentinel AI** will be documented in this file.
 
 ---
 
+## [2.0.0-phase2] - 2026-09-13
+
+### Added
+- **Real Passive IP Intelligence Capabilities**:
+  - `rdap_provider.py`: Implemented passive RDAP (Registration Data Access Protocol) bootstrap lookup retrieving network name, CIDR prefix, start/end IP, organization, country, abuse contact email, administrative contact, and registry (ARIN, RIPE, APNIC, LACNIC, AFRINIC).
+  - `geoip_provider.py`: Implemented passive GeoIP and ASN telemetry provider retrieving country code/name, region, city, timezone, ASN, AS organization, ISP, and approximate coordinates.
+  - `dns_service.py`: Implemented safe non-intrusive DNS resolution querying PTR (reverse DNS), A, AAAA, MX, NS, TXT, and CNAME records with safe timeouts.
+  - `cache.py`: Implemented thread-safe local file & memory TTL `CacheManager` storing JSON network lookup responses under `%LOCALAPPDATA%\IPSentinelAI\cache\`.
+
+- **UI Updates (`QueryView`)**:
+  - Added dedicated section cards for **IP INFORMATION**, **NETWORK & ASN**, **RDAP REGISTRATION**, **GEOLOCATION**, and **DNS TELEMETRY**.
+  - Added explicit data status badges (`AVAILABLE`, `UNAVAILABLE`, `ERROR`, `UNKNOWN`) for every intelligence component.
+  - Added step-by-step progress status updates during lookup (`Validating IP`, `Retrieving RDAP`, `Retrieving network information`, `Retrieving GeoIP`, `Performing reverse DNS`, `Performing DNS lookups`, `Building investigation result`, `Ready`).
+
+- **Forensic Report Engine Updates**:
+  - Updated Jinja2 HTML report template (`report_template.html`) and ReportLab PDF generator (`pdf_generator.py`) to include dedicated sections for IP Info, Network/ASN, RDAP, GeoIP, DNS, and Data Source Status Summary.
+  - Added mandatory security disclaimer:  
+    `"Network intelligence and geolocation are informational and may be approximate or incomplete. They should be correlated with WAF, application, CDN, firewall, and other security telemetry before making enforcement decisions."`
+
+- **Test Suite Expansion**:
+  - Added 12 new unit and integration tests in `tests/` (`test_cache.py`, `test_rdap.py`, `test_geoip.py`, `test_dns_service.py`, `test_phase2_investigation.py`, `test_phase2_reports.py`), bringing total automated test count to **38 tests (100% pass rate)**.
+  - Updated `--self-test` CLI diagnostic in `main.py`.
+
+---
+
 ## [1.0.0-foundation] - 2026-09-13
 
 ### Added
-- **Core Architecture Framework**:
-  - `path_utils.py`: Centralized resource path resolution supporting PyInstaller `sys._MEIPASS` and dev mode.
-  - `ip_utils.py`: Safe IPv4/IPv6 classification, private/loopback detection, CIDR validation using `ipaddress`.
-  - `exceptions.py`: Custom exception hierarchy (`IPSentinelError`, `ConfigError`, `ProviderError`, `ReportError`, `NetworkError`, `ValidationError`) with Qt-aware global exception hook (`sys.excepthook`).
-  - `config.py`: Thread-safe `ConfigManager` with JSON persistence under `%LOCALAPPDATA%\IPSentinelAI\config.json`, environment variable overrides, versioning, and `SecretStore` credentials abstraction.
-  - `logger.py`: Thread-safe logging with rotating file handler (`ipsentinel.log`) and custom `QtSignalLogger` emitting PySide6 signals to UI log console with automated secret redaction.
-  - `worker.py`: Asynchronous background task engine using `QRunnable` and `QThreadPool` with `WorkerSignals` to maintain 60 FPS UI responsiveness.
-
-- **Data Models & Provider Abstraction**:
-  - `threat_intel.py`: Normalized immutable DTOs (`IPIntelResult`, `ThreatScore`, `GeoIPData`, `ReputationData`, `DNSData`, `EvidenceItem`) with explicit status values (`AVAILABLE`, `UNAVAILABLE`, `ERROR`, `NOT_CONFIGURED`, `UNKNOWN`).
-  - `base.py` (providers): Abstract Base Class `BaseIntelProvider`.
-  - `mock_provider.py`: Deterministic `MockIntelProvider` producing realistic `CLEAN`, `SUSPICIOUS`, and `MALICIOUS` scenarios without Internet access.
-
-- **Investigation Service Engine**:
-  - `investigation_service.py`: Orchestrates IP validation, reverse DNS resolution (`dnspython`), provider queries, score aggregation, and fault-tolerant provider execution.
-
-- **Forensic Report Generators**:
-  - `html_generator.py`: Standalone HTML report generator using Jinja2 templates (`report_template.html`).
-  - `pdf_generator.py`: Standalone PDF report generator using ReportLab Platypus elements.
-  - Added mandatory `DEMO / MOCK DATA` warning banners when mock data is used.
-
-- **PySide6 Desktop User Interface**:
-  - Dark cybersecurity theme stylesheet (`dark_theme.qss`).
-  - Sidebar navigation widget (`SidebarNavigation`) with active tab highlighting.
-  - `DashboardView`: Overview metric cards, architecture status, and quick investigation buttons.
-  - `QueryView`: IP lookup bar, asynchronous progress bar, risk score gauge, threat level badge, and structured evidence table.
-  - `ReportsView`: HTML/PDF export configuration with folder picker and live generation progress.
-  - `LogsView`: Real-time streaming audit console with log level filtering.
-  - `SettingsView`: Provider credentials manager with masked password inputs.
-  - `MainWindow`: Organizes sidebar, stacked widget views, header, and status bar.
-
-- **CLI Options**:
-  - Added `--version`, `--debug`, `--headless-test`, and `--self-test` diagnostic CLI flags in `main.py`.
-
-- **Test Suite & Build System**:
-  - 26 automated unit and integration tests in `tests/` covering all foundation subsystems (100% pass rate).
-  - PyInstaller spec file (`pyinstaller.spec`) configured for single-file portable Windows EXE packaging (`dist/IP-Sentinel-AI.exe`).
-  - Automated build (`build.py`) and clean (`clean_build.py`) scripts.
+- Core architecture framework, `MockIntelProvider`, `InvestigationService`, PySide6 dark UI, HTML/PDF generators, `pytest` suite, and single-file portable Windows EXE build.

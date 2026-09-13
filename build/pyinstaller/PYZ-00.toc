@@ -1375,6 +1375,9 @@
   ('ip_sentinel.core',
    'D:\\PROJECTS\\IP Sentinel AI\\src\\ip_sentinel\\core\\__init__.py',
    'PYMODULE'),
+  ('ip_sentinel.core.cache',
+   'D:\\PROJECTS\\IP Sentinel AI\\src\\ip_sentinel\\core\\cache.py',
+   'PYMODULE'),
   ('ip_sentinel.core.config',
    'D:\\PROJECTS\\IP Sentinel AI\\src\\ip_sentinel\\core\\config.py',
    'PYMODULE'),
@@ -1411,9 +1414,17 @@
   ('ip_sentinel.providers.base',
    'D:\\PROJECTS\\IP Sentinel AI\\src\\ip_sentinel\\providers\\base.py',
    'PYMODULE'),
+  ('ip_sentinel.providers.geoip_provider',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\src\\ip_sentinel\\providers\\geoip_provider.py',
+   'PYMODULE'),
   ('ip_sentinel.providers.mock_provider',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\src\\ip_sentinel\\providers\\mock_provider.py',
+   'PYMODULE'),
+  ('ip_sentinel.providers.rdap_provider',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\src\\ip_sentinel\\providers\\rdap_provider.py',
    'PYMODULE'),
   ('ip_sentinel.reports',
    'D:\\PROJECTS\\IP Sentinel AI\\src\\ip_sentinel\\reports\\__init__.py',
@@ -1429,6 +1440,9 @@
    'PYMODULE'),
   ('ip_sentinel.services',
    'D:\\PROJECTS\\IP Sentinel AI\\src\\ip_sentinel\\services\\__init__.py',
+   'PYMODULE'),
+  ('ip_sentinel.services.dns_service',
+   'D:\\PROJECTS\\IP Sentinel AI\\src\\ip_sentinel\\services\\dns_service.py',
    'PYMODULE'),
   ('ip_sentinel.services.investigation_service',
    'D:\\PROJECTS\\IP Sentinel '

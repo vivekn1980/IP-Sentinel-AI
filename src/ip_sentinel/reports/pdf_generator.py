@@ -1,8 +1,7 @@
-"""PDF Forensic Report Generator using ReportLab Platypus engine."""
+"""PDF Forensic Report Generator using ReportLab Platypus engine for Phase 2 data."""
 
 import logging
 from pathlib import Path
-from typing import List
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
@@ -15,13 +14,18 @@ from ip_sentinel.reports.base import BaseReportGenerator
 
 logger = logging.getLogger("ip_sentinel.reports.pdf")
 
+MANDATORY_DISCLAIMER_TEXT = (
+    "Network intelligence and geolocation are informational and may be approximate or incomplete. "
+    "They should be correlated with WAF, application, CDN, firewall, and other security telemetry before making enforcement decisions."
+)
+
 
 class PDFReportGenerator(BaseReportGenerator):
     """Generates standalone PDF forensic investigation reports using ReportLab Platypus."""
 
     def generate_report(self, data: ReportData, output_path: Path) -> Path:
         """Render investigation data into a formatted PDF file."""
-        logger.info(f"Generating PDF report for target IP {data.result.target_ip} at {output_path}")
+        logger.info(f"Generating Phase 2 PDF report for target IP {data.result.target_ip} at {output_path}")
 
         try:
             output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -36,12 +40,11 @@ class PDFReportGenerator(BaseReportGenerator):
 
             styles = getSampleStyleSheet()
 
-            # Custom Dark Cybersecurity PDF Styles
             title_style = ParagraphStyle(
                 "DocTitle",
                 parent=styles["Heading1"],
                 fontName="Helvetica-Bold",
-                fontSize=20,
+                fontSize=18,
                 textColor=colors.HexColor("#00E5FF"),
                 spaceAfter=4,
             )
@@ -50,26 +53,26 @@ class PDFReportGenerator(BaseReportGenerator):
                 "DocSubtitle",
                 parent=styles["Normal"],
                 fontName="Helvetica",
-                fontSize=10,
+                fontSize=9,
                 textColor=colors.HexColor("#64748B"),
-                spaceAfter=12,
+                spaceAfter=8,
             )
 
             section_style = ParagraphStyle(
                 "SectionHeading",
                 parent=styles["Heading2"],
                 fontName="Helvetica-Bold",
-                fontSize=13,
+                fontSize=12,
                 textColor=colors.HexColor("#00E5FF"),
-                spaceBefore=14,
-                spaceAfter=8,
+                spaceBefore=12,
+                spaceAfter=6,
             )
 
             cell_style = ParagraphStyle(
                 "TableCell",
                 parent=styles["Normal"],
                 fontName="Helvetica",
-                fontSize=9,
+                fontSize=8.5,
                 textColor=colors.HexColor("#1E293B"),
             )
 
@@ -77,6 +80,15 @@ class PDFReportGenerator(BaseReportGenerator):
                 "TableBoldCell",
                 parent=cell_style,
                 fontName="Helvetica-Bold",
+            )
+
+            disclaimer_style = ParagraphStyle(
+                "DisclaimerStyle",
+                parent=styles["Normal"],
+                fontName="Helvetica-Oblique",
+                fontSize=8,
+                textColor=colors.HexColor("#475569"),
+                spaceAfter=10,
             )
 
             story = []
@@ -87,9 +99,9 @@ class PDFReportGenerator(BaseReportGenerator):
                     "MockBanner",
                     parent=styles["Normal"],
                     fontName="Helvetica-Bold",
-                    fontSize=11,
+                    fontSize=10,
                     textColor=colors.HexColor("#FFFFFF"),
-                    alignment=1,  # Centered
+                    alignment=1,
                 )
                 mock_table = Table(
                     [[Paragraph("DEMO / MOCK DATA — NOT REAL THREAT INTELLIGENCE", mock_style)]],
@@ -98,25 +110,37 @@ class PDFReportGenerator(BaseReportGenerator):
                 mock_table.setStyle(
                     TableStyle([
                         ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#DC2626")),
-                        ("PADDING", (0, 0), (-1, -1), 8),
-                        ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                        ("PADDING", (0, 0), (-1, -1), 6),
                         ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
                     ])
                 )
                 story.append(mock_table)
-                story.append(Spacer(1, 12))
+                story.append(Spacer(1, 8))
 
-            # 2. Header Title
+            # 2. Header Title & Subtitle
             story.append(Paragraph(data.metadata.title, title_style))
             story.append(
                 Paragraph(
-                    f"Target IP: <b>{data.result.target_ip}</b> | Investigation ID: <b>{data.result.investigation_id}</b> | Date: {data.result.timestamp}",
+                    f"Target IP: <b>{data.result.target_ip}</b> | Investigation ID: <b>{data.result.investigation_id}</b> | Timestamp: {data.result.timestamp}",
                     subtitle_style,
                 )
             )
-            story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#CBD5E1"), spaceAfter=14))
+            story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#CBD5E1"), spaceAfter=10))
 
-            # 3. Overall Threat Score Box
+            # 3. Security Disclaimer Box
+            disc_p = Paragraph(f"<b>Security Disclaimer:</b> {MANDATORY_DISCLAIMER_TEXT}", disclaimer_style)
+            disc_table = Table([[disc_p]], colWidths=[540])
+            disc_table.setStyle(
+                TableStyle([
+                    ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#F1F5F9")),
+                    ("BOX", (0, 0), (-1, -1), 0.5, colors.HexColor("#94A3B8")),
+                    ("PADDING", (0, 0), (-1, -1), 6),
+                ])
+            )
+            story.append(disc_table)
+            story.append(Spacer(1, 10))
+
+            # 4. Overall Threat Score Card
             level_str = data.result.overall_threat_score.level.value
             score_num = data.result.overall_threat_score.score
 
@@ -130,13 +154,13 @@ class PDFReportGenerator(BaseReportGenerator):
                 bg_color = colors.HexColor("#A7F3D0")
                 txt_color = colors.HexColor("#065F46")
 
-            score_style = ParagraphStyle("ScoreBox", fontName="Helvetica-Bold", fontSize=14, textColor=txt_color)
-            score_detail = ParagraphStyle("ScoreDetail", fontName="Helvetica", fontSize=10, textColor=txt_color)
+            score_style = ParagraphStyle("ScoreBox", fontName="Helvetica-Bold", fontSize=13, textColor=txt_color)
+            score_detail = ParagraphStyle("ScoreDetail", fontName="Helvetica", fontSize=9, textColor=txt_color)
 
             score_table_data = [
                 [
                     Paragraph(f"OVERALL THREAT: {level_str}", score_style),
-                    Paragraph(f"SCORE: {score_num} / 100", score_style),
+                    Paragraph(f"RISK SCORE: {score_num} / 100", score_style),
                 ],
                 [
                     Paragraph(f"Confidence: {data.result.overall_threat_score.confidence}%", score_detail),
@@ -148,83 +172,124 @@ class PDFReportGenerator(BaseReportGenerator):
             score_table.setStyle(
                 TableStyle([
                     ("BACKGROUND", (0, 0), (-1, -1), bg_color),
-                    ("PADDING", (0, 0), (-1, -1), 10),
+                    ("PADDING", (0, 0), (-1, -1), 8),
                     ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
                 ])
             )
             story.append(score_table)
-            story.append(Spacer(1, 14))
+            story.append(Spacer(1, 10))
 
-            # 4. Network & Geolocation Overview Table
-            story.append(Paragraph("1. Network & Geolocation Overview", section_style))
-            net_table_data = [
+            # Section 1: IP Information
+            story.append(Paragraph("1. IP Information", section_style))
+            ip_data = [
                 [Paragraph("Property", bold_cell_style), Paragraph("Value", bold_cell_style)],
-                [Paragraph("IP Address", cell_style), Paragraph(data.result.target_ip, cell_style)],
-                [Paragraph("Network Type", cell_style), Paragraph("Private (RFC 1918)" if data.result.is_private_ip else "Public Address", cell_style)],
-                [Paragraph("Country / City", cell_style), Paragraph(f"{data.result.geoip.country_name} ({data.result.geoip.country_code}) - {data.result.geoip.city or 'Unknown'}", cell_style)],
-                [Paragraph("ASN / Organization", cell_style), Paragraph(f"AS{data.result.geoip.asn} - {data.result.geoip.asn_org}", cell_style)],
-                [Paragraph("ISP", cell_style), Paragraph(data.result.geoip.isp or "N/A", cell_style)],
+                [Paragraph("Target IP Address", cell_style), Paragraph(data.result.target_ip, cell_style)],
+                [Paragraph("IP Version", cell_style), Paragraph("IPv6" if ":" in data.result.target_ip else "IPv4", cell_style)],
+                [Paragraph("Category", cell_style), Paragraph("Private (RFC 1918)" if data.result.is_private_ip else "Public Address", cell_style)],
+                [Paragraph("Loopback IP", cell_style), Paragraph("Yes" if data.result.is_loopback_ip else "No", cell_style)],
             ]
+            t_ip = Table(ip_data, colWidths=[180, 360])
+            t_ip.setStyle(self._default_table_style())
+            story.append(t_ip)
+            story.append(Spacer(1, 10))
 
-            net_table = Table(net_table_data, colWidths=[180, 360])
-            net_table.setStyle(
-                TableStyle([
-                    ("BACKGROUND", (0, 0), (1, 0), colors.HexColor("#F1F5F9")),
-                    ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#CBD5E1")),
-                    ("PADDING", (0, 0), (-1, -1), 6),
-                ])
-            )
-            story.append(net_table)
+            # Section 2: Network / ASN
+            story.append(Paragraph("2. Network & Autonomous System (ASN)", section_style))
+            asn_val = f"AS{data.result.asn_data.asn}" if data.result.asn_data.asn is not None else "UNAVAILABLE"
+            net_data = [
+                [Paragraph("Property", bold_cell_style), Paragraph("Value", bold_cell_style)],
+                [Paragraph("ASN", cell_style), Paragraph(asn_val, cell_style)],
+                [Paragraph("Organization", cell_style), Paragraph(data.result.asn_data.asn_org or data.result.geoip.asn_org or "UNAVAILABLE", cell_style)],
+                [Paragraph("Network Prefix / CIDR", cell_style), Paragraph(data.result.rdap.cidr or data.result.asn_data.network_prefix or "UNAVAILABLE", cell_style)],
+                [Paragraph("Registry / RIR", cell_style), Paragraph(data.result.rdap.registry or data.result.asn_data.registry or "UNAVAILABLE", cell_style)],
+                [Paragraph("Status", cell_style), Paragraph(data.result.asn_status.value, cell_style)],
+            ]
+            t_net = Table(net_data, colWidths=[180, 360])
+            t_net.setStyle(self._default_table_style())
+            story.append(t_net)
+            story.append(Spacer(1, 10))
+
+            # Section 3: RDAP Details
+            story.append(Paragraph("3. Registration Data Access Protocol (RDAP)", section_style))
+            rdap_data = [
+                [Paragraph("Property", bold_cell_style), Paragraph("Value", bold_cell_style)],
+                [Paragraph("Network Name", cell_style), Paragraph(data.result.rdap.network_name or "UNAVAILABLE", cell_style)],
+                [Paragraph("Address Range", cell_style), Paragraph(f"{data.result.rdap.start_address or 'N/A'} - {data.result.rdap.end_address or 'N/A'}", cell_style)],
+                [Paragraph("Organization", cell_style), Paragraph(data.result.rdap.organization or "UNAVAILABLE", cell_style)],
+                [Paragraph("Abuse Contact", cell_style), Paragraph(data.result.rdap.abuse_contact or "UNAVAILABLE", cell_style)],
+                [Paragraph("Status", cell_style), Paragraph(data.result.rdap_status.value, cell_style)],
+            ]
+            t_rdap = Table(rdap_data, colWidths=[180, 360])
+            t_rdap.setStyle(self._default_table_style())
+            story.append(t_rdap)
+            story.append(Spacer(1, 10))
+
+            # Section 4: Geolocation
+            story.append(Paragraph("4. Network Geolocation", section_style))
+            geo_data = [
+                [Paragraph("Property", bold_cell_style), Paragraph("Value", bold_cell_style)],
+                [Paragraph("Country", cell_style), Paragraph(f"{data.result.geoip.country_name or 'UNAVAILABLE'} ({data.result.geoip.country_code or 'N/A'})", cell_style)],
+                [Paragraph("Region / State", cell_style), Paragraph(data.result.geoip.region or "UNAVAILABLE", cell_style)],
+                [Paragraph("City", cell_style), Paragraph(data.result.geoip.city or "UNAVAILABLE", cell_style)],
+                [Paragraph("Timezone", cell_style), Paragraph(data.result.geoip.timezone or "UNAVAILABLE", cell_style)],
+                [Paragraph("Status", cell_style), Paragraph(data.result.geoip_status.value, cell_style)],
+            ]
+            t_geo = Table(geo_data, colWidths=[180, 360])
+            t_geo.setStyle(self._default_table_style())
+            story.append(t_geo)
+            story.append(Paragraph(f"Note: {data.result.geoip.disclaimer}", disclaimer_style))
+            story.append(Spacer(1, 10))
+
+            # Section 5: DNS Telemetry
+            story.append(Paragraph("5. DNS Resolution Telemetry", section_style))
+            dns_data = [
+                [Paragraph("Record Type", bold_cell_style), Paragraph("Resolved Values", bold_cell_style)],
+                [Paragraph("Reverse Hostname (PTR)", cell_style), Paragraph(data.result.dns.hostname or (", ".join(data.result.dns.ptr_records) if data.result.dns.ptr_records else "UNAVAILABLE"), cell_style)],
+                [Paragraph("A Records", cell_style), Paragraph(", ".join(data.result.dns.a_records) if data.result.dns.a_records else "UNAVAILABLE", cell_style)],
+                [Paragraph("AAAA Records", cell_style), Paragraph(", ".join(data.result.dns.aaaa_records) if data.result.dns.aaaa_records else "UNAVAILABLE", cell_style)],
+                [Paragraph("MX Records", cell_style), Paragraph(", ".join(data.result.dns.mx_records) if data.result.dns.mx_records else "UNAVAILABLE", cell_style)],
+                [Paragraph("NS Records", cell_style), Paragraph(", ".join(data.result.dns.ns_records) if data.result.dns.ns_records else "UNAVAILABLE", cell_style)],
+                [Paragraph("TXT Records", cell_style), Paragraph(", ".join(data.result.dns.txt_records) if data.result.dns.txt_records else "UNAVAILABLE", cell_style)],
+                [Paragraph("CNAME Records", cell_style), Paragraph(", ".join(data.result.dns.cname_records) if data.result.dns.cname_records else "UNAVAILABLE", cell_style)],
+                [Paragraph("Status", cell_style), Paragraph(data.result.dns_status.value, cell_style)],
+            ]
+            t_dns = Table(dns_data, colWidths=[180, 360])
+            t_dns.setStyle(self._default_table_style())
+            story.append(t_dns)
+            story.append(Spacer(1, 10))
+
+            # Section 6: Data Source Status Summary
+            story.append(Paragraph("6. Data Source Status Summary", section_style))
+            status_data = [[Paragraph("Subsystem", bold_cell_style), Paragraph("Status", bold_cell_style), Paragraph("Diagnostics", bold_cell_style)]]
+            status_data.append([Paragraph("IP Classification", cell_style), Paragraph("AVAILABLE", cell_style), Paragraph("Normalized IPv4/IPv6 classification", cell_style)])
+            status_data.append([Paragraph("RDAP Registration", cell_style), Paragraph(data.result.rdap_status.value, cell_style), Paragraph(data.result.rdap.error_message or "OK", cell_style)])
+            status_data.append([Paragraph("ASN Telemetry", cell_style), Paragraph(data.result.asn_status.value, cell_style), Paragraph(data.result.asn_data.error_message or "OK", cell_style)])
+            status_data.append([Paragraph("GeoIP Geolocation", cell_style), Paragraph(data.result.geoip_status.value, cell_style), Paragraph(data.result.geoip.error_message or "OK", cell_style)])
+            status_data.append([Paragraph("DNS Resolution", cell_style), Paragraph(data.result.dns_status.value, cell_style), Paragraph(data.result.dns.error_message or "OK", cell_style)])
+
+            for name, prov in data.result.provider_results.items():
+                status_data.append([Paragraph(f"Provider: {name}", cell_style), Paragraph(prov.status.value, cell_style), Paragraph(prov.error_message or "OK", cell_style)])
+
+            t_stat = Table(status_data, colWidths=[160, 120, 260])
+            t_stat.setStyle(self._default_table_style())
+            story.append(t_stat)
             story.append(Spacer(1, 12))
 
-            # 5. Reverse DNS Resolution Table
-            story.append(Paragraph("2. Reverse DNS Resolution", section_style))
-            dns_table_data = [
-                [Paragraph("Query", bold_cell_style), Paragraph("Resolved Result", bold_cell_style)],
-                [Paragraph("Hostname (PTR)", cell_style), Paragraph(data.result.dns.hostname or "No PTR record resolved", cell_style)],
-                [Paragraph("Status", cell_style), Paragraph(data.result.dns.status.value, cell_style)],
-            ]
-            dns_table = Table(dns_table_data, colWidths=[180, 360])
-            dns_table.setStyle(
-                TableStyle([
-                    ("BACKGROUND", (0, 0), (1, 0), colors.HexColor("#F1F5F9")),
-                    ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#CBD5E1")),
-                    ("PADDING", (0, 0), (-1, -1), 6),
-                ])
-            )
-            story.append(dns_table)
-            story.append(Spacer(1, 12))
-
-            # 6. Structured Evidence Table
-            story.append(Paragraph("3. Structured Threat Evidence", section_style))
-            if data.result.aggregated_evidence:
-                ev_data = [[Paragraph("Severity", bold_cell_style), Paragraph("Category", bold_cell_style), Paragraph("Description", bold_cell_style)]]
-                for item in data.result.aggregated_evidence:
-                    ev_data.append([
-                        Paragraph(item.severity, cell_style),
-                        Paragraph(item.category, cell_style),
-                        Paragraph(item.description, cell_style),
-                    ])
-                ev_table = Table(ev_data, colWidths=[80, 140, 320])
-                ev_table.setStyle(
-                    TableStyle([
-                        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#F1F5F9")),
-                        ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#CBD5E1")),
-                        ("PADDING", (0, 0), (-1, -1), 6),
-                    ])
-                )
-                story.append(ev_table)
-            else:
-                story.append(Paragraph("No malicious indicators or threat evidence reported.", cell_style))
-
-            story.append(Spacer(1, 14))
-            story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#94A3B8"), spaceAfter=10))
+            story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#94A3B8"), spaceAfter=8))
             footer_text = f"Generated by {data.metadata.author} | {data.metadata.organization} | IP Sentinel AI v{data.metadata.app_version}"
             story.append(Paragraph(footer_text, subtitle_style))
 
             doc.build(story)
-            logger.info(f"Successfully generated PDF report at {output_path}")
+            logger.info(f"Successfully generated Phase 2 PDF report at {output_path}")
             return output_path
         except Exception as err:
             logger.error(f"Failed to generate PDF report: {err}")
             raise ReportError(f"PDF Report generation failed: {err}")
+
+    def _default_table_style(self) -> TableStyle:
+        return TableStyle([
+            ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#F1F5F9")),
+            ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#CBD5E1")),
+            ("PADDING", (0, 0), (-1, -1), 5),
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+        ])

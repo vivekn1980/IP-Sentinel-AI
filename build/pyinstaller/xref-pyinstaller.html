@@ -157,6 +157,7 @@ imports:
  &#8226;   <a href="#io">io</a>
  &#8226;   <a href="#ip_sentinel">ip_sentinel</a>
  &#8226;   <a href="#ip_sentinel.core">ip_sentinel.core</a>
+ &#8226;   <a href="#ip_sentinel.core.cache">ip_sentinel.core.cache</a>
  &#8226;   <a href="#ip_sentinel.core.config">ip_sentinel.core.config</a>
  &#8226;   <a href="#ip_sentinel.core.exceptions">ip_sentinel.core.exceptions</a>
  &#8226;   <a href="#ip_sentinel.core.ip_utils">ip_sentinel.core.ip_utils</a>
@@ -169,12 +170,15 @@ imports:
  &#8226;   <a href="#ip_sentinel.models.threat_intel">ip_sentinel.models.threat_intel</a>
  &#8226;   <a href="#ip_sentinel.providers">ip_sentinel.providers</a>
  &#8226;   <a href="#ip_sentinel.providers.base">ip_sentinel.providers.base</a>
+ &#8226;   <a href="#ip_sentinel.providers.geoip_provider">ip_sentinel.providers.geoip_provider</a>
  &#8226;   <a href="#ip_sentinel.providers.mock_provider">ip_sentinel.providers.mock_provider</a>
+ &#8226;   <a href="#ip_sentinel.providers.rdap_provider">ip_sentinel.providers.rdap_provider</a>
  &#8226;   <a href="#ip_sentinel.reports">ip_sentinel.reports</a>
  &#8226;   <a href="#ip_sentinel.reports.base">ip_sentinel.reports.base</a>
  &#8226;   <a href="#ip_sentinel.reports.html_generator">ip_sentinel.reports.html_generator</a>
  &#8226;   <a href="#ip_sentinel.reports.pdf_generator">ip_sentinel.reports.pdf_generator</a>
  &#8226;   <a href="#ip_sentinel.services">ip_sentinel.services</a>
+ &#8226;   <a href="#ip_sentinel.services.dns_service">ip_sentinel.services.dns_service</a>
  &#8226;   <a href="#ip_sentinel.services.investigation_service">ip_sentinel.services.investigation_service</a>
  &#8226;   <a href="#ip_sentinel.ui">ip_sentinel.ui</a>
  &#8226;   <a href="#ip_sentinel.ui.main_window">ip_sentinel.ui.main_window</a>
@@ -7758,6 +7762,8 @@ imported by:
  &#8226;   <a href="#email.utils">email.utils</a>
  &#8226;   <a href="#http.cookiejar">http.cookiejar</a>
  &#8226;   <a href="#http.server">http.server</a>
+ &#8226;   <a href="#ip_sentinel.providers.geoip_provider">ip_sentinel.providers.geoip_provider</a>
+ &#8226;   <a href="#ip_sentinel.providers.rdap_provider">ip_sentinel.providers.rdap_provider</a>
  &#8226;   <a href="#ip_sentinel.services.investigation_service">ip_sentinel.services.investigation_service</a>
  &#8226;   <a href="#reportlab.lib.normalDate">reportlab.lib.normalDate</a>
  &#8226;   <a href="#reportlab.lib.utils">reportlab.lib.utils</a>
@@ -11127,7 +11133,7 @@ imports:
 imported by:
     <a href="#dns.asyncresolver">dns.asyncresolver</a>
  &#8226;   <a href="#dns.query">dns.query</a>
- &#8226;   <a href="#ip_sentinel.services.investigation_service">ip_sentinel.services.investigation_service</a>
+ &#8226;   <a href="#ip_sentinel.services.dns_service">ip_sentinel.services.dns_service</a>
 
   </div>
 
@@ -11150,7 +11156,7 @@ imports:
 imported by:
     <a href="#dns.asyncresolver">dns.asyncresolver</a>
  &#8226;   <a href="#dns.resolver">dns.resolver</a>
- &#8226;   <a href="#ip_sentinel.services.investigation_service">ip_sentinel.services.investigation_service</a>
+ &#8226;   <a href="#ip_sentinel.services.dns_service">ip_sentinel.services.dns_service</a>
 
   </div>
 
@@ -16360,13 +16366,39 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#ip_sentinel.core.config">ip_sentinel.core.config</a>
+    <a href="#ip_sentinel.core.cache">ip_sentinel.core.cache</a>
+ &#8226;   <a href="#ip_sentinel.core.config">ip_sentinel.core.config</a>
  &#8226;   <a href="#ip_sentinel.core.exceptions">ip_sentinel.core.exceptions</a>
  &#8226;   <a href="#ip_sentinel.core.ip_utils">ip_sentinel.core.ip_utils</a>
  &#8226;   <a href="#ip_sentinel.core.logger">ip_sentinel.core.logger</a>
  &#8226;   <a href="#ip_sentinel.core.path_utils">ip_sentinel.core.path_utils</a>
  &#8226;   <a href="#ip_sentinel.core.signals">ip_sentinel.core.signals</a>
  &#8226;   <a href="#ip_sentinel.core.worker">ip_sentinel.core.worker</a>
+ &#8226;   <a href="#main.py">main.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="ip_sentinel.core.cache"></a>
+  <a target="code" href="///D:/PROJECTS/IP%20Sentinel%20AI/src/ip_sentinel/core/cache.py" type="text/plain"><tt>ip_sentinel.core.cache</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#ip_sentinel.core">ip_sentinel.core</a>
+ &#8226;   <a href="#ip_sentinel.core.path_utils">ip_sentinel.core.path_utils</a>
+ &#8226;   <a href="#json">json</a>
+ &#8226;   <a href="#logging">logging</a>
+ &#8226;   <a href="#pathlib">pathlib</a>
+ &#8226;   <a href="#threading">threading</a>
+ &#8226;   <a href="#time">time</a>
+ &#8226;   <a href="#typing">typing</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#ip_sentinel.providers.geoip_provider">ip_sentinel.providers.geoip_provider</a>
+ &#8226;   <a href="#ip_sentinel.providers.rdap_provider">ip_sentinel.providers.rdap_provider</a>
  &#8226;   <a href="#main.py">main.py</a>
 
   </div>
@@ -16484,7 +16516,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#ip_sentinel.core.config">ip_sentinel.core.config</a>
+    <a href="#ip_sentinel.core.cache">ip_sentinel.core.cache</a>
+ &#8226;   <a href="#ip_sentinel.core.config">ip_sentinel.core.config</a>
  &#8226;   <a href="#ip_sentinel.core.logger">ip_sentinel.core.logger</a>
  &#8226;   <a href="#ip_sentinel.reports.html_generator">ip_sentinel.reports.html_generator</a>
  &#8226;   <a href="#ip_sentinel.ui.main_window">ip_sentinel.ui.main_window</a>
@@ -16595,7 +16628,10 @@ imports:
 imported by:
     <a href="#ip_sentinel.models.report_model">ip_sentinel.models.report_model</a>
  &#8226;   <a href="#ip_sentinel.providers.base">ip_sentinel.providers.base</a>
+ &#8226;   <a href="#ip_sentinel.providers.geoip_provider">ip_sentinel.providers.geoip_provider</a>
  &#8226;   <a href="#ip_sentinel.providers.mock_provider">ip_sentinel.providers.mock_provider</a>
+ &#8226;   <a href="#ip_sentinel.providers.rdap_provider">ip_sentinel.providers.rdap_provider</a>
+ &#8226;   <a href="#ip_sentinel.services.dns_service">ip_sentinel.services.dns_service</a>
  &#8226;   <a href="#ip_sentinel.services.investigation_service">ip_sentinel.services.investigation_service</a>
  &#8226;   <a href="#ip_sentinel.ui.views.query_view">ip_sentinel.ui.views.query_view</a>
  &#8226;   <a href="#ip_sentinel.ui.views.reports_view">ip_sentinel.ui.views.reports_view</a>
@@ -16616,7 +16652,9 @@ imports:
   <div class="import">
 imported by:
     <a href="#ip_sentinel.providers.base">ip_sentinel.providers.base</a>
+ &#8226;   <a href="#ip_sentinel.providers.geoip_provider">ip_sentinel.providers.geoip_provider</a>
  &#8226;   <a href="#ip_sentinel.providers.mock_provider">ip_sentinel.providers.mock_provider</a>
+ &#8226;   <a href="#ip_sentinel.providers.rdap_provider">ip_sentinel.providers.rdap_provider</a>
  &#8226;   <a href="#main.py">main.py</a>
 
   </div>
@@ -16645,6 +16683,30 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="ip_sentinel.providers.geoip_provider"></a>
+  <a target="code" href="///D:/PROJECTS/IP%20Sentinel%20AI/src/ip_sentinel/providers/geoip_provider.py" type="text/plain"><tt>ip_sentinel.providers.geoip_provider</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#datetime">datetime</a>
+ &#8226;   <a href="#ip_sentinel.core.cache">ip_sentinel.core.cache</a>
+ &#8226;   <a href="#ip_sentinel.models.threat_intel">ip_sentinel.models.threat_intel</a>
+ &#8226;   <a href="#ip_sentinel.providers">ip_sentinel.providers</a>
+ &#8226;   <a href="#logging">logging</a>
+ &#8226;   <a href="#re">re</a>
+ &#8226;   <a href="#requests">requests</a>
+ &#8226;   <a href="#typing">typing</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#ip_sentinel.services.investigation_service">ip_sentinel.services.investigation_service</a>
+ &#8226;   <a href="#main.py">main.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="ip_sentinel.providers.mock_provider"></a>
   <a target="code" href="///D:/PROJECTS/IP%20Sentinel%20AI/src/ip_sentinel/providers/mock_provider.py" type="text/plain"><tt>ip_sentinel.providers.mock_provider</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -16652,6 +16714,30 @@ imports:
     <a href="#ip_sentinel.models.threat_intel">ip_sentinel.models.threat_intel</a>
  &#8226;   <a href="#ip_sentinel.providers">ip_sentinel.providers</a>
  &#8226;   <a href="#ip_sentinel.providers.base">ip_sentinel.providers.base</a>
+ &#8226;   <a href="#time">time</a>
+ &#8226;   <a href="#typing">typing</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#ip_sentinel.services.investigation_service">ip_sentinel.services.investigation_service</a>
+ &#8226;   <a href="#main.py">main.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="ip_sentinel.providers.rdap_provider"></a>
+  <a target="code" href="///D:/PROJECTS/IP%20Sentinel%20AI/src/ip_sentinel/providers/rdap_provider.py" type="text/plain"><tt>ip_sentinel.providers.rdap_provider</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#datetime">datetime</a>
+ &#8226;   <a href="#ip_sentinel.core.cache">ip_sentinel.core.cache</a>
+ &#8226;   <a href="#ip_sentinel.models.threat_intel">ip_sentinel.models.threat_intel</a>
+ &#8226;   <a href="#ip_sentinel.providers">ip_sentinel.providers</a>
+ &#8226;   <a href="#logging">logging</a>
+ &#8226;   <a href="#requests">requests</a>
  &#8226;   <a href="#time">time</a>
  &#8226;   <a href="#typing">typing</a>
 
@@ -16747,7 +16833,6 @@ imports:
  &#8226;   <a href="#reportlab.lib.pagesizes">reportlab.lib.pagesizes</a>
  &#8226;   <a href="#reportlab.lib.styles">reportlab.lib.styles</a>
  &#8226;   <a href="#reportlab.platypus">reportlab.platypus</a>
- &#8226;   <a href="#typing">typing</a>
 
   </div>
   <div class="import">
@@ -16769,6 +16854,29 @@ imports:
   </div>
   <div class="import">
 imported by:
+    <a href="#ip_sentinel.services.dns_service">ip_sentinel.services.dns_service</a>
+ &#8226;   <a href="#ip_sentinel.services.investigation_service">ip_sentinel.services.investigation_service</a>
+ &#8226;   <a href="#main.py">main.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="ip_sentinel.services.dns_service"></a>
+  <a target="code" href="///D:/PROJECTS/IP%20Sentinel%20AI/src/ip_sentinel/services/dns_service.py" type="text/plain"><tt>ip_sentinel.services.dns_service</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#dns.resolver">dns.resolver</a>
+ &#8226;   <a href="#dns.reversename">dns.reversename</a>
+ &#8226;   <a href="#ip_sentinel.models.threat_intel">ip_sentinel.models.threat_intel</a>
+ &#8226;   <a href="#ip_sentinel.services">ip_sentinel.services</a>
+ &#8226;   <a href="#logging">logging</a>
+ &#8226;   <a href="#typing">typing</a>
+
+  </div>
+  <div class="import">
+imported by:
     <a href="#ip_sentinel.services.investigation_service">ip_sentinel.services.investigation_service</a>
  &#8226;   <a href="#main.py">main.py</a>
 
@@ -16782,14 +16890,15 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#datetime">datetime</a>
- &#8226;   <a href="#dns.resolver">dns.resolver</a>
- &#8226;   <a href="#dns.reversename">dns.reversename</a>
  &#8226;   <a href="#ip_sentinel.core.exceptions">ip_sentinel.core.exceptions</a>
  &#8226;   <a href="#ip_sentinel.core.ip_utils">ip_sentinel.core.ip_utils</a>
  &#8226;   <a href="#ip_sentinel.models.threat_intel">ip_sentinel.models.threat_intel</a>
  &#8226;   <a href="#ip_sentinel.providers.base">ip_sentinel.providers.base</a>
+ &#8226;   <a href="#ip_sentinel.providers.geoip_provider">ip_sentinel.providers.geoip_provider</a>
  &#8226;   <a href="#ip_sentinel.providers.mock_provider">ip_sentinel.providers.mock_provider</a>
+ &#8226;   <a href="#ip_sentinel.providers.rdap_provider">ip_sentinel.providers.rdap_provider</a>
  &#8226;   <a href="#ip_sentinel.services">ip_sentinel.services</a>
+ &#8226;   <a href="#ip_sentinel.services.dns_service">ip_sentinel.services.dns_service</a>
  &#8226;   <a href="#logging">logging</a>
  &#8226;   <a href="#typing">typing</a>
  &#8226;   <a href="#uuid">uuid</a>
@@ -17851,6 +17960,7 @@ imports:
 imported by:
     <a href="#charset_normalizer.models">charset_normalizer.models</a>
  &#8226;   <a href="#importlib.metadata">importlib.metadata</a>
+ &#8226;   <a href="#ip_sentinel.core.cache">ip_sentinel.core.cache</a>
  &#8226;   <a href="#ip_sentinel.core.config">ip_sentinel.core.config</a>
  &#8226;   <a href="#jinja2.utils">jinja2.utils</a>
  &#8226;   <a href="#json.decoder">json.decoder</a>
@@ -18037,12 +18147,16 @@ imported by:
  &#8226;   <a href="#concurrent.futures._base">concurrent.futures._base</a>
  &#8226;   <a href="#hashlib">hashlib</a>
  &#8226;   <a href="#http.cookiejar">http.cookiejar</a>
+ &#8226;   <a href="#ip_sentinel.core.cache">ip_sentinel.core.cache</a>
  &#8226;   <a href="#ip_sentinel.core.config">ip_sentinel.core.config</a>
  &#8226;   <a href="#ip_sentinel.core.exceptions">ip_sentinel.core.exceptions</a>
  &#8226;   <a href="#ip_sentinel.core.logger">ip_sentinel.core.logger</a>
  &#8226;   <a href="#ip_sentinel.core.worker">ip_sentinel.core.worker</a>
+ &#8226;   <a href="#ip_sentinel.providers.geoip_provider">ip_sentinel.providers.geoip_provider</a>
+ &#8226;   <a href="#ip_sentinel.providers.rdap_provider">ip_sentinel.providers.rdap_provider</a>
  &#8226;   <a href="#ip_sentinel.reports.html_generator">ip_sentinel.reports.html_generator</a>
  &#8226;   <a href="#ip_sentinel.reports.pdf_generator">ip_sentinel.reports.pdf_generator</a>
+ &#8226;   <a href="#ip_sentinel.services.dns_service">ip_sentinel.services.dns_service</a>
  &#8226;   <a href="#ip_sentinel.services.investigation_service">ip_sentinel.services.investigation_service</a>
  &#8226;   <a href="#ip_sentinel.ui.main_window">ip_sentinel.ui.main_window</a>
  &#8226;   <a href="#ip_sentinel.ui.styles">ip_sentinel.ui.styles</a>
@@ -20124,6 +20238,7 @@ imported by:
  &#8226;   <a href="#importlib.resources._common">importlib.resources._common</a>
  &#8226;   <a href="#importlib.resources.abc">importlib.resources.abc</a>
  &#8226;   <a href="#importlib.resources.readers">importlib.resources.readers</a>
+ &#8226;   <a href="#ip_sentinel.core.cache">ip_sentinel.core.cache</a>
  &#8226;   <a href="#ip_sentinel.core.config">ip_sentinel.core.config</a>
  &#8226;   <a href="#ip_sentinel.core.logger">ip_sentinel.core.logger</a>
  &#8226;   <a href="#ip_sentinel.core.path_utils">ip_sentinel.core.path_utils</a>
@@ -20768,6 +20883,7 @@ imported by:
  &#8226;   <a href="#importlib.resources.readers">importlib.resources.readers</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#ip_sentinel.core.logger">ip_sentinel.core.logger</a>
+ &#8226;   <a href="#ip_sentinel.providers.geoip_provider">ip_sentinel.providers.geoip_provider</a>
  &#8226;   <a href="#ipaddress">ipaddress</a>
  &#8226;   <a href="#jinja2._identifier">jinja2._identifier</a>
  &#8226;   <a href="#jinja2.ext">jinja2.ext</a>
@@ -23704,7 +23820,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#main.py">main.py</a>
+    <a href="#ip_sentinel.providers.geoip_provider">ip_sentinel.providers.geoip_provider</a>
+ &#8226;   <a href="#ip_sentinel.providers.rdap_provider">ip_sentinel.providers.rdap_provider</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#requests">requests</a>
  &#8226;   <a href="#requests.__version__">requests.__version__</a>
  &#8226;   <a href="#requests._internal_utils">requests._internal_utils</a>
@@ -29284,6 +29402,7 @@ imported by:
  &#8226;   <a href="#dns.win32util">dns.win32util</a>
  &#8226;   <a href="#http.cookiejar">http.cookiejar</a>
  &#8226;   <a href="#importlib.util">importlib.util</a>
+ &#8226;   <a href="#ip_sentinel.core.cache">ip_sentinel.core.cache</a>
  &#8226;   <a href="#ip_sentinel.core.config">ip_sentinel.core.config</a>
  &#8226;   <a href="#jinja2.utils">jinja2.utils</a>
  &#8226;   <a href="#logging">logging</a>
@@ -29359,7 +29478,9 @@ imported by:
  &#8226;   <a href="#http.cookiejar">http.cookiejar</a>
  &#8226;   <a href="#http.cookies">http.cookies</a>
  &#8226;   <a href="#http.server">http.server</a>
+ &#8226;   <a href="#ip_sentinel.core.cache">ip_sentinel.core.cache</a>
  &#8226;   <a href="#ip_sentinel.providers.mock_provider">ip_sentinel.providers.mock_provider</a>
+ &#8226;   <a href="#ip_sentinel.providers.rdap_provider">ip_sentinel.providers.rdap_provider</a>
  &#8226;   <a href="#logging">logging</a>
  &#8226;   <a href="#logging.handlers">logging.handlers</a>
  &#8226;   <a href="#multiprocessing.connection">multiprocessing.connection</a>
@@ -29893,6 +30014,7 @@ imported by:
  &#8226;   <a href="#importlib.metadata._meta">importlib.metadata._meta</a>
  &#8226;   <a href="#importlib.resources._common">importlib.resources._common</a>
  &#8226;   <a href="#importlib.resources.abc">importlib.resources.abc</a>
+ &#8226;   <a href="#ip_sentinel.core.cache">ip_sentinel.core.cache</a>
  &#8226;   <a href="#ip_sentinel.core.config">ip_sentinel.core.config</a>
  &#8226;   <a href="#ip_sentinel.core.exceptions">ip_sentinel.core.exceptions</a>
  &#8226;   <a href="#ip_sentinel.core.ip_utils">ip_sentinel.core.ip_utils</a>
@@ -29901,9 +30023,11 @@ imported by:
  &#8226;   <a href="#ip_sentinel.models.report_model">ip_sentinel.models.report_model</a>
  &#8226;   <a href="#ip_sentinel.models.threat_intel">ip_sentinel.models.threat_intel</a>
  &#8226;   <a href="#ip_sentinel.providers.base">ip_sentinel.providers.base</a>
+ &#8226;   <a href="#ip_sentinel.providers.geoip_provider">ip_sentinel.providers.geoip_provider</a>
  &#8226;   <a href="#ip_sentinel.providers.mock_provider">ip_sentinel.providers.mock_provider</a>
+ &#8226;   <a href="#ip_sentinel.providers.rdap_provider">ip_sentinel.providers.rdap_provider</a>
  &#8226;   <a href="#ip_sentinel.reports.html_generator">ip_sentinel.reports.html_generator</a>
- &#8226;   <a href="#ip_sentinel.reports.pdf_generator">ip_sentinel.reports.pdf_generator</a>
+ &#8226;   <a href="#ip_sentinel.services.dns_service">ip_sentinel.services.dns_service</a>
  &#8226;   <a href="#ip_sentinel.services.investigation_service">ip_sentinel.services.investigation_service</a>
  &#8226;   <a href="#ip_sentinel.ui.views.query_view">ip_sentinel.ui.views.query_view</a>
  &#8226;   <a href="#ip_sentinel.ui.views.reports_view">ip_sentinel.ui.views.reports_view</a>

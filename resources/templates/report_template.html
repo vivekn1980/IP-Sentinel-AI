@@ -44,12 +44,22 @@
             color: #fef2f2;
             text-align: center;
             font-weight: bold;
-            font-size: 16px;
-            padding: 12px;
+            font-size: 15px;
+            padding: 10px;
             border-radius: 8px;
-            margin-bottom: 24px;
-            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
             border: 1px solid #ef4444;
+        }
+        .disclaimer-box {
+            background-color: #1e1b4b;
+            color: #c7d2fe;
+            border: 1px solid #6366f1;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            margin-bottom: 24px;
+            line-height: 1.4;
         }
         .score-card {
             display: flex;
@@ -73,20 +83,20 @@
         .score-card.CLEAN .score-number { color: #10b981; }
         .section-title {
             color: #38bdf8;
-            font-size: 18px;
+            font-size: 17px;
             border-bottom: 1px solid #334155;
-            padding-bottom: 8px;
-            margin-top: 28px;
-            margin-bottom: 16px;
+            padding-bottom: 6px;
+            margin-top: 24px;
+            margin-bottom: 14px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
         th, td {
             text-align: left;
-            padding: 10px 14px;
+            padding: 8px 12px;
             border-bottom: 1px solid #334155;
         }
         th {
@@ -95,20 +105,23 @@
             font-size: 13px;
         }
         td {
-            font-size: 14px;
+            font-size: 13px;
         }
+        .status-AVAILABLE { color: #34d399; font-weight: bold; }
+        .status-ERROR { color: #f87171; font-weight: bold; }
+        .status-UNAVAILABLE, .status-NOT_CONFIGURED { color: #fbbf24; font-weight: bold; }
         .badge {
             display: inline-block;
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 4px;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 11px;
         }
         .badge.HIGH, .badge.CRITICAL { background-color: #7f1d1d; color: #fca5a5; }
         .badge.MEDIUM { background-color: #78350f; color: #fde68a; }
         .badge.INFO { background-color: #064e3b; color: #a7f3d0; }
         .footer {
-            margin-top: 40px;
+            margin-top: 36px;
             text-align: center;
             color: #64748b;
             font-size: 12px;
@@ -137,6 +150,10 @@
             </div>
         </div>
 
+        <div class="disclaimer-box">
+            📌 <strong>Security Disclaimer:</strong> Network intelligence and geolocation are informational and may be approximate or incomplete. They should be correlated with WAF, application, CDN, firewall, and other security telemetry before making enforcement decisions.
+        </div>
+
         <!-- Overall Risk Card -->
         <div class="score-card {{ result.overall_threat_score.level.value }}">
             <div>
@@ -153,54 +170,68 @@
             </div>
         </div>
 
-        <!-- IP & Network Overview -->
-        <div class="section-title">Network & Geolocation Overview</div>
+        <!-- Section 1: IP Information -->
+        <div class="section-title">1. IP Information</div>
         <table>
-            <tr>
-                <th>Property</th>
-                <th>Value</th>
-            </tr>
-            <tr>
-                <td>IP Address</td>
-                <td>{{ result.target_ip }}</td>
-            </tr>
-            <tr>
-                <td>Network Type</td>
-                <td>{% if result.is_private_ip %}Private (RFC 1918){% else %}Public Address{% endif %}</td>
-            </tr>
-            <tr>
-                <td>Country / City</td>
-                <td>{{ result.geoip.country_name }} ({{ result.geoip.country_code }}) - {{ result.geoip.city or "Unknown" }}</td>
-            </tr>
-            <tr>
-                <td>ASN / Organization</td>
-                <td>AS{{ result.geoip.asn }} - {{ result.geoip.asn_org }}</td>
-            </tr>
-            <tr>
-                <td>ISP</td>
-                <td>{{ result.geoip.isp or "N/A" }}</td>
-            </tr>
+            <tr><th>Property</th><th>Value</th></tr>
+            <tr><td>Target IP Address</td><td>{{ result.target_ip }}</td></tr>
+            <tr><td>IP Version</td><td>{% if ":" in result.target_ip %}IPv6{% else %}IPv4{% endif %}</td></tr>
+            <tr><td>Network Category</td><td>{% if result.is_private_ip %}Private Address (RFC 1918){% else %}Public Address{% endif %}</td></tr>
+            <tr><td>Loopback IP</td><td>{% if result.is_loopback_ip %}Yes{% else %}No{% endif %}</td></tr>
         </table>
 
-        <!-- DNS Resolution -->
-        <div class="section-title">DNS Resolution</div>
+        <!-- Section 2: Network / ASN -->
+        <div class="section-title">2. Network & Autonomous System (ASN)</div>
         <table>
-            <tr>
-                <th>DNS Query Type</th>
-                <th>Result</th>
-            </tr>
-            <tr>
-                <td>Reverse Hostname (PTR)</td>
-                <td>{{ result.dns.hostname or "No PTR record found" }}</td>
-            </tr>
-            <tr>
-                <td>Status</td>
-                <td>{{ result.dns.status.value }}</td>
-            </tr>
+            <tr><th>Property</th><th>Value</th></tr>
+            <tr><td>ASN</td><td>{% if result.asn_data.asn %}AS{{ result.asn_data.asn }}{% else %}UNAVAILABLE{% endif %}</td></tr>
+            <tr><td>Autonomous System Organization</td><td>{{ result.asn_data.asn_org or result.geoip.asn_org or "UNAVAILABLE" }}</td></tr>
+            <tr><td>Network CIDR Prefix</td><td>{{ result.rdap.cidr or result.asn_data.network_prefix or "UNAVAILABLE" }}</td></tr>
+            <tr><td>Registry / RIR</td><td>{{ result.rdap.registry or result.asn_data.registry or "UNAVAILABLE" }}</td></tr>
+            <tr><td>Status</td><td class="status-{{ result.asn_status.value }}">{{ result.asn_status.value }}</td></tr>
         </table>
 
-        <!-- Threat Evidence Table -->
-        <div class="section-title">Structured Threat Evidence</div>
+        <!-- Section 3: RDAP Details -->
+        <div class="section-title">3. Registration Data Access Protocol (RDAP)</div>
+        <table>
+            <tr><th>Property</th><th>Value</th></tr>
+            <tr><td>Network Name</td><td>{{ result.rdap.network_name or "UNAVAILABLE" }}</td></tr>
+            <tr><td>Address Range</td><td>{{ result.rdap.start_address or "N/A" }} - {{ result.rdap.end_address or "N/A" }}</td></tr>
+            <tr><td>Organization</td><td>{{ result.rdap.organization or "UNAVAILABLE" }}</td></tr>
+            <tr><td>Abuse Contact</td><td>{{ result.rdap.abuse_contact or "UNAVAILABLE" }}</td></tr>
+            <tr><td>Administrative Contact</td><td>{{ result.rdap.admin_contact or "UNAVAILABLE" }}</td></tr>
+            <tr><td>Status</td><td class="status-{{ result.rdap_status.value }}">{{ result.rdap_status.value }}</td></tr>
+        </table>
+
+        <!-- Section 4: Geolocation -->
+        <div class="section-title">4. Network Geolocation</div>
+        <table>
+            <tr><th>Property</th><th>Value</th></tr>
+            <tr><td>Country</td><td>{{ result.geoip.country_name or "UNAVAILABLE" }} ({{ result.geoip.country_code or "N/A" }})</td></tr>
+            <tr><td>Region / State</td><td>{{ result.geoip.region or "UNAVAILABLE" }}</td></tr>
+            <tr><td>City</td><td>{{ result.geoip.city or "UNAVAILABLE" }}</td></tr>
+            <tr><td>Timezone</td><td>{{ result.geoip.timezone or "UNAVAILABLE" }}</td></tr>
+            <tr><td>Approximate Coordinates</td><td>{% if result.geoip.latitude %}{{ result.geoip.latitude }}, {{ result.geoip.longitude }}{% else %}UNAVAILABLE{% endif %}</td></tr>
+            <tr><td>Status</td><td class="status-{{ result.geoip_status.value }}">{{ result.geoip_status.value }}</td></tr>
+        </table>
+        <p style="color: #64748b; font-size: 11px; font-style: italic;">Note: {{ result.geoip.disclaimer }}</p>
+
+        <!-- Section 5: DNS Telemetry -->
+        <div class="section-title">5. DNS Resolution Telemetry</div>
+        <table>
+            <tr><th>DNS Record Type</th><th>Resolved Values</th></tr>
+            <tr><td>Reverse Hostname (PTR)</td><td>{{ result.dns.hostname or (result.dns.ptr_records|join(', ')) or "UNAVAILABLE" }}</td></tr>
+            <tr><td>A Records</td><td>{{ result.dns.a_records|join(', ') or "UNAVAILABLE" }}</td></tr>
+            <tr><td>AAAA Records</td><td>{{ result.dns.aaaa_records|join(', ') or "UNAVAILABLE" }}</td></tr>
+            <tr><td>MX Records</td><td>{{ result.dns.mx_records|join(', ') or "UNAVAILABLE" }}</td></tr>
+            <tr><td>NS Records</td><td>{{ result.dns.ns_records|join(', ') or "UNAVAILABLE" }}</td></tr>
+            <tr><td>TXT Records</td><td>{{ result.dns.txt_records|join(', ') or "UNAVAILABLE" }}</td></tr>
+            <tr><td>CNAME Records</td><td>{{ result.dns.cname_records|join(', ') or "UNAVAILABLE" }}</td></tr>
+            <tr><td>Status</td><td class="status-{{ result.dns_status.value }}">{{ result.dns_status.value }}</td></tr>
+        </table>
+
+        <!-- Section 6: Structured Threat Evidence -->
+        <div class="section-title">6. Structured Threat Telemetry Evidence</div>
         {% if result.aggregated_evidence %}
         <table>
             <thead>
@@ -223,32 +254,33 @@
             </tbody>
         </table>
         {% else %}
-        <p style="color: #94a3b8;">No malicious indicators or evidence recorded.</p>
+        <p style="color: #94a3b8;">No malicious indicators or threat evidence reported.</p>
         {% endif %}
 
-        <!-- Data Sources & Limitations -->
-        <div class="section-title">Data Sources & Operational Limitations</div>
+        <!-- Section 7: Data Source Status Summary -->
+        <div class="section-title">7. Data Source Status Summary</div>
         <table>
             <thead>
                 <tr>
-                    <th>Provider</th>
+                    <th>Intelligence Subsystem</th>
                     <th>Status</th>
-                    <th>Execution Time</th>
+                    <th>Notes / Errors</th>
                 </tr>
             </thead>
             <tbody>
+                <tr><td>IP Classification</td><td class="status-AVAILABLE">AVAILABLE</td><td>Normalized IPv4/IPv6 classification</td></tr>
+                <tr><td>RDAP Registration</td><td class="status-{{ result.rdap_status.value }}">{{ result.rdap_status.value }}</td><td>{{ result.rdap.error_message or "OK" }}</td></tr>
+                <tr><td>ASN & Routing</td><td class="status-{{ result.asn_status.value }}">{{ result.asn_status.value }}</td><td>{{ result.asn_data.error_message or "OK" }}</td></tr>
+                <tr><td>GeoIP Geolocation</td><td class="status-{{ result.geoip_status.value }}">{{ result.geoip_status.value }}</td><td>{{ result.geoip.error_message or "OK" }}</td></tr>
+                <tr><td>DNS Telemetry</td><td class="status-{{ result.dns_status.value }}">{{ result.dns_status.value }}</td><td>{{ result.dns.error_message or "OK" }}</td></tr>
                 {% for name, prov in result.provider_results.items() %}
-                <tr>
-                    <td>{{ name }}</td>
-                    <td>{{ prov.status.value }}</td>
-                    <td>{{ "%.2f"|format(prov.execution_time_ms) }} ms</td>
-                </tr>
+                <tr><td>Provider: {{ name }}</td><td class="status-{{ prov.status.value }}">{{ prov.status.value }}</td><td>{{ prov.error_message or "OK" }}</td></tr>
                 {% endfor %}
             </tbody>
         </table>
 
         <div class="footer">
-            Generated by {{ metadata.author }} &bull; {{ metadata.organization }} &bull; IP Sentinel AI Engine
+            Generated by {{ metadata.author }} &bull; {{ metadata.organization }} &bull; IP Sentinel AI Engine v{{ metadata.app_version }}
         </div>
     </div>
 </body>

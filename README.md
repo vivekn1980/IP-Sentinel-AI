@@ -1,6 +1,6 @@
 # IP Sentinel AI — WAF IP Threat Intelligence & Investigation Tool
 
-> **Foundation Architecture v1.0.0-foundation**  
+> **Phase 2 Release — Real Passive IP Intelligence**  
 > Portable Standalone Windows Desktop Application for Incident Response & WAF Forensics.
 
 ---
@@ -9,11 +9,18 @@
 
 **IP Sentinel AI** is a production-grade, standalone Windows desktop application built with PySide6 for WAF IP Threat Intelligence gathering, incident investigation, and automated forensic report generation (HTML & PDF).
 
-### Key Features
+### Key Features (Phase 2)
+- **Real Passive IP Intelligence**: Collects live, factual network intelligence for public IPv4 and IPv6 addresses without active probing or port scanning.
+  - **RDAP**: Network name, CIDR range, start/end IP, organization, country, abuse contact, administrative contact, registry (ARIN, RIPE, APNIC, LACNIC, AFRINIC).
+  - **ASN**: Autonomous System Number, AS organization, routing prefix, country.
+  - **Geolocation**: Country, region, city, timezone, approximate coordinates with mandatory network-level disclaimer.
+  - **DNS Telemetry**: Reverse PTR, A, AAAA, MX, NS, TXT, CNAME record resolution.
 - **Zero Target Runtime Dependencies**: Distributed as a portable single-file Windows executable (`dist/IP-Sentinel-AI.exe`). The target Windows machine does **NOT** require Python, Node.js, Java, pip, Docker, or any database server.
-- **Deterministic Mock Engine**: Includes a offline-capable `MockIntelProvider` allowing complete end-to-end testing of lookups, risk scoring, DNS resolution, and PDF/HTML report generation without API keys or Internet access.
+- **Local TTL Caching**: Includes a thread-safe, file-backed JSON cache manager (`CacheManager`) to speed up repeat queries without requiring a database server.
+- **Deterministic Mock Engine**: Preserves `MockIntelProvider` allowing offline verification of lookups, threat scoring, and PDF/HTML report creation.
+- **Fault-Tolerant Resilience**: Provider and subsystem failures (e.g. GeoIP service timeout) are handled gracefully without aborting the overall investigation.
 - **60 FPS Responsive GUI**: All network queries and ReportLab PDF rendering execute asynchronously in background thread pools (`QThreadPool` / `QRunnable`), keeping the PySide6 UI 100% fluid.
-- **Strict Security**: Zero hardcoded credentials, zero shell command execution (prevention of command injection via `ipaddress` validation), and automated log secret redaction.
+- **Strict Security**: Safe pure-Python HTTPS/DNS lookups, zero hardcoded credentials, zero shell command execution, and automated log secret redaction.
 
 ---
 
@@ -23,10 +30,13 @@
 UI (PySide6 QStackedWidget)
   ↓ (Asynchronous QThreadPool / Worker)
 InvestigationService
+  ├─► RDAPProvider (Passive HTTPS bootstrap lookup)
+  ├─► GeoIPProvider (Passive GeoIP & ASN query)
+  ├─► DNSService (dnspython PTR, A, AAAA, MX, NS, TXT, CNAME)
+  ├─► CacheManager (File & memory TTL cache)
+  └─► BaseIntelProvider (MockIntelProvider / Threat Intel Adapters)
   ↓
-Providers (MockIntelProvider / Future API Adapters) & Local DNS
-  ↓
-Normalized Data Models (IPIntelResult, ThreatScore, EvidenceItem)
+Normalized Data Models (IPIntelResult, RDAPData, ASNData, GeoIPData, DNSData)
   ↓
 Report Generators (Jinja2 HTML & ReportLab Platypus PDF)
 ```
@@ -81,7 +91,7 @@ python -m ip_sentinel.main --self-test
 
 ## 🧪 Automated Testing
 
-The project contains a comprehensive automated test suite in `tests/` covering configuration, custom exceptions, IP utilities, thread-safe log scrubbing, mock providers, investigation service, report generators, worker thread signals, and PySide6 UI views.
+The project contains a comprehensive automated test suite in `tests/` (38 tests) covering configuration, cache manager, RDAP queries, GeoIP/ASN, DNS resolution, custom exceptions, IP utilities, thread-safe log scrubbing, mock providers, investigation service, report generators, worker thread signals, and PySide6 UI views.
 
 ```powershell
 # Run full pytest suite
@@ -104,11 +114,6 @@ The compiled binary will be placed at:
 dist/IP-Sentinel-AI.exe
 ```
 
-### Clean Workspace Script
-```powershell
-python clean_build.py
-```
-
 ---
 
 ## 💻 Clean Machine Testing Protocol
@@ -117,7 +122,8 @@ To verify portable execution on a fresh Windows machine:
 
 1. Copy `dist/IP-Sentinel-AI.exe` to a clean Windows machine without Python, Node.js, pip, Git, or database servers installed.
 2. Double-click `IP-Sentinel-AI.exe`.
-3. Perform an IP lookup (e.g. `185.220.101.5`).
-4. Click **📄 Export Report** to generate HTML and PDF forensic reports.
-5. Confirm report files are written cleanly to `Documents\IPSentinelReports\`.
-6. Exit application.
+3. Enter a public IP address (e.g. `1.1.1.1` or `8.8.8.8`).
+4. Click **⚡ Analyze IP** to view RDAP, ASN, GeoIP, and DNS telemetry.
+5. Click **📄 Export Report** to generate HTML and PDF forensic reports.
+6. Confirm report files are written cleanly to `Documents\IPSentinelReports\`.
+7. Exit application.

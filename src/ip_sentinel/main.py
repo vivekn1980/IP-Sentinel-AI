@@ -83,7 +83,24 @@ def run_self_test() -> int:
 
     check("Investigation Service Engine", test_investigation)
 
-    # 5. HTML & PDF Generators test
+    # 5. Cache & Phase 2 Services test
+    def test_phase2_services():
+        from ip_sentinel.core.cache import CacheManager
+        from ip_sentinel.providers.rdap_provider import RDAPProvider
+        from ip_sentinel.providers.geoip_provider import GeoIPProvider
+        from ip_sentinel.services.dns_service import DNSService
+
+        cache = CacheManager()
+        cache.set("selftest_key", "selftest_val", ttl_seconds=60)
+        assert cache.get("selftest_key") == "selftest_val", "Cache set/get failed."
+
+        dns_svc = DNSService(timeout=1.0)
+        dns_res = dns_svc.resolve_all_records("127.0.0.1")
+        assert dns_res is not None, "DNSService returned None."
+
+    check("Cache & Phase 2 Intelligence Services", test_phase2_services)
+
+    # 6. HTML & PDF Generators test
     def test_reports():
         svc = InvestigationService()
         result = svc.investigate("1.1.1.1")

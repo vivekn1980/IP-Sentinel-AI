@@ -1,38 +1,40 @@
 # SECURITY.md — IP Sentinel AI Security Policy & Architecture
 
-## 🛡️ Security Guidelines & Principles
+## 🛡️ Security Guidelines & Principles (Phase 2)
 
-IP Sentinel AI is designed for cybersecurity operations and incident investigation. Security is enforced through strict technical architecture controls.
+IP Sentinel AI is designed for WAF IP Threat Intelligence and incident investigation. Security is enforced through strict technical architecture controls.
 
 ---
 
-## 1. No Shell Command Execution (Command Injection Immunity)
+## 1. Passive Network Operations Only
+
+- **Zero Active Probing**: IP Sentinel AI **NEVER** performs port scanning, service enumeration, vulnerability scanning, active probing, or exploitation against target IP addresses.
+- **Pure-Python Network Requests**: All network calls use standard Python library sockets (`dnspython`) or HTTPS over TLS (`requests`).
+
+---
+
+## 2. No Shell Command Execution (Command Injection Immunity)
 
 - **Input Sanitization**: All user-supplied IP addresses are parsed and validated using Python's built-in `ipaddress` standard library (`ipaddress.ip_address`).
 - **Zero OS Subprocesses**: IP Sentinel AI **NEVER** invokes shell commands (e.g. `ping`, `nslookup`, `traceroute`, `nmap`) using OS subprocesses or shell execution strings built from user input.
-- **Pure-Python Network Resolution**: All DNS lookups use `dnspython` sockets; HTTP requests use `requests` over TLS.
 
 ---
 
-## 2. No Hardcoded Credentials
+## 3. Mandatory Geolocation Disclaimer
 
-- **SecretStore Abstraction**: API keys (AbuseIPDB, VirusTotal, Shodan, OTX) are strictly managed via `ConfigManager` and stored in `%LOCALAPPDATA%\IPSentinelAI\credentials.json` or OS environment variables (`IPSENTINEL_KEY_*`).
-- **Zero In-Code Keys**: Source code contains no default or fallback API keys.
-
----
-
-## 3. Secret Scrubbing in Logs & UI
-
-- **Sensitive Data Filter**: `QtSignalLogger` and rotating file handlers enforce regex pattern matching (`SECRET_PATTERNS`) to scrub API keys, tokens, passwords, or bearer headers before writing to disk or displaying in the log console.
+- Network-level GeoIP coordinates are approximate and derived from Autonomous System (ASN) and ISP registration ranges.
+- All application views and generated reports include the mandatory disclaimer:  
+  `"GeoIP information represents approximate network geolocation and does not identify the physical location of an attacker."`
 
 ---
 
-## 4. HTML & PDF Report Injection Protection
+## 4. No Hardcoded Credentials & Secret Scrubbing
 
-- **Jinja2 Autoescaping**: `HTMLReportGenerator` uses Jinja2 template autoescaping (`autoescape=True`) to prevent Cross-Site Scripting (XSS) or HTML script injection when rendering threat data or user notes into report files.
+- **SecretStore Abstraction**: API keys are managed via `ConfigManager` and stored in `%LOCALAPPDATA%\IPSentinelAI\credentials.json` or OS environment variables (`IPSENTINEL_KEY_*`).
+- **Log Redaction**: `QtSignalLogger` and rotating file handlers enforce regex pattern matching (`SECRET_PATTERNS`) to scrub credentials before writing to disk or displaying in UI log console.
 
 ---
 
-## 5. Non-Privileged Execution
+## 5. Report Injection Protection
 
-- The application runs within normal Windows user context and does **NOT** require Administrator privileges or UAC elevation.
+- **Jinja2 Autoescaping**: `HTMLReportGenerator` uses Jinja2 template autoescaping (`autoescape=True`) to prevent Cross-Site Scripting (XSS) or HTML script injection when rendering RDAP strings or user notes into report files.

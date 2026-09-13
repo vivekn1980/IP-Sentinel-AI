@@ -18,8 +18,8 @@ def test_html_report_generation(sample_report_data, tmp_path):
     assert sample_report_data.result.investigation_id in content
     assert str(sample_report_data.result.overall_threat_score.score) in content
     assert "DEMO / MOCK DATA" in content
-    assert "Network & Geolocation Overview" in content
-    assert "Structured Threat Evidence" in content
+    assert "Network Geolocation" in content
+    assert "Structured Threat Telemetry Evidence" in content
 
 
 def test_pdf_report_generation(sample_report_data, tmp_path):
