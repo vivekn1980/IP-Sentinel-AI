@@ -1,0 +1,190 @@
+/* IP Sentinel AI - Professional Cybersecurity Dark QSS Stylesheet */
+
+QMainWindow {
+    background-color: #0F141C;
+    color: #E2E8F0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 13px;
+}
+
+QWidget {
+    background-color: #0F141C;
+    color: #E2E8F0;
+    selection-background-color: #00E5FF;
+    selection-color: #0F141C;
+}
+
+/* Sidebar Navigation */
+#sidebarFrame {
+    background-color: #171E28;
+    border-right: 1px solid #2A3649;
+}
+
+#navTitleLabel {
+    color: #00E676;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 8px;
+}
+
+#navSubtitleLabel {
+    color: #94A3B8;
+    font-size: 11px;
+    padding-left: 8px;
+    margin-bottom: 12px;
+}
+
+QPushButton.navButton {
+    background-color: transparent;
+    color: #94A3B8;
+    border: none;
+    border-left: 4px solid transparent;
+    border-radius: 0px;
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+QPushButton.navButton:hover {
+    background-color: #222C3A;
+    color: #F8FAFC;
+}
+
+QPushButton.navButton:checked, QPushButton.navButton.active {
+    background-color: #1E293B;
+    color: #00E5FF;
+    border-left: 4px solid #00E5FF;
+    font-weight: bold;
+}
+
+/* Card Containers & Panels */
+QFrame.cardFrame {
+    background-color: #171E28;
+    border: 1px solid #2A3649;
+    border-radius: 8px;
+    padding: 14px;
+}
+
+QLabel.cardHeader {
+    color: #00E5FF;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+/* Standard Inputs & Edits */
+QLineEdit, QTextEdit, QPlainTextEdit, QSpinBox {
+    background-color: #1E293B;
+    color: #F8FAFC;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+}
+
+QLineEdit:focus, QTextEdit:focus, QPlainTextEdit:focus, QSpinBox:focus {
+    border: 1px solid #00E5FF;
+    outline: none;
+}
+
+/* Buttons */
+QPushButton.primaryButton {
+    background-color: #00C853;
+    color: #0F141C;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    padding: 9px 20px;
+    font-size: 13px;
+}
+
+QPushButton.primaryButton:hover {
+    background-color: #00E676;
+}
+
+QPushButton.primaryButton:pressed {
+    background-color: #00B0FF;
+}
+
+QPushButton.secondaryButton {
+    background-color: #1E293B;
+    color: #E2E8F0;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-weight: 500;
+}
+
+QPushButton.secondaryButton:hover {
+    background-color: #334155;
+    color: #FFFFFF;
+    border-color: #475569;
+}
+
+/* Status Badges */
+QLabel.badgeClean {
+    background-color: #064E3B;
+    color: #34D399;
+    border: 1px solid #059669;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-weight: bold;
+}
+
+QLabel.badgeSuspicious {
+    background-color: #78350F;
+    color: #FBBF24;
+    border: 1px solid #D97706;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-weight: bold;
+}
+
+QLabel.badgeMalicious {
+    background-color: #7F1D1D;
+    color: #FCA5A5;
+    border: 1px solid #DC2626;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-weight: bold;
+}
+
+/* Data Tables */
+QTableWidget, QTreeWidget {
+    background-color: #171E28;
+    color: #E2E8F0;
+    gridline-color: #2A3649;
+    border: 1px solid #2A3649;
+    border-radius: 6px;
+}
+
+QHeaderView::section {
+    background-color: #1E293B;
+    color: #94A3B8;
+    padding: 8px;
+    font-weight: bold;
+    border: none;
+    border-bottom: 1px solid #334155;
+}
+
+/* Progress Bar */
+QProgressBar {
+    background-color: #1E293B;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    text-align: center;
+    color: #F8FAFC;
+}
+
+QProgressBar::chunk {
+    background-color: #00E5FF;
+    border-radius: 5px;
+}
+
+/* Status Bar */
+QStatusBar {
+    background-color: #171E28;
+    color: #94A3B8;
+    border-top: 1px solid #2A3649;
+}

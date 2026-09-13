@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ metadata.title }} - {{ result.target_ip }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #1e293b;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border: 1px solid #334155;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+        }
+        .header h1 {
+            color: #38bdf8;
+            margin: 0;
+            font-size: 24px;
+        }
+        .header .meta {
+            text-align: right;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+        .mock-banner {
+            background-color: #991b1b;
+            color: #fef2f2;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            letter-spacing: 1.5px;
+            border: 1px solid #ef4444;
+        }
+        .score-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #0f172a;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border-left: 6px solid #38bdf8;
+        }
+        .score-card.MALICIOUS { border-left-color: #ef4444; }
+        .score-card.SUSPICIOUS { border-left-color: #f59e0b; }
+        .score-card.CLEAN { border-left-color: #10b981; }
+        .score-number {
+            font-size: 42px;
+            font-weight: bold;
+        }
+        .score-card.MALICIOUS .score-number { color: #ef4444; }
+        .score-card.SUSPICIOUS .score-number { color: #f59e0b; }
+        .score-card.CLEAN .score-number { color: #10b981; }
+        .section-title {
+            color: #38bdf8;
+            font-size: 18px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+            margin-top: 28px;
+            margin-bottom: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 1px solid #334155;
+        }
+        th {
+            background-color: #0f172a;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+        td {
+            font-size: 14px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .badge.HIGH, .badge.CRITICAL { background-color: #7f1d1d; color: #fca5a5; }
+        .badge.MEDIUM { background-color: #78350f; color: #fde68a; }
+        .badge.INFO { background-color: #064e3b; color: #a7f3d0; }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #64748b;
+            font-size: 12px;
+            border-top: 1px solid #334155;
+            padding-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if result.is_mock %}
+        <div class="mock-banner">
+            ⚠️ DEMO / MOCK DATA — NOT REAL THREAT INTELLIGENCE
+        </div>
+        {% endif %}
+
+        <div class="header">
+            <div>
+                <h1>{{ metadata.title }}</h1>
+                <div style="color: #94a3b8; margin-top: 4px;">Target IP: <strong>{{ result.target_ip }}</strong></div>
+            </div>
+            <div class="meta">
+                <div>Investigation ID: <strong>{{ result.investigation_id }}</strong></div>
+                <div>Generated At: {{ result.timestamp }}</div>
+                <div>App Version: v{{ metadata.app_version }}</div>
+            </div>
+        </div>
+
+        <!-- Overall Risk Card -->
+        <div class="score-card {{ result.overall_threat_score.level.value }}">
+            <div>
+                <div style="color: #94a3b8; font-size: 13px;">OVERALL THREAT ASSESSMENT</div>
+                <div style="font-size: 20px; font-weight: bold; margin-top: 4px;">
+                    {{ result.overall_threat_score.level.value }} THREAT
+                </div>
+                <div style="color: #64748b; font-size: 12px; margin-top: 4px;">
+                    Confidence Score: {{ result.overall_threat_score.confidence }}%
+                </div>
+            </div>
+            <div class="score-number">
+                {{ result.overall_threat_score.score }}<span style="font-size: 20px; color: #64748b;">/100</span>
+            </div>
+        </div>
+
+        <!-- IP & Network Overview -->
+        <div class="section-title">Network & Geolocation Overview</div>
+        <table>
+            <tr>
+                <th>Property</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>IP Address</td>
+                <td>{{ result.target_ip }}</td>
+            </tr>
+            <tr>
+                <td>Network Type</td>
+                <td>{% if result.is_private_ip %}Private (RFC 1918){% else %}Public Address{% endif %}</td>
+            </tr>
+            <tr>
+                <td>Country / City</td>
+                <td>{{ result.geoip.country_name }} ({{ result.geoip.country_code }}) - {{ result.geoip.city or "Unknown" }}</td>
+            </tr>
+            <tr>
+                <td>ASN / Organization</td>
+                <td>AS{{ result.geoip.asn }} - {{ result.geoip.asn_org }}</td>
+            </tr>
+            <tr>
+                <td>ISP</td>
+                <td>{{ result.geoip.isp or "N/A" }}</td>
+            </tr>
+        </table>
+
+        <!-- DNS Resolution -->
+        <div class="section-title">DNS Resolution</div>
+        <table>
+            <tr>
+                <th>DNS Query Type</th>
+                <th>Result</th>
+            </tr>
+            <tr>
+                <td>Reverse Hostname (PTR)</td>
+                <td>{{ result.dns.hostname or "No PTR record found" }}</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>{{ result.dns.status.value }}</td>
+            </tr>
+        </table>
+
+        <!-- Threat Evidence Table -->
+        <div class="section-title">Structured Threat Evidence</div>
+        {% if result.aggregated_evidence %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Severity</th>
+                    <th>Category</th>
+                    <th>Source</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in result.aggregated_evidence %}
+                <tr>
+                    <td><span class="badge {{ item.severity }}">{{ item.severity }}</span></td>
+                    <td>{{ item.category }}</td>
+                    <td>{{ item.source }}</td>
+                    <td>{{ item.description }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="color: #94a3b8;">No malicious indicators or evidence recorded.</p>
+        {% endif %}
+
+        <!-- Data Sources & Limitations -->
+        <div class="section-title">Data Sources & Operational Limitations</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Provider</th>
+                    <th>Status</th>
+                    <th>Execution Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for name, prov in result.provider_results.items() %}
+                <tr>
+                    <td>{{ name }}</td>
+                    <td>{{ prov.status.value }}</td>
+                    <td>{{ "%.2f"|format(prov.execution_time_ms) }} ms</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="footer">
+            Generated by {{ metadata.author }} &bull; {{ metadata.organization }} &bull; IP Sentinel AI Engine
+        </div>
+    </div>
+</body>
+</html>
