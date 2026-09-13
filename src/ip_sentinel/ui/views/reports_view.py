@@ -3,7 +3,7 @@
 import logging
 import os
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Callable, Optional, Tuple
 
 from PySide6.QtCore import Slot
 from PySide6.QtWidgets import (
@@ -156,23 +156,39 @@ class ReportsView(QWidget):
         self.btn_pdf.setEnabled(enabled)
         self.btn_both.setEnabled(enabled)
 
-    def _render_report_task(self, fmt: str, export_dir: Path, result: IPIntelResult) -> str:
+    def _render_report_task(
+        self,
+        fmt: str,
+        export_dir: Path,
+        result: IPIntelResult,
+        progress_callback: Optional[Callable[[int, str], None]] = None,
+    ) -> str:
+        if progress_callback:
+            progress_callback(30, "Generating forensic report data...")
+
         data = ReportData(
             result=result,
             metadata=ReportMetadata(),
         )
-        base_name = f"Report_{result.target_ip.replace('.', '_')}_{result.investigation_id}"
+        base_name = f"Report_{result.target_ip.replace('.', '_').replace(':', '_')}_{result.investigation_id}"
         created_paths = []
 
         if fmt in ("HTML", "BOTH"):
+            if progress_callback:
+                progress_callback(50, "Rendering Jinja2 HTML report...")
             html_path = export_dir / f"{base_name}.html"
             HTMLReportGenerator().generate_report(data, html_path)
             created_paths.append(str(html_path))
 
         if fmt in ("PDF", "BOTH"):
+            if progress_callback:
+                progress_callback(80, "Rendering ReportLab PDF report...")
             pdf_path = export_dir / f"{base_name}.pdf"
             PDFReportGenerator().generate_report(data, pdf_path)
             created_paths.append(str(pdf_path))
+
+        if progress_callback:
+            progress_callback(100, "Report export complete.")
 
         return "\n".join(created_paths)
 

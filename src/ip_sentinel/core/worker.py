@@ -4,6 +4,7 @@ Ensures UI thread responsiveness by running network lookups, DNS resolution,
 and report rendering off the main GUI event thread.
 """
 
+import inspect
 import logging
 import sys
 import traceback
@@ -34,9 +35,14 @@ class Worker(QRunnable):
         self.kwargs = kwargs
         self.signals = WorkerSignals()
         
-        # Inject progress callback parameter into kwargs if expected by fn
-        if "progress_callback" not in self.kwargs:
-            self.kwargs["progress_callback"] = self._emit_progress
+        # Inject progress callback parameter into kwargs ONLY if expected by target fn
+        try:
+            sig = inspect.signature(self.fn)
+            has_var_kw = any(p.kind == inspect.Parameter.VAR_KEYWORD for p in sig.parameters.values())
+            if ("progress_callback" in sig.parameters or has_var_kw) and "progress_callback" not in self.kwargs:
+                self.kwargs["progress_callback"] = self._emit_progress
+        except (ValueError, TypeError):
+            pass
 
     def _emit_progress(self, percent: int, message: str) -> None:
         """Helper callback passed to worker target functions."""
