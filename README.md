@@ -1,37 +1,34 @@
 # IP Sentinel AI — WAF IP Threat Intelligence & Investigation Tool
 
-> **Phase 3 Release — Live Threat Reputation & Evidence Correlation**  
-> Portable Standalone Windows Desktop Application for Incident Response & WAF Forensics.
+> **Phase 4 Release — WAF Behavioral & Attack Analysis Engine**  
+> Portable Standalone Windows Desktop Application for WAF Log Ingestion, Incident Response & Forensics.
 
 ---
 
 ## 🛡️ Executive Summary
 
-**IP Sentinel AI** is a production-grade, standalone Windows desktop application built with PySide6 for WAF IP Threat Intelligence gathering, incident investigation, risk assessment, and automated forensic report generation (HTML & PDF).
+**IP Sentinel AI** is a production-grade, standalone Windows desktop application built with PySide6 for WAF IP Threat Intelligence gathering, passive WAF log behavioral analysis, incident investigation, risk assessment, and automated forensic report generation (HTML & PDF).
 
-### Key Features (Phase 3)
-- **Live Threat Reputation**:
-  - **AbuseIPDB Adapter**: Queries AbuseIPDB API v2 `check` endpoint for abuse confidence score, total reports, distinct reporters, last reported timestamp, domain, usage type, and abuse categories.
-  - **VirusTotal Adapter**: Queries VirusTotal API v3 `ip_addresses` endpoint for malicious, suspicious, harmless, and undetected engine metrics.
-- **Evidence Correlation Engine (`EvidenceAggregator`)**:
-  - Automatically normalizes telemetry across RDAP, GeoIP, DNS, WAF Context, AbuseIPDB, and VirusTotal.
-  - Generates structured, deduplicated evidence items with observation descriptions, confidence levels, and supporting metadata.
-  - Calculates severity counts and flags contradictory evidence (e.g. AbuseIPDB HIGH vs VirusTotal CLEAN, or Cloud/Datacenter IP with zero reports).
-- **Weighted Risk Assessment Engine (`RiskEngine`)**:
-  - Computes an objective risk score (0–100), threat level classification (`VERY_LOW`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`), and overall confidence score based on multi-source evidence weights.
-- **WAF Attack Context Correlation**:
-  - Supports correlating target IPs against WAF telemetry (Rule ID, Rule Description, URI Path, User-Agent, Attack Vector).
-- **Real Passive Network Intelligence (Phase 2 Baseline)**:
-  - **RDAP**: Network name, CIDR range, start/end IP, organization, country, abuse contact, administrative contact, registry.
-  - **ASN & GeoIP**: Autonomous System Number, AS organization, routing prefix, country, region, city, timezone, approximate coordinates.
-  - **DNS Telemetry**: Reverse PTR, A, AAAA, MX, NS, TXT, CNAME record resolution.
-- **Zero Target Runtime Dependencies**: Distributed as a portable single-file Windows executable (`dist/IP-Sentinel-AI.exe`). The target Windows machine does **NOT** require Python, Node.js, Java, pip, Docker, or any database server.
-- **Secure Secret Storage**: API keys are securely loaded from `%LOCALAPPDATA%\IPSentinelAI\credentials.json` or environment variables without hardcoded secrets. Includes UI connection testing for AbuseIPDB and VirusTotal.
-- **Local TTL Caching**: Thread-safe, file-backed JSON cache manager (`CacheManager`) to speed up repeat queries.
-- **Deterministic Mock Engine**: Preserves `MockIntelProvider` for offline testing and air-gapped forensic report generation.
-- **Fault-Tolerant Resilience**: Provider failures (e.g., HTTP 401, 429, timeout) are gracefully handled as provider status indicators (`NOT_CONFIGURED`, `RATE_LIMITED`, `ERROR`) without breaking the investigation pipeline.
-- **60 FPS Responsive GUI**: Asynchronous multi-threading via `QThreadPool` / `QRunnable` keeps PySide6 UI smooth during live network lookups and PDF generation.
-- **Forensic HTML & PDF Reports**: Includes Jinja2 HTML templates and ReportLab Platypus PDF reports featuring Phase 3 Threat Reputation Feeds, Evidence Summary Matrix, Evidence Table, Risk Score & Threat Level, and Mandatory Disclaimers.
+### Key Features (Phase 4)
+- **WAF Behavioral & Attack Analysis Engine**:
+  - **Multi-Format WAF Log Ingestion**: Ingests and parses WAF log files via flexible CSV and JSON/NDJSON parsers (`CSVWAFParser`, `JSONWAFParser`) with extensible architecture for AWS WAF, Cloudflare, ModSecurity, and Akamai.
+  - **Traffic Volume & Rate Telemetry**: Calculates total requests, observation time window, average/peak requests per second & minute, rate distribution, temporal burstiness, and request rate anomalies.
+  - **User-Agent Analysis**: Computes unique UA count, dominant UA, dominant UA ratio, missing UA percentage, and UA diversity.
+  - **URI & Sensitive Endpoint Targeting**: Analyzes unique URI count, repeated URI ratio, 404 URI ratio, and flags probes against sensitive path categories (`CONFIG_DISCOVERY` e.g. `/.env`, `/.git`, `ADMIN_ENUMERATION` e.g. `/admin`, `/phpmyadmin`, `CMS_SCAN` e.g. `/wp-login.php`, `WEB_SCANNER` e.g. `/etc/passwd`, `/shell`, `CREDENTIAL_ENDPOINT` e.g. `/login`, `/oauth/token`).
+  - **HTTP Status Code Breakdown**: Tracks 2xx, 3xx, 4xx, 5xx, 403, 404, and 429 response percentages.
+  - **Request Pattern & Temporal Regularity**: Computes temporal interval regularity scores (0–100), request repetition, and HTTP method GET/POST ratios.
+  - **Evidence-Backed Attack Classification (`AttackClassifier`)**: Classifies traffic into `NORMAL_CLIENT`, `AUTOMATED_BOT`, `MALICIOUS_BOT`, `WEB_SCANNER`, `HTTP_FLOOD`, `CREDENTIAL_ATTACK`, `SUSPICIOUS_AUTOMATION`, or `UNKNOWN` with confidence ratings (0–100), supporting evidence, contradictory evidence, and limitations.
+  - **Multi-Dimensional Behavioral Fingerprint**: Generates qualitative `LOW`/`MEDIUM`/`HIGH` ratings across 9 behavioral dimensions.
+- **WAF Analysis UI View (`WAFAnalysisView`)**:
+  - Dedicated GUI view featuring CSV/JSON log file upload buttons, executive metric summary cards (Total Events, Unique IPs, Time Range, High Risk IPs), interactive sortable IP telemetry table, and one-click **"⚡ Investigate Selected IP"** action.
+- **Live Threat Reputation & Network Intelligence (Phase 2/3 Baseline)**:
+  - AbuseIPDB API v2, VirusTotal API v3, RDAP bootstrap queries, GeoIP/ASN telemetry, and DNS record resolution (PTR, A, AAAA, MX, NS, TXT, CNAME).
+- **Multi-Source Evidence Correlation & Risk Engine**:
+  - Normalizes findings across all subsystems into structured `EvidenceItem` records, calculates severity summaries, and blends WAF behavioral scores with reputation feeds while detecting contradictory evidence.
+- **Forensic HTML & PDF Reports**:
+  - Includes dedicated WAF Behavioral Analysis sections, traffic statistics, behavioral fingerprints, attack classification, evidence matrix, and mandatory behavioral disclaimers.
+- **Zero Target Runtime Dependencies**:
+  - Portable single-file Windows executable (`dist/IP-Sentinel-AI.exe`). No Python, Node.js, Java, Docker, or database server required on target Windows machines.
 
 ---
 
@@ -102,7 +99,7 @@ python -m ip_sentinel.main --self-test
 
 ## 🧪 Automated Testing
 
-The project contains a comprehensive automated test suite in `tests/` (**51 tests**) covering configuration, cache manager, RDAP queries, GeoIP/ASN, DNS resolution, AbuseIPDB provider, VirusTotal provider, evidence aggregator, risk engine, custom exceptions, IP utilities, thread-safe log scrubbing, mock providers, investigation service, report generators, worker thread signals, and PySide6 UI views.
+The project contains a comprehensive automated test suite in `tests/` (**69 tests**) covering configuration, cache manager, RDAP queries, GeoIP/ASN, DNS resolution, AbuseIPDB provider, VirusTotal provider, evidence aggregator, risk engine, CSV WAF parser, JSON WAF parser, WAF analysis service, attack classifier, custom exceptions, IP utilities, thread-safe log scrubbing, mock providers, investigation service, report generators, worker thread signals, and PySide6 UI views.
 
 ```powershell
 # Run full pytest suite

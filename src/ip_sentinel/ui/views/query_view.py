@@ -282,8 +282,10 @@ class QueryView(QWidget):
         self.progress_bar.setVisible(True)
         self.scroll_area.setVisible(False)
 
+        waf_analysis = getattr(self, "current_waf_analysis", None)
+
         # Execute in background thread pool to keep UI responsive
-        signals = TaskPool.execute(self.service.investigate, ip_str)
+        signals = TaskPool.execute(self.service.investigate, ip_str, None, waf_analysis)
         signals.progress.connect(self._on_progress)
         signals.result.connect(self._on_result)
         signals.error.connect(self._on_error)

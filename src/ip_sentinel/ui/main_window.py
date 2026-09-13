@@ -21,6 +21,7 @@ from ip_sentinel.ui.views.logs_view import LogsView
 from ip_sentinel.ui.views.query_view import QueryView
 from ip_sentinel.ui.views.reports_view import ReportsView
 from ip_sentinel.ui.views.settings_view import SettingsView
+from ip_sentinel.ui.views.waf_analysis_view import WAFAnalysisView
 
 logger = logging.getLogger("ip_sentinel.ui.main_window")
 
@@ -84,20 +85,34 @@ class MainWindow(QMainWindow):
 
         self._views["dashboard"] = DashboardView()
         self._views["query"] = QueryView(service=self.service)
+        self._views["waf"] = WAFAnalysisView()
         self._views["reports"] = ReportsView()
         self._views["logs"] = LogsView()
         self._views["settings"] = SettingsView()
 
+        # Connect WAF Analysis signal to IP investigation switch
+        self._views["waf"].investigate_ip_requested.connect(self._handle_waf_investigate_request)
+
         for view_name, view_widget in self._views.items():
             self.stacked_widget.addWidget(view_widget)
 
+        right_layout.addWidget(top_bar)
         right_layout.addWidget(self.stacked_widget)
         main_layout.addWidget(right_container, 1)
 
         # 3. Bottom Status Bar
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
-        self.status_bar.showMessage("IP Sentinel AI v1.0.0-foundation | Ready.")
+        self.status_bar.showMessage("IP Sentinel AI v3.0.0-phase3 | Ready.")
+
+    def _handle_waf_investigate_request(self, target_ip: str, waf_analysis):
+        """Handle request to investigate an IP selected in WAF Analysis view."""
+        self.switch_view("query")
+        query_view = self._views.get("query")
+        if query_view and hasattr(query_view, "ip_input"):
+            query_view.ip_input.setText(target_ip)
+            query_view.current_waf_analysis = waf_analysis
+            query_view.start_investigation()
 
     @Slot(str)
     def switch_view(self, view_name: str):
@@ -113,6 +128,7 @@ class MainWindow(QMainWindow):
             titles = {
                 "dashboard": "Security Operations Dashboard",
                 "query": "IP Threat Intelligence Investigation",
+                "waf": "WAF Behavioral & Attack Analysis Engine",
                 "reports": "Forensic Report Generation Engine",
                 "logs": "Live System Audit Logs",
                 "settings": "Settings & Threat Intelligence Providers",

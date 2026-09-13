@@ -36,6 +36,7 @@ class SidebarNavigation(QFrame):
         nav_items = [
             ("dashboard", "📊 Dashboard"),
             ("query", "🔍 IP Investigation"),
+            ("waf", "🛡️ WAF Analysis"),
             ("reports", "📄 Reports Export"),
             ("logs", "📜 Live Audit Logs"),
             ("settings", "⚙️ Settings & Keys"),
@@ -52,7 +53,7 @@ class SidebarNavigation(QFrame):
         layout.addStretch()
 
         # Footer Version Notice
-        ver_label = QLabel("v1.0.0-foundation\n[Portable Windows EXE]")
+        ver_label = QLabel("v3.0.0-phase3\n[Portable Windows EXE]")
         ver_label.setStyleSheet("color: #64748B; font-size: 11px; padding: 12px; font-family: monospace;")
         layout.addWidget(ver_label)
 

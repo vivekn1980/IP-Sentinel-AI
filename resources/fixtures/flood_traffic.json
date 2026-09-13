@@ -1,0 +1,68 @@
+[
+  {
+    "timestamp": "2026-09-13T12:00:00.000Z",
+    "source_ip": "198.51.100.99",
+    "http_method": "GET",
+    "uri_path": "/api/search",
+    "user_agent": "Go-http-client/1.1",
+    "status_code": 200,
+    "waf_rule": "NONE",
+    "waf_action": "ALLOW",
+    "host": "api.example.com"
+  },
+  {
+    "timestamp": "2026-09-13T12:00:00.050Z",
+    "source_ip": "198.51.100.99",
+    "http_method": "GET",
+    "uri_path": "/api/search",
+    "user_agent": "Go-http-client/1.1",
+    "status_code": 200,
+    "waf_rule": "NONE",
+    "waf_action": "ALLOW",
+    "host": "api.example.com"
+  },
+  {
+    "timestamp": "2026-09-13T12:00:00.100Z",
+    "source_ip": "198.51.100.99",
+    "http_method": "GET",
+    "uri_path": "/api/search",
+    "user_agent": "Go-http-client/1.1",
+    "status_code": 200,
+    "waf_rule": "NONE",
+    "waf_action": "ALLOW",
+    "host": "api.example.com"
+  },
+  {
+    "timestamp": "2026-09-13T12:00:00.150Z",
+    "source_ip": "198.51.100.99",
+    "http_method": "GET",
+    "uri_path": "/api/search",
+    "user_agent": "Go-http-client/1.1",
+    "status_code": 200,
+    "waf_rule": "NONE",
+    "waf_action": "ALLOW",
+    "host": "api.example.com"
+  },
+  {
+    "timestamp": "2026-09-13T12:00:00.200Z",
+    "source_ip": "198.51.100.99",
+    "http_method": "GET",
+    "uri_path": "/api/search",
+    "user_agent": "Go-http-client/1.1",
+    "status_code": 429,
+    "waf_rule": "RATE_LIMIT_EXCEEDED",
+    "waf_action": "BLOCK",
+    "host": "api.example.com"
+  },
+  {
+    "timestamp": "2026-09-13T12:00:00.250Z",
+    "source_ip": "198.51.100.99",
+    "http_method": "GET",
+    "uri_path": "/api/search",
+    "user_agent": "Go-http-client/1.1",
+    "status_code": 429,
+    "waf_rule": "RATE_LIMIT_EXCEEDED",
+    "waf_action": "BLOCK",
+    "host": "api.example.com"
+  }
+]

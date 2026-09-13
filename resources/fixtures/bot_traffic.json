@@ -1,0 +1,46 @@
+[
+  {
+    "timestamp": "2026-09-13T13:00:00Z",
+    "source_ip": "203.0.113.88",
+    "http_method": "GET",
+    "uri_path": "/feed.xml",
+    "user_agent": "GenericBot/2.0 (+http://example-bot.com)",
+    "status_code": 200,
+    "waf_rule": "NONE",
+    "waf_action": "ALLOW",
+    "host": "example.com"
+  },
+  {
+    "timestamp": "2026-09-13T13:00:10Z",
+    "source_ip": "203.0.113.88",
+    "http_method": "GET",
+    "uri_path": "/feed.xml",
+    "user_agent": "GenericBot/2.0 (+http://example-bot.com)",
+    "status_code": 200,
+    "waf_rule": "NONE",
+    "waf_action": "ALLOW",
+    "host": "example.com"
+  },
+  {
+    "timestamp": "2026-09-13T13:00:20Z",
+    "source_ip": "203.0.113.88",
+    "http_method": "GET",
+    "uri_path": "/feed.xml",
+    "user_agent": "GenericBot/2.0 (+http://example-bot.com)",
+    "status_code": 200,
+    "waf_rule": "NONE",
+    "waf_action": "ALLOW",
+    "host": "example.com"
+  },
+  {
+    "timestamp": "2026-09-13T13:00:30Z",
+    "source_ip": "203.0.113.88",
+    "http_method": "GET",
+    "uri_path": "/feed.xml",
+    "user_agent": "GenericBot/2.0 (+http://example-bot.com)",
+    "status_code": 200,
+    "waf_rule": "NONE",
+    "waf_action": "ALLOW",
+    "host": "example.com"
+  }
+]

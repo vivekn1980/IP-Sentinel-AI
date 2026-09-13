@@ -3,7 +3,7 @@
 import datetime
 import logging
 import uuid
-from typing import Callable, List, Optional
+from typing import Any, Callable, List, Optional
 
 from ip_sentinel.core.exceptions import ValidationError
 from ip_sentinel.core.ip_utils import validate_and_classify_ip
@@ -60,6 +60,7 @@ class InvestigationService:
         self,
         target_ip: str,
         waf_context: Optional[WAFContext] = None,
+        waf_analysis: Optional[Any] = None,
         progress_callback: Optional[Callable[[int, str], None]] = None,
     ) -> IPIntelResult:
         """Execute complete passive network investigation and threat correlation for target IP.
@@ -67,6 +68,7 @@ class InvestigationService:
         Args:
             target_ip: Input IP string to investigate.
             waf_context: Optional WAFContext containing attack telemetry.
+            waf_analysis: Optional WAFIPAnalysis containing behavioral analysis.
             progress_callback: Optional callback receiving (percentage, status_message).
             
         Returns:
@@ -78,7 +80,7 @@ class InvestigationService:
         inv_id = f"INV-{uuid.uuid4().hex[:8].upper()}"
         now_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
-        logger.info(f"Starting Phase 3 investigation {inv_id} for target IP: '{target_ip}'")
+        logger.info(f"Starting Phase 4 investigation {inv_id} for target IP: '{target_ip}'")
 
         # Step 1: Validating IP
         if progress_callback:
@@ -90,6 +92,28 @@ class InvestigationService:
             raise ValidationError(classification.error_message or "Invalid IP address format.")
 
         norm_ip = classification.normalized_ip
+
+        # If waf_context is supplied without waf_analysis, synthesize a WAFIPAnalysis object
+        if waf_context and waf_context.request_count > 0 and waf_analysis is None:
+            try:
+                from ip_sentinel.models.waf_event import WAFEvent
+                from ip_sentinel.services.waf_analysis_service import WAFAnalysisService
+                syn_events = [
+                    WAFEvent(
+                        timestamp=now_str,
+                        source_ip=norm_ip,
+                        http_method=waf_context.http_method or "GET",
+                        uri_path=waf_context.uri or "/",
+                        user_agent=waf_context.user_agent or "UNKNOWN",
+                        status_code=waf_context.http_status,
+                        waf_rule=waf_context.rule_triggered or "UNKNOWN",
+                        waf_action="BLOCK",
+                    ) for _ in range(waf_context.request_count)
+                ]
+                waf_service = WAFAnalysisService()
+                waf_analysis = waf_service.analyze_ip_events(norm_ip, syn_events)
+            except Exception as err:
+                logger.warning("Failed to auto-synthesize WAF analysis from WAFContext: %s", err)
 
         # Step 2: Retrieving RDAP
         if progress_callback:
@@ -196,6 +220,7 @@ class InvestigationService:
             dns=dns_data,
             provider_results=provider_results,
             waf_context=waf_context,
+            waf_analysis=waf_analysis,
         )
 
         # Step 9: Risk Evaluation
@@ -208,7 +233,7 @@ class InvestigationService:
             provider_results=provider_results,
             rdap=rdap_data,
             asn_data=asn_data,
-            waf_context=waf_context,
+            waf_analysis=waf_analysis,
             has_conflicting_evidence=has_conflict,
             conflict_explanation=conflict_notes,
         )
@@ -224,6 +249,7 @@ class InvestigationService:
             geoip=geoip_data,
             dns=dns_data,
             waf_context=waf_context,
+            waf_analysis=waf_analysis,
             provider_results=provider_results,
             aggregated_evidence=evidence_list,
             evidence_summary=evidence_summary,

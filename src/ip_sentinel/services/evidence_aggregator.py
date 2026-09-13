@@ -1,7 +1,7 @@
 """Evidence Aggregator normalizing, deduplicating, and correlating multi-source intelligence."""
 
 import logging
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 from ip_sentinel.models.threat_intel import (
     ASNData,
@@ -29,6 +29,7 @@ class EvidenceAggregator:
         dns: DNSData,
         provider_results: Dict[str, ProviderResult],
         waf_context: Optional[WAFContext] = None,
+        waf_analysis: Optional[Any] = None,
     ) -> Tuple[List[EvidenceItem], EvidenceSummary, bool, Optional[str]]:
         """Collect, deduplicate, and analyze all investigation telemetry into normalized evidence.
         
@@ -104,6 +105,10 @@ class EvidenceAggregator:
                 )
             )
 
+        # 5b. Collect WAF Behavioral Analysis Evidence if provided
+        if waf_analysis and hasattr(waf_analysis, "evidence_items") and waf_analysis.evidence_items:
+            raw_evidence.extend(waf_analysis.evidence_items)
+
         # 6. Collect evidence from Intelligence Providers
         for p_name, res in provider_results.items():
             if res.status == DataStatus.AVAILABLE and res.evidence:
@@ -146,10 +151,27 @@ class EvidenceAggregator:
                 has_conflict = True
                 conflict_notes = f"Contradictory intelligence detected: AbuseIPDB score is {abuse_score}/100 while VirusTotal score is {vt_score}/100."
         
+        # Check WAF behavior vs reputation conflict
+        if waf_analysis and hasattr(waf_analysis, "primary_classification"):
+            cls_name = waf_analysis.primary_classification.value if hasattr(waf_analysis.primary_classification, "value") else str(waf_analysis.primary_classification)
+            max_rep_score = max([s for s in [abuse_score, vt_score] if s is not None], default=0)
+            if max_rep_score <= 15 and cls_name in ("WEB_SCANNER", "CREDENTIAL_ATTACK", "HTTP_FLOOD", "MALICIOUS_BOT"):
+                has_conflict = True
+                conflict_notes = (
+                    f"Contradictory evidence: Target IP has clean external reputation (score <= 15), "
+                    f"but active WAF telemetry exhibits malicious behavioral pattern ('{cls_name}')."
+                )
+            elif max_rep_score >= 70 and cls_name == "NORMAL_CLIENT":
+                has_conflict = True
+                conflict_notes = (
+                    f"Contradictory evidence: Target IP has high external threat reputation (score {max_rep_score}/100), "
+                    f"but current WAF telemetry shows normal client behavior."
+                )
+
         # Check cloud/datacenter vs abuse report conflict
         org_lower = (rdap.organization or asn_data.asn_org or "").lower()
         is_datacenter = any(kw in org_lower for kw in ["amazon", "aws", "google", "cloudflare", "hetzner", "digitalocean", "linode", "ovh"])
-        if is_datacenter and (crit == 0 and high == 0 and (abuse_score or 0) < 20):
+        if is_datacenter and (crit == 0 and high == 0 and (abuse_score or 0) < 20) and not has_conflict:
             has_conflict = True
             conflict_notes = (
                 f"Note: IP belongs to cloud/datacenter infrastructure ({rdap.organization or asn_data.asn_org}), "

@@ -25,12 +25,13 @@ class PDFReportGenerator(BaseReportGenerator):
 
     def generate_report(self, data: ReportData, output_path: Path) -> Path:
         """Render investigation data into a formatted PDF file."""
-        logger.info(f"Generating Phase 3 PDF report for target IP {data.result.target_ip} at {output_path}")
+        out_p = Path(output_path)
+        logger.info(f"Generating Phase 4 PDF report for target IP {data.result.target_ip} at {out_p}")
 
         try:
-            output_path.parent.mkdir(parents=True, exist_ok=True)
+            out_p.parent.mkdir(parents=True, exist_ok=True)
             doc = SimpleDocTemplate(
-                str(output_path),
+                str(out_p),
                 pagesize=letter,
                 rightMargin=36,
                 leftMargin=36,
@@ -247,6 +248,28 @@ class PDFReportGenerator(BaseReportGenerator):
 
             story.append(Spacer(1, 10))
 
+            # Section 2b: WAF Behavioral & Attack Analysis
+            if data.result.waf_analysis:
+                story.append(Paragraph("2b. WAF Behavioral & Attack Analysis", section_style))
+                wa = data.result.waf_analysis
+                waf_table_data = [
+                    [Paragraph("Analysis Dimension", bold_cell_style), Paragraph("Observed Behavioral Telemetry", bold_cell_style)],
+                    [Paragraph("Primary Attack Classification", cell_style), Paragraph(f"<b>{wa.primary_classification.value}</b> (Confidence: {wa.classification_confidence}%)", cell_style)],
+                    [Paragraph("Behavioral Risk Score", cell_style), Paragraph(f"{wa.risk_score} / 100", cell_style)],
+                    [Paragraph("Traffic Volume & Duration", cell_style), Paragraph(f"{wa.total_requests} requests over {wa.duration_seconds:.1f}s (Avg: {wa.avg_req_per_sec:.1f} req/s, Peak: {wa.peak_req_per_sec:.1f} req/s)", cell_style)],
+                    [Paragraph("User-Agent Diversity", cell_style), Paragraph(f"{wa.unique_ua_count} unique UA(s). Dominant: {wa.dominant_ua[:40]} ({wa.dominant_ua_pct:.1f}%)", cell_style)],
+                    [Paragraph("URI Targets & Probes", cell_style), Paragraph(f"{wa.unique_uri_count} unique URI(s). Probes: Config: {wa.config_file_hits}, Admin: {wa.admin_endpoint_hits}, Scanner: {wa.sensitive_endpoint_hits}, Auth: {wa.auth_endpoint_hits}", cell_style)],
+                    [Paragraph("HTTP Status Breakdown", cell_style), Paragraph(f"2xx: {wa.pct_2xx:.1f}% | 4xx: {wa.pct_4xx:.1f}% (404: {wa.pct_404:.1f}%) | 5xx: {wa.pct_5xx:.1f}%", cell_style)],
+                ]
+                t_waf = Table(waf_table_data, colWidths=[150, 390])
+                t_waf.setStyle(self._default_table_style())
+                story.append(t_waf)
+                story.append(Spacer(1, 6))
+
+                disc_waf_style = ParagraphStyle("DiscWAFStyle", fontName="Helvetica-Oblique", fontSize=7.5, textColor=colors.HexColor("#475569"))
+                story.append(Paragraph("<b>Mandatory Behavioral Disclaimer:</b> Behavioral classifications are analytical assessments based on the supplied telemetry. They should be correlated with application, CDN, firewall, authentication, and other security telemetry before enforcement decisions are made.", disc_waf_style))
+                story.append(Spacer(1, 10))
+
             # Section 3: IP Information & Network
             story.append(Paragraph("3. IP Information & Network Telemetry", section_style))
             net_data = [
@@ -282,8 +305,8 @@ class PDFReportGenerator(BaseReportGenerator):
             story.append(Paragraph(footer_text, subtitle_style))
 
             doc.build(story)
-            logger.info(f"Successfully generated Phase 3 PDF report at {output_path}")
-            return output_path
+            logger.info(f"Successfully generated Phase 4 PDF report at {out_p}")
+            return out_p
         except Exception as err:
             logger.error(f"Failed to generate PDF report: {err}")
             raise ReportError(f"PDF Report generation failed: {err}")

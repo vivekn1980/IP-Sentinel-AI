@@ -99,6 +99,14 @@ def validate_cidr(cidr_str: str) -> Tuple[bool, Optional[str], Optional[str]]:
         return False, None, f"Invalid CIDR network format: {err}"
 
 
+def sanitize_ip(ip_str: str) -> str:
+    """Sanitize and clean raw IP string input."""
+    if not ip_str or not isinstance(ip_str, str):
+        return ""
+    cleaned = ip_str.strip().strip("'\"").strip()
+    return cleaned
+
+
 def is_valid_ip(ip_str: str) -> bool:
     """Quick boolean check if input is a valid IPv4 or IPv6 address."""
     classification = validate_and_classify_ip(ip_str)

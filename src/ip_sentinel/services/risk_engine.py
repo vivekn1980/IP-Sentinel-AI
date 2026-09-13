@@ -1,7 +1,7 @@
 """Risk Engine evaluating evidence-backed threat scores and classification levels."""
 
 import logging
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 from ip_sentinel.models.threat_intel import (
     ASNData,
@@ -30,7 +30,7 @@ class RiskEngine:
         provider_results: Dict[str, ProviderResult],
         rdap: RDAPData,
         asn_data: ASNData,
-        waf_context: Optional[WAFContext] = None,
+        waf_analysis: Optional[Any] = None,
         has_conflicting_evidence: bool = False,
         conflict_explanation: Optional[str] = None,
     ) -> ThreatScore:
@@ -56,9 +56,16 @@ class RiskEngine:
             if res.status == DataStatus.AVAILABLE and res.threat_score:
                 provider_scores.append(res.threat_score.score)
 
-        if provider_scores and evidence_score > 0:
+        waf_score = waf_analysis.risk_score if waf_analysis and hasattr(waf_analysis, "risk_score") else None
+
+        if provider_scores and waf_score is not None:
+            avg_prov_score = sum(provider_scores) / len(provider_scores)
+            final_score_val = int((evidence_score * 0.4) + (avg_prov_score * 0.3) + (waf_score * 0.3))
+        elif provider_scores and evidence_score > 0:
             avg_prov_score = sum(provider_scores) / len(provider_scores)
             final_score_val = int((evidence_score * 0.6) + (avg_prov_score * 0.4))
+        elif waf_score is not None:
+            final_score_val = int((evidence_score * 0.5) + (waf_score * 0.5))
         elif provider_scores:
             final_score_val = int(sum(provider_scores) / len(provider_scores))
         else:

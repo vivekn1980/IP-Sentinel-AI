@@ -1,0 +1,4 @@
+timestamp,source_ip,http_method,uri_path,user_agent,status_code,waf_rule,waf_action,host
+2026-09-13T10:00:01Z,203.0.113.15,GET,/,Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/128.0,200,NONE,ALLOW,example.com
+2026-09-13T10:00:05Z,203.0.113.15,GET,/static/css/main.css,Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/128.0,200,NONE,ALLOW,example.com
+2026-09-13T10:00:15Z,203.0.113.15,GET,/products/catalog,Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/128.0,200,NONE,ALLOW,example.com

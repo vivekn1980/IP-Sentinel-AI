@@ -1,0 +1,68 @@
+[
+  {
+    "timestamp": "2026-09-13T10:15:00Z",
+    "source_ip": "198.51.100.45",
+    "http_method": "GET",
+    "uri_path": "/.env",
+    "user_agent": "python-requests/2.31.0",
+    "status_code": 404,
+    "waf_rule": "SENSITIVE_FILE_PROBE",
+    "waf_action": "BLOCK",
+    "host": "target-app.org"
+  },
+  {
+    "timestamp": "2026-09-13T10:15:01Z",
+    "source_ip": "198.51.100.45",
+    "http_method": "GET",
+    "uri_path": "/.git/config",
+    "user_agent": "python-requests/2.31.0",
+    "status_code": 404,
+    "waf_rule": "SENSITIVE_FILE_PROBE",
+    "waf_action": "BLOCK",
+    "host": "target-app.org"
+  },
+  {
+    "timestamp": "2026-09-13T10:15:02Z",
+    "source_ip": "198.51.100.45",
+    "http_method": "GET",
+    "uri_path": "/admin",
+    "user_agent": "python-requests/2.31.0",
+    "status_code": 403,
+    "waf_rule": "ADMIN_ACCESS_ATTEMPT",
+    "waf_action": "BLOCK",
+    "host": "target-app.org"
+  },
+  {
+    "timestamp": "2026-09-13T10:15:03Z",
+    "source_ip": "198.51.100.45",
+    "http_method": "GET",
+    "uri_path": "/wp-login.php",
+    "user_agent": "python-requests/2.31.0",
+    "status_code": 404,
+    "waf_rule": "CMS_DISCOVERY",
+    "waf_action": "LOG",
+    "host": "target-app.org"
+  },
+  {
+    "timestamp": "2026-09-13T10:15:04Z",
+    "source_ip": "198.51.100.45",
+    "http_method": "GET",
+    "uri_path": "/actuator/env",
+    "user_agent": "python-requests/2.31.0",
+    "status_code": 404,
+    "waf_rule": "CONFIG_DISCOVERY",
+    "waf_action": "BLOCK",
+    "host": "target-app.org"
+  },
+  {
+    "timestamp": "2026-09-13T10:15:05Z",
+    "source_ip": "198.51.100.45",
+    "http_method": "GET",
+    "uri_path": "/phpmyadmin",
+    "user_agent": "python-requests/2.31.0",
+    "status_code": 404,
+    "waf_rule": "ADMIN_ACCESS_ATTEMPT",
+    "waf_action": "BLOCK",
+    "host": "target-app.org"
+  }
+]

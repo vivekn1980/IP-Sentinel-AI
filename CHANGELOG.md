@@ -4,6 +4,28 @@ All notable changes to **IP Sentinel AI** will be documented in this file.
 
 ---
 
+## [4.0.0-phase4] - 2026-09-13
+
+### Added
+- **WAF Log Ingestion & Parser Abstraction**:
+  - `waf_event.py`: Implemented normalized `WAFEvent` dataclass with fields for timestamp, IP, HTTP method, URI path, User-Agent, status code, rule ID, action, response size, host, and country.
+  - `parsers/base.py`: Abstract `BaseWAFParser` with resilient row normalization.
+  - `parsers/csv_parser.py` & `parsers/json_parser.py`: Implemented CSV, JSON array, and NDJSON/JSONL log parsers with flexible header and key aliases.
+  - `parsers/vendor_stubs.py`: Architectural parser stubs for AWS WAF, Cloudflare, ModSecurity, and Akamai.
+- **WAF Behavioral Analysis Service & Attack Classifier**:
+  - `waf_analysis_service.py`: Computes traffic volume, average/peak req/sec & req/min, burst indicators, rate anomalies, UA diversity, dominant UA, missing UA ratios, URI probe hits (`CONFIG_DISCOVERY`, `ADMIN_ENUMERATION`, `CMS_SCAN`, `WEB_SCANNER`, `CREDENTIAL_ENDPOINT`), HTTP status code percentages (2xx, 3xx, 4xx, 5xx, 403, 404, 429), and temporal regularity scores.
+  - `attack_classifier.py`: Evaluates behavioral indicators to compute evidence-backed attack classifications (`NORMAL_CLIENT`, `AUTOMATED_BOT`, `MALICIOUS_BOT`, `WEB_SCANNER`, `HTTP_FLOOD`, `CREDENTIAL_ATTACK`, `SUSPICIOUS_AUTOMATION`, `UNKNOWN`) with confidence ratings (0–100), supporting evidence, contradictory evidence, and limitations.
+  - `waf_behavior.py`: Multi-dimensional `BehavioralFingerprint` model across 9 qualitative LOW/MEDIUM/HIGH dimensions.
+- **UI Enhancements (`WAFAnalysisView`)**:
+  - Added dedicated **WAF Analysis** sidebar navigation view featuring CSV/JSON upload buttons, executive metric summary cards, interactive IP breakdown table, and "⚡ Investigate Selected IP" transition.
+- **Forensic Report Engine Updates**:
+  - Updated Jinja2 HTML template and ReportLab PDF generator with WAF Behavioral Analysis, traffic stats, behavioral fingerprints, attack classifications, and mandatory behavioral disclaimers.
+- **Test Suite & Deterministic Fixtures**:
+  - Added 6 deterministic fixture log files (`clean_traffic.json`, `scanner_traffic.json`, `bot_traffic.json`, `flood_traffic.json`, `credential_attack.json`, `mixed_traffic.json`).
+  - Added 18 new automated tests (`test_waf_parser.py`, `test_waf_analysis_service.py`, `test_attack_classifier.py`, `test_phase4_integration.py`, `test_phase4_reports.py`, `test_waf_ui.py`), bringing total automated test suite to **69 tests (100% pass rate)**.
+
+---
+
 ## [3.0.0-phase3] - 2026-09-13
 
 ### Added

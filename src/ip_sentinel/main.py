@@ -127,6 +127,18 @@ def run_self_test() -> int:
 
     check("HTML & PDF Forensic Report Generators", test_reports)
 
+    # 7. WAF Behavioral Engine test
+    def test_waf_engine():
+        from ip_sentinel.services.waf_analysis_service import WAFAnalysisService
+        fixture_path = get_resource_path("fixtures/scanner_traffic.json")
+        assert fixture_path.exists(), f"Missing fixture at {fixture_path}"
+        waf_service = WAFAnalysisService()
+        res = waf_service.analyze_file(str(fixture_path))
+        assert res.total_events >= 5, "WAF log parsing failed."
+        assert len(res.ip_analyses) == 1, "WAF IP aggregation failed."
+
+    check("WAF Behavioral Engine & Log Parsers", test_waf_engine)
+
     print("=" * 60)
     print(f"SELF-TEST RESULTS: {passed} PASSED, {failed} FAILED.")
     print("=" * 60)

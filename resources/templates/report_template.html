@@ -275,8 +275,26 @@
         <p style="color: #94a3b8;">No threat evidence items recorded.</p>
         {% endif %}
 
-        <!-- Section 4: IP & Network Information -->
-        <div class="section-title">4. IP Information & Network Telemetry</div>
+        <!-- Section 4b: WAF Behavioral & Attack Analysis -->
+        {% if result.waf_analysis %}
+        <div class="section-title">4b. WAF Behavioral & Attack Analysis</div>
+        <table>
+            <tr><th>Analysis Parameter</th><th>Observed Telemetry</th></tr>
+            <tr><td>Primary Attack Classification</td><td><span class="badge badge-{{ result.waf_analysis.primary_classification.value }}">{{ result.waf_analysis.primary_classification.value }}</span> (Confidence: {{ result.waf_analysis.classification_confidence }}%)</td></tr>
+            <tr><td>Behavioral Risk Score</td><td><strong>{{ result.waf_analysis.risk_score }}/100</strong></td></tr>
+            <tr><td>Traffic Volume & Duration</td><td>{{ result.waf_analysis.total_requests }} requests over {{ result.waf_analysis.duration_seconds|round(1) }}s (Avg: {{ result.waf_analysis.avg_req_per_sec|round(1) }} req/s, Peak: {{ result.waf_analysis.peak_req_per_sec|round(1) }} req/s)</td></tr>
+            <tr><td>User-Agent Diversity</td><td>{{ result.waf_analysis.unique_ua_count }} unique UA(s). Dominant UA: <code>{{ result.waf_analysis.dominant_ua }}</code> ({{ result.waf_analysis.dominant_ua_pct|round(1) }}%)</td></tr>
+            <tr><td>URI Targets & Probes</td><td>{{ result.waf_analysis.unique_uri_count }} unique URI(s). Probes: {{ result.waf_analysis.config_file_hits }} Config, {{ result.waf_analysis.admin_endpoint_hits }} Admin, {{ result.waf_analysis.sensitive_endpoint_hits }} Scanner, {{ result.waf_analysis.auth_endpoint_hits }} Auth</td></tr>
+            <tr><td>HTTP Status Distribution</td><td>2xx: {{ result.waf_analysis.pct_2xx|round(1) }}% | 4xx: {{ result.waf_analysis.pct_4xx|round(1) }}% (404: {{ result.waf_analysis.pct_404|round(1) }}%) | 5xx: {{ result.waf_analysis.pct_5xx|round(1) }}%</td></tr>
+        </table>
+        
+        <div class="disclaimer-box" style="margin-top: 10px; background-color: #0f172a; border-color: #38bdf8;">
+            <strong>Mandatory Behavioral Disclaimer:</strong> Behavioral classifications are analytical assessments based on the supplied telemetry. They should be correlated with application, CDN, firewall, authentication, and other security telemetry before enforcement decisions are made.
+        </div>
+        {% endif %}
+
+        <!-- Section 5: Target IP & Network Overview -->
+        <div class="section-title">5. Target IP & Network Overview</div>
         <table>
             <tr><th>Property</th><th>Value</th></tr>
             <tr><td>Target IP Address</td><td>{{ result.target_ip }}</td></tr>

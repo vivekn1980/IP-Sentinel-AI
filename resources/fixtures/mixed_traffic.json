@@ -1,0 +1,52 @@
+[
+  {
+    "timestamp": "2026-09-13T14:00:00Z",
+    "source_ip": "203.0.113.15",
+    "http_method": "GET",
+    "uri_path": "/home",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+    "status_code": 200,
+    "waf_rule": "NONE",
+    "waf_action": "ALLOW"
+  },
+  {
+    "timestamp": "2026-09-13T14:00:01Z",
+    "source_ip": "198.51.100.45",
+    "http_method": "GET",
+    "uri_path": "/.env",
+    "user_agent": "Nmap Scripting Engine",
+    "status_code": 404,
+    "waf_rule": "SCANNER_DETECTED",
+    "waf_action": "BLOCK"
+  },
+  {
+    "timestamp": "2026-09-13T14:00:02Z",
+    "source_ip": "198.51.100.45",
+    "http_method": "GET",
+    "uri_path": "/admin",
+    "user_agent": "Nmap Scripting Engine",
+    "status_code": 403,
+    "waf_rule": "ADMIN_PROBE",
+    "waf_action": "BLOCK"
+  },
+  {
+    "timestamp": "2026-09-13T14:00:03Z",
+    "source_ip": "192.0.2.100",
+    "http_method": "POST",
+    "uri_path": "/login",
+    "user_agent": "Hydra/9.5",
+    "status_code": 401,
+    "waf_rule": "BRUTE_FORCE",
+    "waf_action": "LOG"
+  },
+  {
+    "timestamp": "2026-09-13T14:00:04Z",
+    "source_ip": "192.0.2.100",
+    "http_method": "POST",
+    "uri_path": "/login",
+    "user_agent": "Hydra/9.5",
+    "status_code": 401,
+    "waf_rule": "BRUTE_FORCE",
+    "waf_action": "LOG"
+  }
+]

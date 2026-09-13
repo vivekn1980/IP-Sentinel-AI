@@ -49,12 +49,13 @@ class HTMLReportGenerator(BaseReportGenerator):
                 executive_summary=data.executive_summary,
             )
 
-            output_path.parent.mkdir(parents=True, exist_ok=True)
-            with open(output_path, "w", encoding="utf-8") as f:
+            out_p = Path(output_path)
+            out_p.parent.mkdir(parents=True, exist_ok=True)
+            with open(out_p, "w", encoding="utf-8") as f:
                 f.write(rendered_html)
 
-            logger.info(f"Successfully generated HTML report at {output_path}")
-            return output_path
+            logger.info(f"Successfully generated HTML report at {out_p}")
+            return out_p
         except Exception as err:
             logger.error(f"Failed to generate HTML report: {err}")
             raise ReportError(f"HTML Report generation failed: {err}")

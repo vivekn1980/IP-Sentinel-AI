@@ -92,10 +92,6 @@
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\tls\\qschannelbackend.dll',
    'BINARY'),
-  ('PySide6\\plugins\\tls\\qcertonlybackend.dll',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\tls\\qcertonlybackend.dll',
-   'BINARY'),
   ('PySide6\\plugins\\tls\\qopensslbackend.dll',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\tls\\qopensslbackend.dll',
@@ -104,77 +100,81 @@
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\networkinformation\\qnetworklistmanager.dll',
    'BINARY'),
+  ('PySide6\\plugins\\tls\\qcertonlybackend.dll',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\tls\\qcertonlybackend.dll',
+   'BINARY'),
   ('PySide6\\plugins\\styles\\qmodernwindowsstyle.dll',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\styles\\qmodernwindowsstyle.dll',
-   'BINARY'),
-  ('PySide6\\plugins\\imageformats\\qwebp.dll',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qwebp.dll',
-   'BINARY'),
-  ('PySide6\\plugins\\imageformats\\qsvg.dll',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qsvg.dll',
-   'BINARY'),
-  ('PySide6\\plugins\\imageformats\\qtiff.dll',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qtiff.dll',
-   'BINARY'),
-  ('PySide6\\plugins\\platforminputcontexts\\qtvirtualkeyboardplugin.dll',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\platforminputcontexts\\qtvirtualkeyboardplugin.dll',
-   'BINARY'),
-  ('PySide6\\plugins\\imageformats\\qjpeg.dll',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qjpeg.dll',
-   'BINARY'),
-  ('PySide6\\plugins\\imageformats\\qicns.dll',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qicns.dll',
-   'BINARY'),
-  ('PySide6\\plugins\\generic\\qtuiotouchplugin.dll',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\generic\\qtuiotouchplugin.dll',
-   'BINARY'),
-  ('PySide6\\plugins\\imageformats\\qico.dll',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qico.dll',
-   'BINARY'),
-  ('PySide6\\plugins\\platforms\\qoffscreen.dll',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\platforms\\qoffscreen.dll',
-   'BINARY'),
-  ('PySide6\\plugins\\platforms\\qwindows.dll',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\platforms\\qwindows.dll',
    'BINARY'),
   ('PySide6\\plugins\\imageformats\\qtga.dll',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qtga.dll',
    'BINARY'),
+  ('PySide6\\plugins\\imageformats\\qico.dll',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qico.dll',
+   'BINARY'),
+  ('PySide6\\plugins\\imageformats\\qtiff.dll',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qtiff.dll',
+   'BINARY'),
   ('PySide6\\plugins\\imageformats\\qwbmp.dll',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qwbmp.dll',
    'BINARY'),
-  ('PySide6\\plugins\\iconengines\\qsvgicon.dll',
+  ('PySide6\\plugins\\generic\\qtuiotouchplugin.dll',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\iconengines\\qsvgicon.dll',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\generic\\qtuiotouchplugin.dll',
+   'BINARY'),
+  ('PySide6\\plugins\\platforms\\qoffscreen.dll',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\platforms\\qoffscreen.dll',
+   'BINARY'),
+  ('PySide6\\plugins\\imageformats\\qpdf.dll',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qpdf.dll',
+   'BINARY'),
+  ('PySide6\\plugins\\imageformats\\qsvg.dll',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qsvg.dll',
+   'BINARY'),
+  ('PySide6\\plugins\\imageformats\\qwebp.dll',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qwebp.dll',
    'BINARY'),
   ('PySide6\\plugins\\imageformats\\qgif.dll',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qgif.dll',
    'BINARY'),
-  ('PySide6\\plugins\\platforms\\qdirect2d.dll',
+  ('PySide6\\plugins\\platforms\\qwindows.dll',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\platforms\\qdirect2d.dll',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\platforms\\qwindows.dll',
    'BINARY'),
   ('PySide6\\plugins\\platforms\\qminimal.dll',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\platforms\\qminimal.dll',
    'BINARY'),
-  ('PySide6\\plugins\\imageformats\\qpdf.dll',
+  ('PySide6\\plugins\\imageformats\\qjpeg.dll',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qpdf.dll',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qjpeg.dll',
+   'BINARY'),
+  ('PySide6\\plugins\\platforminputcontexts\\qtvirtualkeyboardplugin.dll',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\platforminputcontexts\\qtvirtualkeyboardplugin.dll',
+   'BINARY'),
+  ('PySide6\\plugins\\iconengines\\qsvgicon.dll',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\iconengines\\qsvgicon.dll',
+   'BINARY'),
+  ('PySide6\\plugins\\platforms\\qdirect2d.dll',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\platforms\\qdirect2d.dll',
+   'BINARY'),
+  ('PySide6\\plugins\\imageformats\\qicns.dll',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\plugins\\imageformats\\qicns.dll',
    'BINARY'),
   ('_decimal.pyd',
    'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_decimal.pyd',
@@ -283,56 +283,60 @@
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\QtGui.pyd',
    'EXTENSION'),
-  ('api-ms-win-crt-process-l1-1-0.dll',
-   'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-process-l1-1-0.dll',
-   'BINARY'),
   ('api-ms-win-crt-string-l1-1-0.dll',
    'D:\\Program '
    'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-string-l1-1-0.dll',
-   'BINARY'),
-  ('api-ms-win-crt-heap-l1-1-0.dll',
-   'D:\\Program Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-heap-l1-1-0.dll',
-   'BINARY'),
-  ('api-ms-win-crt-math-l1-1-0.dll',
-   'D:\\Program Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-math-l1-1-0.dll',
-   'BINARY'),
-  ('VCRUNTIME140.dll',
-   'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python313\\VCRUNTIME140.dll',
-   'BINARY'),
-  ('api-ms-win-crt-runtime-l1-1-0.dll',
-   'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-runtime-l1-1-0.dll',
    'BINARY'),
   ('api-ms-win-crt-filesystem-l1-1-0.dll',
    'D:\\Program '
    'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-filesystem-l1-1-0.dll',
    'BINARY'),
-  ('api-ms-win-crt-convert-l1-1-0.dll',
+  ('api-ms-win-crt-locale-l1-1-0.dll',
    'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-convert-l1-1-0.dll',
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-locale-l1-1-0.dll',
    'BINARY'),
-  ('api-ms-win-crt-time-l1-1-0.dll',
-   'D:\\Program Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-time-l1-1-0.dll',
+  ('api-ms-win-crt-heap-l1-1-0.dll',
+   'D:\\Program Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-heap-l1-1-0.dll',
+   'BINARY'),
+  ('VCRUNTIME140.dll',
+   'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python313\\VCRUNTIME140.dll',
    'BINARY'),
   ('api-ms-win-crt-environment-l1-1-0.dll',
    'D:\\Program '
    'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-environment-l1-1-0.dll',
    'BINARY'),
-  ('api-ms-win-crt-locale-l1-1-0.dll',
+  ('api-ms-win-crt-conio-l1-1-0.dll',
    'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-locale-l1-1-0.dll',
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-conio-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-crt-time-l1-1-0.dll',
+   'D:\\Program Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-time-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-crt-runtime-l1-1-0.dll',
+   'D:\\Program '
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-runtime-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-crt-math-l1-1-0.dll',
+   'D:\\Program Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-math-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-crt-process-l1-1-0.dll',
+   'D:\\Program '
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-process-l1-1-0.dll',
    'BINARY'),
   ('api-ms-win-crt-stdio-l1-1-0.dll',
    'D:\\Program '
    'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-stdio-l1-1-0.dll',
    'BINARY'),
-  ('api-ms-win-crt-conio-l1-1-0.dll',
+  ('api-ms-win-crt-convert-l1-1-0.dll',
    'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-conio-l1-1-0.dll',
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-convert-l1-1-0.dll',
    'BINARY'),
   ('VCRUNTIME140_1.dll',
    'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python313\\VCRUNTIME140_1.dll',
+   'BINARY'),
+  ('shiboken6\\MSVCP140.dll',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\shiboken6\\MSVCP140.dll',
    'BINARY'),
   ('PySide6\\Qt6Network.dll',
    'D:\\PROJECTS\\IP Sentinel '
@@ -342,21 +346,21 @@
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\Qt6Core.dll',
    'BINARY'),
-  ('shiboken6\\MSVCP140.dll',
+  ('PySide6\\Qt6Widgets.dll',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\shiboken6\\MSVCP140.dll',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\Qt6Widgets.dll',
    'BINARY'),
   ('PySide6\\Qt6Gui.dll',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\Qt6Gui.dll',
    'BINARY'),
-  ('PySide6\\Qt6Widgets.dll',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\Qt6Widgets.dll',
-   'BINARY'),
   ('api-ms-win-crt-utility-l1-1-0.dll',
    'D:\\Program '
    'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-crt-utility-l1-1-0.dll',
+   'BINARY'),
+  ('PySide6\\Qt6Pdf.dll',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\Qt6Pdf.dll',
    'BINARY'),
   ('PySide6\\Qt6Svg.dll',
    'D:\\PROJECTS\\IP Sentinel '
@@ -365,10 +369,6 @@
   ('PySide6\\Qt6VirtualKeyboard.dll',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\Qt6VirtualKeyboard.dll',
-   'BINARY'),
-  ('PySide6\\Qt6Pdf.dll',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\Qt6Pdf.dll',
    'BINARY'),
   ('libcrypto-3.dll',
    'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libcrypto-3.dll',
@@ -379,24 +379,24 @@
   ('libffi-8.dll',
    'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libffi-8.dll',
    'BINARY'),
-  ('shiboken6\\shiboken6.abi3.dll',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\shiboken6\\shiboken6.abi3.dll',
-   'BINARY'),
   ('PySide6\\MSVCP140.dll',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\MSVCP140.dll',
    'BINARY'),
-  ('PySide6\\pyside6.abi3.dll',
+  ('python3.dll',
+   'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python313\\python3.dll',
+   'BINARY'),
+  ('shiboken6\\shiboken6.abi3.dll',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\pyside6.abi3.dll',
+   'AI\\.venv\\Lib\\site-packages\\shiboken6\\shiboken6.abi3.dll',
    'BINARY'),
   ('PySide6\\VCRUNTIME140.dll',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\VCRUNTIME140.dll',
    'BINARY'),
-  ('python3.dll',
-   'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python313\\python3.dll',
+  ('PySide6\\pyside6.abi3.dll',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\pyside6.abi3.dll',
    'BINARY'),
   ('PySide6\\VCRUNTIME140_1.dll',
    'D:\\PROJECTS\\IP Sentinel '
@@ -433,33 +433,17 @@
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\Qt6Qml.dll',
    'BINARY'),
-  ('api-ms-win-core-file-l1-2-0.dll',
-   'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-file-l1-2-0.dll',
-   'BINARY'),
-  ('api-ms-win-core-file-l1-1-0.dll',
-   'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-file-l1-1-0.dll',
-   'BINARY'),
-  ('api-ms-win-core-synch-l1-1-0.dll',
-   'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-synch-l1-1-0.dll',
-   'BINARY'),
-  ('api-ms-win-core-heap-l1-1-0.dll',
-   'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-heap-l1-1-0.dll',
-   'BINARY'),
   ('api-ms-win-core-console-l1-1-0.dll',
    'D:\\Program '
    'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-console-l1-1-0.dll',
    'BINARY'),
-  ('api-ms-win-core-profile-l1-1-0.dll',
+  ('api-ms-win-core-fibers-l1-1-0.dll',
    'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-profile-l1-1-0.dll',
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-fibers-l1-1-0.dll',
    'BINARY'),
-  ('api-ms-win-core-memory-l1-1-0.dll',
+  ('api-ms-win-core-processthreads-l1-1-1.dll',
    'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-memory-l1-1-0.dll',
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-processthreads-l1-1-1.dll',
    'BINARY'),
   ('api-ms-win-core-processenvironment-l1-1-0.dll',
    'D:\\Program '
@@ -469,69 +453,85 @@
    'D:\\Program '
    'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-handle-l1-1-0.dll',
    'BINARY'),
-  ('api-ms-win-core-datetime-l1-1-0.dll',
+  ('api-ms-win-core-util-l1-1-0.dll',
    'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-datetime-l1-1-0.dll',
-   'BINARY'),
-  ('api-ms-win-core-rtlsupport-l1-1-0.dll',
-   'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-rtlsupport-l1-1-0.dll',
-   'BINARY'),
-  ('api-ms-win-core-file-l2-1-0.dll',
-   'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-file-l2-1-0.dll',
-   'BINARY'),
-  ('api-ms-win-core-processthreads-l1-1-0.dll',
-   'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-processthreads-l1-1-0.dll',
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-util-l1-1-0.dll',
    'BINARY'),
   ('api-ms-win-core-interlocked-l1-1-0.dll',
    'D:\\Program '
    'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-interlocked-l1-1-0.dll',
    'BINARY'),
-  ('api-ms-win-core-errorhandling-l1-1-0.dll',
+  ('api-ms-win-core-memory-l1-1-0.dll',
    'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-errorhandling-l1-1-0.dll',
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-memory-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-file-l1-1-0.dll',
+   'D:\\Program '
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-file-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-heap-l1-1-0.dll',
+   'D:\\Program '
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-heap-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-synch-l1-1-0.dll',
+   'D:\\Program '
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-synch-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-sysinfo-l1-1-0.dll',
+   'D:\\Program '
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-sysinfo-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-file-l2-1-0.dll',
+   'D:\\Program '
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-file-l2-1-0.dll',
    'BINARY'),
   ('api-ms-win-core-libraryloader-l1-1-0.dll',
    'D:\\Program '
    'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-libraryloader-l1-1-0.dll',
    'BINARY'),
-  ('api-ms-win-core-processthreads-l1-1-1.dll',
+  ('api-ms-win-core-rtlsupport-l1-1-0.dll',
    'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-processthreads-l1-1-1.dll',
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-rtlsupport-l1-1-0.dll',
    'BINARY'),
-  ('api-ms-win-core-localization-l1-2-0.dll',
+  ('api-ms-win-core-datetime-l1-1-0.dll',
    'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-localization-l1-2-0.dll',
-   'BINARY'),
-  ('api-ms-win-core-string-l1-1-0.dll',
-   'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-string-l1-1-0.dll',
-   'BINARY'),
-  ('api-ms-win-core-util-l1-1-0.dll',
-   'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-util-l1-1-0.dll',
-   'BINARY'),
-  ('api-ms-win-core-debug-l1-1-0.dll',
-   'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-debug-l1-1-0.dll',
-   'BINARY'),
-  ('api-ms-win-core-fibers-l1-1-0.dll',
-   'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-fibers-l1-1-0.dll',
-   'BINARY'),
-  ('api-ms-win-core-timezone-l1-1-0.dll',
-   'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-timezone-l1-1-0.dll',
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-datetime-l1-1-0.dll',
    'BINARY'),
   ('api-ms-win-core-namedpipe-l1-1-0.dll',
    'D:\\Program '
    'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-namedpipe-l1-1-0.dll',
    'BINARY'),
-  ('api-ms-win-core-sysinfo-l1-1-0.dll',
+  ('api-ms-win-core-file-l1-2-0.dll',
    'D:\\Program '
-   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-sysinfo-l1-1-0.dll',
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-file-l1-2-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-string-l1-1-0.dll',
+   'D:\\Program '
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-string-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-processthreads-l1-1-0.dll',
+   'D:\\Program '
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-processthreads-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-profile-l1-1-0.dll',
+   'D:\\Program '
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-profile-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-localization-l1-2-0.dll',
+   'D:\\Program '
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-localization-l1-2-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-errorhandling-l1-1-0.dll',
+   'D:\\Program '
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-errorhandling-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-debug-l1-1-0.dll',
+   'D:\\Program '
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-debug-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-timezone-l1-1-0.dll',
+   'D:\\Program '
+   'Files\\Latex\\miktex\\bin\\x64\\api-ms-win-core-timezone-l1-1-0.dll',
    'BINARY'),
   ('PySide6\\Qt6QmlModels.dll',
    'D:\\PROJECTS\\IP Sentinel '
@@ -549,6 +549,30 @@
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\Qt6QmlWorkerScript.dll',
    'BINARY'),
+  ('resources\\fixtures\\bot_traffic.json',
+   'D:\\PROJECTS\\IP Sentinel AI\\resources\\fixtures\\bot_traffic.json',
+   'DATA'),
+  ('resources\\fixtures\\clean_traffic.csv',
+   'D:\\PROJECTS\\IP Sentinel AI\\resources\\fixtures\\clean_traffic.csv',
+   'DATA'),
+  ('resources\\fixtures\\clean_traffic.json',
+   'D:\\PROJECTS\\IP Sentinel AI\\resources\\fixtures\\clean_traffic.json',
+   'DATA'),
+  ('resources\\fixtures\\credential_attack.json',
+   'D:\\PROJECTS\\IP Sentinel AI\\resources\\fixtures\\credential_attack.json',
+   'DATA'),
+  ('resources\\fixtures\\flood_traffic.json',
+   'D:\\PROJECTS\\IP Sentinel AI\\resources\\fixtures\\flood_traffic.json',
+   'DATA'),
+  ('resources\\fixtures\\mixed_traffic.json',
+   'D:\\PROJECTS\\IP Sentinel AI\\resources\\fixtures\\mixed_traffic.json',
+   'DATA'),
+  ('resources\\fixtures\\scanner_traffic.csv',
+   'D:\\PROJECTS\\IP Sentinel AI\\resources\\fixtures\\scanner_traffic.csv',
+   'DATA'),
+  ('resources\\fixtures\\scanner_traffic.json',
+   'D:\\PROJECTS\\IP Sentinel AI\\resources\\fixtures\\scanner_traffic.json',
+   'DATA'),
   ('resources\\styles\\dark_theme.qss',
    'D:\\PROJECTS\\IP Sentinel AI\\resources\\styles\\dark_theme.qss',
    'DATA'),
@@ -560,68 +584,256 @@
    'AI\\.venv\\Lib\\site-packages\\setuptools\\_vendor\\jaraco\\text\\Lorem '
    'ipsum.txt',
    'DATA'),
+  ('certifi\\py.typed',
+   'D:\\PROJECTS\\IP Sentinel AI\\.venv\\Lib\\site-packages\\certifi\\py.typed',
+   'DATA'),
   ('certifi\\cacert.pem',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\certifi\\cacert.pem',
    'DATA'),
-  ('certifi\\py.typed',
-   'D:\\PROJECTS\\IP Sentinel AI\\.venv\\Lib\\site-packages\\certifi\\py.typed',
-   'DATA'),
-  ('PySide6\\translations\\qt_ko.qm',
+  ('PySide6\\translations\\qt_gl.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_ko.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_gl.qm',
    'DATA'),
-  ('PySide6\\translations\\qtbase_zh_CN.qm',
+  ('PySide6\\translations\\qtbase_hr.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_zh_CN.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_hr.qm',
    'DATA'),
-  ('PySide6\\translations\\qtbase_ko.qm',
+  ('PySide6\\translations\\qt_help_ko.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_ko.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_ko.qm',
    'DATA'),
-  ('PySide6\\translations\\qt_help_hu.qm',
+  ('PySide6\\translations\\qt_nl.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_hu.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_nl.qm',
    'DATA'),
-  ('PySide6\\translations\\qt_help_de.qm',
+  ('PySide6\\translations\\qtbase_en.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_de.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_en.qm',
    'DATA'),
-  ('PySide6\\translations\\qtbase_es.qm',
+  ('PySide6\\translations\\qt_de.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_es.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_help_es.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_es.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_nn.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_nn.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_help_it.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_it.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_de.qm',
    'DATA'),
   ('PySide6\\translations\\qt_help_zh_CN.qm',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_zh_CN.qm',
    'DATA'),
-  ('PySide6\\translations\\qtbase_fi.qm',
+  ('PySide6\\translations\\qt_ar.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_fi.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_ar.qm',
    'DATA'),
-  ('PySide6\\translations\\qtbase_tr.qm',
+  ('PySide6\\translations\\qtbase_es.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_tr.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_es.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_ru.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_ru.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_sk.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_sk.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_fa.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_fa.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_ar.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_ar.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_pl.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_pl.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_hu.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_hu.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_ru.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_ru.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_uk.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_uk.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_nn.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_nn.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_nn.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_nn.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_zh_CN.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_zh_CN.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_da.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_da.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_zh_CN.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_zh_CN.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_fr.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_fr.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_hu.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_hu.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_ka.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_ka.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_de.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_de.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_ca.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_ca.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_de.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_de.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_pt_BR.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_pt_BR.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_pl.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_pl.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_lg.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_lg.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_ru.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_ru.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_it.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_it.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_zh_TW.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_zh_TW.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_cs.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_cs.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_ko.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_ko.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_lg.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_lg.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_fr.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_fr.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_sv.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_sv.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_en.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_en.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_lt.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_lt.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_lv.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_lv.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_es.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_es.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_fi.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_fi.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_it.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_it.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_gl.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_gl.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_ca.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_ca.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_ja.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_ja.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_it.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_it.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_sl.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_sl.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_da.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_da.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_sk.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_sk.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_uk.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_uk.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_he.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_he.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_pl.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_pl.qm',
    'DATA'),
   ('PySide6\\translations\\qt_pt_BR.qm',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_pt_BR.qm',
    'DATA'),
-  ('PySide6\\translations\\qt_help_sl.qm',
+  ('PySide6\\translations\\qt_hr.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_sl.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_hr.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_nn.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_nn.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_ka.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_ka.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_hr.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_hr.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_ca.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_ca.qm',
    'DATA'),
   ('PySide6\\translations\\qtbase_gd.qm',
    'D:\\PROJECTS\\IP Sentinel '
@@ -631,205 +843,17 @@
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_bg.qm',
    'DATA'),
-  ('PySide6\\translations\\qtbase_ar.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_ar.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_fa.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_fa.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_help_fr.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_fr.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_cs.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_cs.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_ca.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_ca.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_hr.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_hr.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_uk.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_uk.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_help_en.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_en.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_hu.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_hu.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_sl.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_sl.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_cs.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_cs.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_help_ko.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_ko.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_da.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_da.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_help_ca.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_ca.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_it.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_it.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_help_hr.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_hr.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_ja.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_ja.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_lg.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_lg.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_tr.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_tr.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_help_da.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_da.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_zh_CN.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_zh_CN.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_pt_PT.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_pt_PT.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_zh_TW.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_zh_TW.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_gd.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_gd.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_fr.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_fr.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_ar.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_ar.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_pl.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_pl.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_it.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_it.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_he.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_he.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_en.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_en.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_nn.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_nn.qm',
-   'DATA'),
   ('PySide6\\translations\\qt_he.qm',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_he.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_help_pt_BR.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_pt_BR.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_fr.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_fr.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_gl.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_gl.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_ca.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_ca.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_fi.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_fi.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_pt_BR.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_pt_BR.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_uk.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_uk.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_help_zh_TW.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_zh_TW.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_zh_TW.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_zh_TW.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_lg.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_lg.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_sk.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_sk.qm',
    'DATA'),
   ('PySide6\\translations\\qt_help_nl.qm',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_nl.qm',
    'DATA'),
-  ('PySide6\\translations\\qt_help_gl.qm',
+  ('PySide6\\translations\\qtbase_zh_TW.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_gl.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_lt.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_lt.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_sv.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_sv.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_de.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_de.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_en.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_en.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_ka.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_ka.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_zh_TW.qm',
    'DATA'),
   ('PySide6\\translations\\qtbase_fa.qm',
    'D:\\PROJECTS\\IP Sentinel '
@@ -839,133 +863,133 @@
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_nl.qm',
    'DATA'),
-  ('PySide6\\translations\\qt_help_cs.qm',
+  ('PySide6\\translations\\qt_help_sl.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_cs.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_pl.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_pl.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_lv.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_lv.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_nl.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_nl.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_help_nn.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_nn.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_ru.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_ru.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_help_sk.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_sk.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_sl.qm',
    'DATA'),
   ('PySide6\\translations\\qt_bg.qm',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_bg.qm',
    'DATA'),
-  ('PySide6\\translations\\qt_ru.qm',
+  ('PySide6\\translations\\qt_help_bg.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_ru.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_bg.qm',
    'DATA'),
-  ('PySide6\\translations\\qt_help_ar.qm',
+  ('PySide6\\translations\\qt_help_cs.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_ar.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_cs.qm',
    'DATA'),
-  ('PySide6\\translations\\qt_help_uk.qm',
+  ('PySide6\\translations\\qt_pt_PT.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_uk.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_pt_PT.qm',
    'DATA'),
-  ('PySide6\\translations\\qtbase_lv.qm',
+  ('PySide6\\translations\\qtbase_tr.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_lv.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_tr.qm',
    'DATA'),
-  ('PySide6\\translations\\qtbase_sk.qm',
+  ('PySide6\\translations\\qt_cs.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_sk.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_hr.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_hr.qm',
-   'DATA'),
-  ('PySide6\\translations\\qtbase_da.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_da.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_cs.qm',
    'DATA'),
   ('PySide6\\translations\\qtbase_hu.qm',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_hu.qm',
    'DATA'),
-  ('PySide6\\translations\\qt_de.qm',
+  ('PySide6\\translations\\qtbase_ar.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_de.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_ar.qm',
    'DATA'),
-  ('PySide6\\translations\\qt_help_tr.qm',
+  ('PySide6\\translations\\qt_gd.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_tr.qm',
-   'DATA'),
-  ('PySide6\\translations\\qt_ja.qm',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_ja.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_gd.qm',
    'DATA'),
   ('PySide6\\translations\\qt_es.qm',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_es.qm',
    'DATA'),
-  ('PySide6\\translations\\qtbase_ka.qm',
+  ('PySide6\\translations\\qtbase_pt_BR.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_ka.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_pt_BR.qm',
    'DATA'),
-  ('PySide6\\translations\\qt_help_pl.qm',
+  ('PySide6\\translations\\qt_ka.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_pl.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_ka.qm',
    'DATA'),
-  ('PySide6\\translations\\qt_help_bg.qm',
+  ('PySide6\\translations\\qt_help_sk.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_bg.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_sk.qm',
    'DATA'),
-  ('PySide6\\translations\\qt_help_ka.qm',
+  ('PySide6\\translations\\qt_fr.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_ka.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_fr.qm',
    'DATA'),
-  ('PySide6\\translations\\qt_help_ru.qm',
+  ('PySide6\\translations\\qt_ko.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_ru.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_ko.qm',
    'DATA'),
-  ('PySide6\\translations\\qt_help_ja.qm',
+  ('PySide6\\translations\\qt_zh_TW.qm',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_ja.qm',
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_zh_TW.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_tr.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_tr.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_tr.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_tr.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_ja.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_ja.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_lv.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_lv.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_ja.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_ja.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_en.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_en.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_help_da.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_help_da.qm',
+   'DATA'),
+  ('PySide6\\translations\\qt_uk.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qt_uk.qm',
+   'DATA'),
+  ('PySide6\\translations\\qtbase_fi.qm',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\PySide6\\translations\\qtbase_fi.qm',
+   'DATA'),
+  ('markupsafe-3.0.3.dist-info\\WHEEL',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\markupsafe-3.0.3.dist-info\\WHEEL',
    'DATA'),
   ('markupsafe-3.0.3.dist-info\\METADATA',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\markupsafe-3.0.3.dist-info\\METADATA',
    'DATA'),
-  ('markupsafe-3.0.3.dist-info\\INSTALLER',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\markupsafe-3.0.3.dist-info\\INSTALLER',
-   'DATA'),
   ('markupsafe-3.0.3.dist-info\\RECORD',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\markupsafe-3.0.3.dist-info\\RECORD',
-   'DATA'),
-  ('markupsafe-3.0.3.dist-info\\licenses\\LICENSE.txt',
-   'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\markupsafe-3.0.3.dist-info\\licenses\\LICENSE.txt',
    'DATA'),
   ('markupsafe-3.0.3.dist-info\\top_level.txt',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\markupsafe-3.0.3.dist-info\\top_level.txt',
    'DATA'),
-  ('markupsafe-3.0.3.dist-info\\WHEEL',
+  ('markupsafe-3.0.3.dist-info\\INSTALLER',
    'D:\\PROJECTS\\IP Sentinel '
-   'AI\\.venv\\Lib\\site-packages\\markupsafe-3.0.3.dist-info\\WHEEL',
+   'AI\\.venv\\Lib\\site-packages\\markupsafe-3.0.3.dist-info\\INSTALLER',
+   'DATA'),
+  ('markupsafe-3.0.3.dist-info\\licenses\\LICENSE.txt',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\.venv\\Lib\\site-packages\\markupsafe-3.0.3.dist-info\\licenses\\LICENSE.txt',
    'DATA'),
   ('base_library.zip',
    'D:\\PROJECTS\\IP Sentinel AI\\build\\pyinstaller\\base_library.zip',
@@ -973,7 +997,7 @@
  [],
  False,
  False,
- 1789291385,
+ 1789292783,
  [('runw.exe',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\.venv\\Lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\runw.exe',

@@ -198,6 +198,7 @@ class IPIntelResult:
     geoip: GeoIPData = field(default_factory=GeoIPData)
     dns: DNSData = field(default_factory=DNSData)
     waf_context: Optional[WAFContext] = None
+    waf_analysis: Optional[Any] = None
     provider_results: Dict[str, ProviderResult] = field(default_factory=dict)
     aggregated_evidence: List[EvidenceItem] = field(default_factory=list)
     evidence_summary: EvidenceSummary = field(default_factory=EvidenceSummary)

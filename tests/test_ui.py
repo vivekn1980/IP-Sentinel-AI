@@ -8,7 +8,7 @@ def test_main_window_instantiation(qapp):
     svc = InvestigationService()
     win = MainWindow(service=svc)
     assert win.windowTitle().startswith("IP Sentinel AI")
-    assert win.stacked_widget.count() == 5
+    assert win.stacked_widget.count() == 6
 
 
 def test_view_switching(qapp):
@@ -17,6 +17,9 @@ def test_view_switching(qapp):
 
     win.switch_view("query")
     assert win.stacked_widget.currentWidget() == win._views["query"]
+
+    win.switch_view("waf")
+    assert win.stacked_widget.currentWidget() == win._views["waf"]
 
     win.switch_view("reports")
     assert win.stacked_widget.currentWidget() == win._views["reports"]

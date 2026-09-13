@@ -1,0 +1,6 @@
+timestamp,source_ip,http_method,uri_path,user_agent,status_code,waf_rule,waf_action,host
+2026-09-13T10:15:00Z,198.51.100.45,GET,/.env,python-requests/2.31.0,404,SENSITIVE_FILE_PROBE,BLOCK,target-app.org
+2026-09-13T10:15:01Z,198.51.100.45,GET,/.git/config,python-requests/2.31.0,404,SENSITIVE_FILE_PROBE,BLOCK,target-app.org
+2026-09-13T10:15:02Z,198.51.100.45,GET,/admin,python-requests/2.31.0,403,ADMIN_ACCESS_ATTEMPT,BLOCK,target-app.org
+2026-09-13T10:15:03Z,198.51.100.45,GET,/wp-login.php,python-requests/2.31.0,404,CMS_DISCOVERY,LOG,target-app.org
+2026-09-13T10:15:04Z,198.51.100.45,GET,/actuator/env,python-requests/2.31.0,404,CONFIG_DISCOVERY,BLOCK,target-app.org

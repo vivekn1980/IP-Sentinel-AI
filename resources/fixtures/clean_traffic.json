@@ -1,0 +1,57 @@
+[
+  {
+    "timestamp": "2026-09-13T10:00:01Z",
+    "source_ip": "203.0.113.15",
+    "http_method": "GET",
+    "uri_path": "/",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "status_code": 200,
+    "waf_rule": "NONE",
+    "waf_action": "ALLOW",
+    "host": "example.com"
+  },
+  {
+    "timestamp": "2026-09-13T10:00:05Z",
+    "source_ip": "203.0.113.15",
+    "http_method": "GET",
+    "uri_path": "/static/css/main.css",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "status_code": 200,
+    "waf_rule": "NONE",
+    "waf_action": "ALLOW",
+    "host": "example.com"
+  },
+  {
+    "timestamp": "2026-09-13T10:00:06Z",
+    "source_ip": "203.0.113.15",
+    "http_method": "GET",
+    "uri_path": "/static/js/app.js",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "status_code": 200,
+    "waf_rule": "NONE",
+    "waf_action": "ALLOW",
+    "host": "example.com"
+  },
+  {
+    "timestamp": "2026-09-13T10:00:15Z",
+    "source_ip": "203.0.113.15",
+    "http_method": "GET",
+    "uri_path": "/products/catalog",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "status_code": 200,
+    "waf_rule": "NONE",
+    "waf_action": "ALLOW",
+    "host": "example.com"
+  },
+  {
+    "timestamp": "2026-09-13T10:00:30Z",
+    "source_ip": "203.0.113.15",
+    "http_method": "POST",
+    "uri_path": "/api/cart/add",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "status_code": 200,
+    "waf_rule": "NONE",
+    "waf_action": "ALLOW",
+    "host": "example.com"
+  }
+]
