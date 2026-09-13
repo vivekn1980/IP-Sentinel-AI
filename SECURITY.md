@@ -30,11 +30,19 @@ IP Sentinel AI is designed for WAF IP Threat Intelligence and incident investiga
 
 ## 4. No Hardcoded Credentials & Secret Scrubbing
 
-- **SecretStore Abstraction**: API keys are managed via `ConfigManager` and stored in `%LOCALAPPDATA%\IPSentinelAI\credentials.json` or OS environment variables (`IPSENTINEL_KEY_*`).
+- **SecretStore Abstraction**: API keys (AbuseIPDB, VirusTotal) are managed via `ConfigManager` and stored securely in `%LOCALAPPDATA%\IPSentinelAI\credentials.json` or OS environment variables (`IPSENTINEL_KEY_ABUSEIPDB`, `IPSENTINEL_KEY_VIRUSTOTAL`).
 - **Log Redaction**: `QtSignalLogger` and rotating file handlers enforce regex pattern matching (`SECRET_PATTERNS`) to scrub credentials before writing to disk or displaying in UI log console.
 
 ---
 
-## 5. Report Injection Protection
+## 5. Threat Feed API & TLS Security
+
+- **Strict TLS Verification**: All passive network requests to AbuseIPDB (`api.abuseipdb.com`), VirusTotal (`www.virustotal.com`), and RDAP bootstrap servers strictly require standard HTTPS TLS encryption.
+- **Header Secret Protection**: API keys are passed strictly in HTTP request headers (`Key`, `x-apikey`), never in plaintext URL query parameters.
+- **API Key UI Masking**: PySide6 settings UI masks API key fields with echo modes (`QLineEdit.Password`) and validates credentials on demand without logging raw key contents.
+
+---
+
+## 6. Report Injection Protection
 
 - **Jinja2 Autoescaping**: `HTMLReportGenerator` uses Jinja2 template autoescaping (`autoescape=True`) to prevent Cross-Site Scripting (XSS) or HTML script injection when rendering RDAP strings or user notes into report files.

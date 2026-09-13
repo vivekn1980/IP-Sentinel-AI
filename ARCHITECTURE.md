@@ -16,6 +16,10 @@ The architecture strictly adheres to **SOLID** software engineering principles:
   - `RDAPProvider`: Passive RDAP lookup & JSON parsing.
   - `GeoIPProvider`: Network-level geolocation & ASN retrieval.
   - `DNSService`: Standard DNS record resolution (PTR, A, AAAA, MX, NS, TXT, CNAME).
+  - `AbuseIPDBProvider`: AbuseIPDB API v2 threat reputation adapter & category mapping.
+  - `VirusTotalProvider`: VirusTotal API v3 threat reputation adapter & scanner metrics.
+  - `EvidenceAggregator`: Multi-source telemetry normalization, deduplication & evidence item formatting.
+  - `RiskEngine`: Dynamic weighted risk scoring (0–100), threat classification & confidence assessment.
   - `CacheManager`: File & memory TTL caching without a database server.
   - `InvestigationService`: High-level orchestration of network investigation workflows.
 - **Open/Closed Principle (OCP)**: Threat intelligence providers and network services are extensible via abstract interfaces without modifying core execution logic.
@@ -32,14 +36,27 @@ The architecture strictly adheres to **SOLID** software engineering principles:
                                           v (Asynchronous QThreadPool / Worker)
 +-----------------------------------------------------------------------------------+
 |                              InvestigationService                                 |
-|   Orchestrator |  CacheManager (TTL) | SignalBus | ExceptionHook | ConfigManager  |
-+---------+-------------------+--------------------+--------------------+-----------+
-          |                   |                    |                    |
-          v                   v                    v                    v
-+-------------------+ +---------------+ +--------------------+ +--------------------+
-|  RDAPProvider     | | GeoIPProvider | |    DNSService      | | Threat Intel       |
-|  Bootstrap HTTPS  | | GeoIP & ASN   | | PTR/A/AAAA/MX/NS | | BaseIntelProvider  |
-+-------------------+ +---------------+ +--------------------+ +--------------------+
+|   Orchestrator | CacheManager (TTL) | SignalBus | ExceptionHook | ConfigManager   |
++----+--------------+---------------+-----------------+------------------+----------+
+     |              |               |                 |                  |
+     v              v               v                 v                  v
++----------+  +-----------+  +-------------+  +---------------+  +---------------+
+|   RDAP   |  |   GeoIP   |  | DNS Service |  |  AbuseIPDB    |  |  VirusTotal   |
+| Bootstrap|  | ASN/Geo   |  | PTR/A/MX... |  | API v2 Check  |  | API v3 IP     |
++----+-----+  +-----+-----+  +------+------+  +-------+-------+  +-------+-------+
+     |              |               |                 |                  |
+     +--------------+---------------+-----------------+------------------+
+                                    |
+                                    v
+                        +-----------------------+
+                        |   EvidenceAggregator  |
+                        +-----------+-----------+
+                                    |
+                                    v
+                        +-----------------------+
+                        |      RiskEngine       |
+                        | (Risk Score 0-100)    |
+                        +-----------------------+
 ```
 
 ---

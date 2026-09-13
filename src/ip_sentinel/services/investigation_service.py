@@ -1,4 +1,4 @@
-"""InvestigationService orchestrating real passive IP intelligence, RDAP, GeoIP, ASN, and DNS workflows."""
+"""InvestigationService orchestrating real passive IP intelligence, threat providers, evidence correlation, and risk calculation."""
 
 import datetime
 import logging
@@ -12,30 +12,45 @@ from ip_sentinel.models.threat_intel import (
     DNSData,
     DataStatus,
     EvidenceItem,
+    EvidenceSummary,
     GeoIPData,
     IPIntelResult,
     ProviderResult,
     RDAPData,
-    ThreatLevel,
     ThreatScore,
+    WAFContext,
 )
+from ip_sentinel.providers.abuseipdb_provider import AbuseIPDBProvider
 from ip_sentinel.providers.base import BaseIntelProvider
 from ip_sentinel.providers.geoip_provider import GeoIPProvider
 from ip_sentinel.providers.mock_provider import MockIntelProvider
 from ip_sentinel.providers.rdap_provider import RDAPProvider
+from ip_sentinel.providers.virustotal_provider import VirusTotalProvider
 from ip_sentinel.services.dns_service import DNSService
+from ip_sentinel.services.evidence_aggregator import EvidenceAggregator
+from ip_sentinel.services.risk_engine import RiskEngine
 
 logger = logging.getLogger("ip_sentinel.investigation")
 
 
 class InvestigationService:
-    """Orchestrates passive network intelligence gathering (RDAP, GeoIP, ASN, DNS) and provider threat queries."""
+    """Orchestrates network intelligence, live threat providers, evidence correlation, and risk evaluation."""
 
     def __init__(self, providers: Optional[List[BaseIntelProvider]] = None):
-        self.providers = providers if providers is not None else [MockIntelProvider()]
+        if providers is not None:
+            self.providers = providers
+        else:
+            self.providers = [
+                MockIntelProvider(),
+                AbuseIPDBProvider(),
+                VirusTotalProvider(),
+            ]
+
         self.rdap_provider = RDAPProvider()
         self.geoip_provider = GeoIPProvider()
         self.dns_service = DNSService()
+        self.evidence_aggregator = EvidenceAggregator()
+        self.risk_engine = RiskEngine()
 
     def register_provider(self, provider: BaseIntelProvider) -> None:
         """Dynamically register a threat intelligence provider."""
@@ -44,24 +59,26 @@ class InvestigationService:
     def investigate(
         self,
         target_ip: str,
+        waf_context: Optional[WAFContext] = None,
         progress_callback: Optional[Callable[[int, str], None]] = None,
     ) -> IPIntelResult:
-        """Execute complete passive network investigation for target IP.
+        """Execute complete passive network investigation and threat correlation for target IP.
         
         Args:
             target_ip: Input IP string to investigate.
-            progress_callback: Optional status callback receiving (percentage, message).
+            waf_context: Optional WAFContext containing attack telemetry.
+            progress_callback: Optional callback receiving (percentage, status_message).
             
         Returns:
-            Normalized IPIntelResult container.
+            Normalized IPIntelResult payload.
             
         Raises:
-            ValidationError: If IP format is invalid.
+            ValidationError: If target IP format is invalid.
         """
         inv_id = f"INV-{uuid.uuid4().hex[:8].upper()}"
         now_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
-        logger.info(f"Starting Phase 2 investigation {inv_id} for target IP: '{target_ip}'")
+        logger.info(f"Starting Phase 3 investigation {inv_id} for target IP: '{target_ip}'")
 
         # Step 1: Validating IP
         if progress_callback:
@@ -76,7 +93,7 @@ class InvestigationService:
 
         # Step 2: Retrieving RDAP
         if progress_callback:
-            progress_callback(25, "Retrieving RDAP")
+            progress_callback(20, "Retrieving RDAP")
 
         rdap_data = RDAPData(status=DataStatus.UNAVAILABLE, ip_address=norm_ip, lookup_timestamp=now_str)
         if not classification.is_private and not classification.is_loopback:
@@ -95,9 +112,9 @@ class InvestigationService:
 
         # Step 3 & 4: Retrieving network information & GeoIP
         if progress_callback:
-            progress_callback(40, "Retrieving network information")
+            progress_callback(35, "Retrieving network information")
         if progress_callback:
-            progress_callback(55, "Retrieving GeoIP")
+            progress_callback(50, "Retrieving GeoIP")
 
         geoip_data = GeoIPData(status=DataStatus.UNAVAILABLE)
         asn_data = ASNData(status=DataStatus.UNAVAILABLE, timestamp=now_str)
@@ -126,9 +143,9 @@ class InvestigationService:
 
         # Step 5 & 6: Performing reverse DNS & DNS lookups
         if progress_callback:
-            progress_callback(70, "Performing reverse DNS")
+            progress_callback(65, "Performing reverse DNS")
         if progress_callback:
-            progress_callback(85, "Performing DNS lookups")
+            progress_callback(75, "Performing DNS lookups")
 
         dns_data = DNSData(status=DataStatus.UNAVAILABLE)
         try:
@@ -137,13 +154,11 @@ class InvestigationService:
             logger.error(f"DNS Service exception for {norm_ip}: {err}")
             dns_data = DNSData(status=DataStatus.ERROR, error_message=f"DNS Error: {err}")
 
-        # Step 7: Query registered threat providers & build investigation result
+        # Step 7: Query registered threat intelligence providers
         if progress_callback:
-            progress_callback(95, "Building investigation result")
+            progress_callback(85, "Querying live threat intelligence providers...")
 
         provider_results = {}
-        aggregated_evidence: List[EvidenceItem] = []
-        scores: List[int] = []
         is_mock_run = False
 
         for provider in self.providers:
@@ -162,12 +177,6 @@ class InvestigationService:
                 res = provider.query_ip(norm_ip)
                 provider_results[provider.provider_name] = res
 
-                if res.status == DataStatus.AVAILABLE:
-                    if res.threat_score:
-                        scores.append(res.threat_score.score)
-                    if res.evidence:
-                        aggregated_evidence.extend(res.evidence)
-
             except Exception as err:
                 logger.error(f"Provider '{provider.provider_name}' query error: {err}")
                 provider_results[provider.provider_name] = ProviderResult(
@@ -176,26 +185,32 @@ class InvestigationService:
                     error_message=f"Provider query exception: {err}",
                 )
 
-        # Score Aggregation
-        if scores:
-            avg_score = int(sum(scores) / len(scores))
-        else:
-            avg_score = 0
+        # Step 8: Evidence Aggregation & Correlation
+        if progress_callback:
+            progress_callback(92, "Aggregating evidence & analyzing threat indicators...")
 
-        if avg_score >= 80:
-            level = ThreatLevel.MALICIOUS
-        elif avg_score >= 40:
-            level = ThreatLevel.SUSPICIOUS
-        elif avg_score > 0:
-            level = ThreatLevel.LOW
-        else:
-            level = ThreatLevel.CLEAN
+        evidence_list, evidence_summary, has_conflict, conflict_notes = self.evidence_aggregator.aggregate_evidence(
+            rdap=rdap_data,
+            asn_data=asn_data,
+            geoip=geoip_data,
+            dns=dns_data,
+            provider_results=provider_results,
+            waf_context=waf_context,
+        )
 
-        overall_score = ThreatScore(
-            score=avg_score,
-            level=level,
-            confidence=95 if scores else 0,
-            status=DataStatus.AVAILABLE if scores else DataStatus.UNAVAILABLE,
+        # Step 9: Risk Evaluation
+        if progress_callback:
+            progress_callback(98, "Calculating risk score & evaluating confidence...")
+
+        overall_threat_score = self.risk_engine.evaluate_risk(
+            evidence_list=evidence_list,
+            evidence_summary=evidence_summary,
+            provider_results=provider_results,
+            rdap=rdap_data,
+            asn_data=asn_data,
+            waf_context=waf_context,
+            has_conflicting_evidence=has_conflict,
+            conflict_explanation=conflict_notes,
         )
 
         result = IPIntelResult(
@@ -203,20 +218,24 @@ class InvestigationService:
             target_ip=norm_ip,
             timestamp=now_str,
             is_mock=is_mock_run,
-            overall_threat_score=overall_score,
+            overall_threat_score=overall_threat_score,
             rdap=rdap_data,
             asn_data=asn_data,
             geoip=geoip_data,
             dns=dns_data,
+            waf_context=waf_context,
             provider_results=provider_results,
-            aggregated_evidence=aggregated_evidence,
+            aggregated_evidence=evidence_list,
+            evidence_summary=evidence_summary,
+            has_conflicting_evidence=has_conflict,
+            conflict_explanation=conflict_notes,
             is_private_ip=classification.is_private,
             is_loopback_ip=classification.is_loopback,
-            summary_notes="Passive network intelligence investigation completed successfully.",
+            summary_notes="Passive network intelligence & evidence correlation completed successfully.",
         )
 
         if progress_callback:
             progress_callback(100, "Ready")
 
-        logger.info(f"Investigation {inv_id} completed. Threat Level: {level.value} (Score: {avg_score})")
+        logger.info(f"Phase 3 investigation {inv_id} completed. Threat Level: {overall_threat_score.level.value} (Score: {overall_threat_score.score})")
         return result

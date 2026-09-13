@@ -4,6 +4,28 @@ All notable changes to **IP Sentinel AI** will be documented in this file.
 
 ---
 
+## [3.0.0-phase3] - 2026-09-13
+
+### Added
+- **Live Threat Reputation Intelligence**:
+  - `abuseipdb_provider.py`: Implemented AbuseIPDB API v2 `check` endpoint adapter retrieving abuse confidence score, total report count, distinct reporters, last reported timestamp, domain, usage type, and abuse categories with local TTL caching.
+  - `virustotal_provider.py`: Implemented VirusTotal API v3 `ip_addresses` endpoint adapter retrieving malicious, suspicious, harmless, and undetected security engine detection counts with local TTL caching.
+- **Evidence Correlation Engine (`evidence_aggregator.py`)**:
+  - Normalizes telemetry from RDAP, GeoIP, DNS, WAF Context, AbuseIPDB, and VirusTotal.
+  - Formats structured `EvidenceItem` objects with confidence levels, observations, and supporting data.
+  - Calculates severity breakdown (CRITICAL, HIGH, MEDIUM, LOW, INFO) and automatically detects contradictory evidence.
+- **Weighted Risk Assessment Engine (`risk_engine.py`)**:
+  - Computes dynamic 0–100 overall risk score, qualitative threat level classification (`VERY_LOW`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`), and confidence rating based on multi-source evidence weights.
+- **UI Enhancements (`QueryView` & `SettingsView`)**:
+  - `QueryView`: Added AbuseIPDB and VirusTotal threat cards, Evidence Summary matrix, Evidence Table, Risk Assessment display, and Contradictory Evidence alert notice.
+  - `SettingsView`: Added "Test Connection" functionality for validating AbuseIPDB and VirusTotal API keys with live feedback.
+- **Forensic Report Engine Updates (`html_generator.py` & `pdf_generator.py`)**:
+  - Updated Jinja2 HTML template (`report_template.html`) and ReportLab PDF generator to render threat feeds, evidence table, risk score, confidence ratings, and mandatory disclaimers.
+- **Test Suite Expansion**:
+  - Added 13 new unit and integration tests (`test_abuseipdb.py`, `test_virustotal.py`, `test_evidence_aggregator.py`, `test_risk_engine.py`, `test_phase3_investigation.py`, `test_phase3_reports.py`), bringing total automated test count to **51 tests (100% pass rate)**.
+
+---
+
 ## [2.0.0-phase2] - 2026-09-13
 
 ### Added

@@ -1411,6 +1411,10 @@
   ('ip_sentinel.providers',
    'D:\\PROJECTS\\IP Sentinel AI\\src\\ip_sentinel\\providers\\__init__.py',
    'PYMODULE'),
+  ('ip_sentinel.providers.abuseipdb_provider',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\src\\ip_sentinel\\providers\\abuseipdb_provider.py',
+   'PYMODULE'),
   ('ip_sentinel.providers.base',
    'D:\\PROJECTS\\IP Sentinel AI\\src\\ip_sentinel\\providers\\base.py',
    'PYMODULE'),
@@ -1425,6 +1429,10 @@
   ('ip_sentinel.providers.rdap_provider',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\src\\ip_sentinel\\providers\\rdap_provider.py',
+   'PYMODULE'),
+  ('ip_sentinel.providers.virustotal_provider',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\src\\ip_sentinel\\providers\\virustotal_provider.py',
    'PYMODULE'),
   ('ip_sentinel.reports',
    'D:\\PROJECTS\\IP Sentinel AI\\src\\ip_sentinel\\reports\\__init__.py',
@@ -1444,9 +1452,16 @@
   ('ip_sentinel.services.dns_service',
    'D:\\PROJECTS\\IP Sentinel AI\\src\\ip_sentinel\\services\\dns_service.py',
    'PYMODULE'),
+  ('ip_sentinel.services.evidence_aggregator',
+   'D:\\PROJECTS\\IP Sentinel '
+   'AI\\src\\ip_sentinel\\services\\evidence_aggregator.py',
+   'PYMODULE'),
   ('ip_sentinel.services.investigation_service',
    'D:\\PROJECTS\\IP Sentinel '
    'AI\\src\\ip_sentinel\\services\\investigation_service.py',
+   'PYMODULE'),
+  ('ip_sentinel.services.risk_engine',
+   'D:\\PROJECTS\\IP Sentinel AI\\src\\ip_sentinel\\services\\risk_engine.py',
    'PYMODULE'),
   ('ip_sentinel.ui',
    'D:\\PROJECTS\\IP Sentinel AI\\src\\ip_sentinel\\ui\\__init__.py',

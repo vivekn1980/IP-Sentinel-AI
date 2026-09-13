@@ -1,6 +1,7 @@
-"""Normalized threat intelligence and network data transfer objects (DTOs).
+"""Normalized threat intelligence, network, and evidence correlation data models (DTOs).
 
-Supports Phase 2 real passive network intelligence: RDAP, ASN, GeoIP, and DNS.
+Phase 3 updates: Evidence correlation, WAF context, Threat Intelligence provider DTOs,
+and multi-source risk assessment.
 """
 
 from dataclasses import dataclass, field
@@ -13,24 +14,44 @@ class DataStatus(Enum):
     UNAVAILABLE = "UNAVAILABLE"
     ERROR = "ERROR"
     NOT_CONFIGURED = "NOT_CONFIGURED"
+    RATE_LIMITED = "RATE_LIMITED"
     UNKNOWN = "UNKNOWN"
 
 
 class ThreatLevel(Enum):
-    CLEAN = "CLEAN"
+    VERY_LOW = "VERY_LOW"
     LOW = "LOW"
+    MEDIUM = "MEDIUM"
+    HIGH = "HIGH"
+    CRITICAL = "CRITICAL"
+    CLEAN = "CLEAN"
     SUSPICIOUS = "SUSPICIOUS"
     MALICIOUS = "MALICIOUS"
     UNKNOWN = "UNKNOWN"
 
 
 @dataclass(frozen=True)
+class WAFContext:
+    """Optional Web Application Firewall (WAF) event correlation context."""
+    request_count: int = 0
+    time_window: str = "10m"
+    http_method: Optional[str] = None
+    rule_triggered: Optional[str] = None
+    uri: Optional[str] = None
+    user_agent: Optional[str] = None
+    http_status: Optional[int] = None
+    client_ip: Optional[str] = None
+
+
+@dataclass(frozen=True)
 class ThreatScore:
-    """Normalized threat score metric scaled 0 to 100."""
+    """Normalized evidence-backed threat score metric scaled 0 to 100."""
     score: int  # 0 to 100
     level: ThreatLevel
     confidence: int = 100  # 0 to 100 percentage
     status: DataStatus = DataStatus.AVAILABLE
+    conflicting_evidence: bool = False
+    conflict_notes: Optional[str] = None
 
 
 @dataclass(frozen=True)
@@ -47,7 +68,7 @@ class RDAPData:
     country: Optional[str] = None
     admin_contact: Optional[str] = None
     abuse_contact: Optional[str] = None
-    registry: Optional[str] = None  # ARIN, RIPE, APNIC, LACNIC, AFRINIC
+    registry: Optional[str] = None
     lookup_timestamp: Optional[str] = None
     raw_payload: Dict[str, Any] = field(default_factory=dict)
     error_message: Optional[str] = None
@@ -89,7 +110,7 @@ class GeoIPData:
 class DNSData:
     """Comprehensive DNS record resolution telemetry."""
     status: DataStatus = DataStatus.UNAVAILABLE
-    hostname: Optional[str] = None  # Primary reverse PTR
+    hostname: Optional[str] = None
     ptr_records: List[str] = field(default_factory=list)
     a_records: List[str] = field(default_factory=list)
     aaaa_records: List[str] = field(default_factory=list)
@@ -105,23 +126,38 @@ class ReputationData:
     """Reputation metrics, categories, and report metrics from an intelligence provider."""
     provider_name: str
     status: DataStatus = DataStatus.AVAILABLE
+    abuse_score: int = 0  # 0 to 100
     total_reports: int = 0
     distinct_reporters: int = 0
     last_reported_at: Optional[str] = None
     categories: List[str] = field(default_factory=list)
     tags: List[str] = field(default_factory=list)
+    malicious_count: int = 0
+    suspicious_count: int = 0
+    harmless_count: int = 0
+    undetected_count: int = 0
     raw_response: Dict[str, Any] = field(default_factory=dict)
     error_message: Optional[str] = None
 
 
 @dataclass(frozen=True)
 class EvidenceItem:
-    """Structured evidence item supporting threat assessment."""
-    category: str
-    description: str
+    """Normalized structured evidence item supporting threat assessment."""
     source: str
+    category: str  # REPUTATION, NETWORK, ASN, DNS, GEOLOCATION, WAF, BEHAVIOR, THREAT_INTELLIGENCE, HISTORICAL
+    severity: str = "INFO"  # INFO, LOW, MEDIUM, HIGH, CRITICAL
+    confidence: int = 80  # 0 to 100
+    observation: str = ""
+    description: str = ""
     timestamp: Optional[str] = None
-    severity: str = "INFO"
+    supporting_data: Dict[str, Any] = field(default_factory=dict)
+    status: DataStatus = DataStatus.AVAILABLE
+
+    def __post_init__(self):
+        if not self.observation and self.description:
+            object.__setattr__(self, "observation", self.description)
+        elif not self.description and self.observation:
+            object.__setattr__(self, "description", self.observation)
 
 
 @dataclass(frozen=True)
@@ -137,8 +173,19 @@ class ProviderResult:
 
 
 @dataclass(frozen=True)
+class EvidenceSummary:
+    """Summary metrics of aggregated evidence items by severity."""
+    total_count: int = 0
+    critical_count: int = 0
+    high_count: int = 0
+    medium_count: int = 0
+    low_count: int = 0
+    info_count: int = 0
+
+
+@dataclass(frozen=True)
 class IPIntelResult:
-    """Aggregated normalized threat intelligence and network investigation result."""
+    """Aggregated normalized threat intelligence, network, and evidence correlation result."""
     investigation_id: str
     target_ip: str
     timestamp: str
@@ -150,8 +197,12 @@ class IPIntelResult:
     asn_data: ASNData = field(default_factory=ASNData)
     geoip: GeoIPData = field(default_factory=GeoIPData)
     dns: DNSData = field(default_factory=DNSData)
+    waf_context: Optional[WAFContext] = None
     provider_results: Dict[str, ProviderResult] = field(default_factory=dict)
     aggregated_evidence: List[EvidenceItem] = field(default_factory=list)
+    evidence_summary: EvidenceSummary = field(default_factory=EvidenceSummary)
+    has_conflicting_evidence: bool = False
+    conflict_explanation: Optional[str] = None
     is_private_ip: bool = False
     is_loopback_ip: bool = False
     summary_notes: str = ""

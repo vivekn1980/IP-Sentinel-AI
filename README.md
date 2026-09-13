@@ -1,26 +1,37 @@
 # IP Sentinel AI — WAF IP Threat Intelligence & Investigation Tool
 
-> **Phase 2 Release — Real Passive IP Intelligence**  
+> **Phase 3 Release — Live Threat Reputation & Evidence Correlation**  
 > Portable Standalone Windows Desktop Application for Incident Response & WAF Forensics.
 
 ---
 
 ## 🛡️ Executive Summary
 
-**IP Sentinel AI** is a production-grade, standalone Windows desktop application built with PySide6 for WAF IP Threat Intelligence gathering, incident investigation, and automated forensic report generation (HTML & PDF).
+**IP Sentinel AI** is a production-grade, standalone Windows desktop application built with PySide6 for WAF IP Threat Intelligence gathering, incident investigation, risk assessment, and automated forensic report generation (HTML & PDF).
 
-### Key Features (Phase 2)
-- **Real Passive IP Intelligence**: Collects live, factual network intelligence for public IPv4 and IPv6 addresses without active probing or port scanning.
-  - **RDAP**: Network name, CIDR range, start/end IP, organization, country, abuse contact, administrative contact, registry (ARIN, RIPE, APNIC, LACNIC, AFRINIC).
-  - **ASN**: Autonomous System Number, AS organization, routing prefix, country.
-  - **Geolocation**: Country, region, city, timezone, approximate coordinates with mandatory network-level disclaimer.
+### Key Features (Phase 3)
+- **Live Threat Reputation**:
+  - **AbuseIPDB Adapter**: Queries AbuseIPDB API v2 `check` endpoint for abuse confidence score, total reports, distinct reporters, last reported timestamp, domain, usage type, and abuse categories.
+  - **VirusTotal Adapter**: Queries VirusTotal API v3 `ip_addresses` endpoint for malicious, suspicious, harmless, and undetected engine metrics.
+- **Evidence Correlation Engine (`EvidenceAggregator`)**:
+  - Automatically normalizes telemetry across RDAP, GeoIP, DNS, WAF Context, AbuseIPDB, and VirusTotal.
+  - Generates structured, deduplicated evidence items with observation descriptions, confidence levels, and supporting metadata.
+  - Calculates severity counts and flags contradictory evidence (e.g. AbuseIPDB HIGH vs VirusTotal CLEAN, or Cloud/Datacenter IP with zero reports).
+- **Weighted Risk Assessment Engine (`RiskEngine`)**:
+  - Computes an objective risk score (0–100), threat level classification (`VERY_LOW`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`), and overall confidence score based on multi-source evidence weights.
+- **WAF Attack Context Correlation**:
+  - Supports correlating target IPs against WAF telemetry (Rule ID, Rule Description, URI Path, User-Agent, Attack Vector).
+- **Real Passive Network Intelligence (Phase 2 Baseline)**:
+  - **RDAP**: Network name, CIDR range, start/end IP, organization, country, abuse contact, administrative contact, registry.
+  - **ASN & GeoIP**: Autonomous System Number, AS organization, routing prefix, country, region, city, timezone, approximate coordinates.
   - **DNS Telemetry**: Reverse PTR, A, AAAA, MX, NS, TXT, CNAME record resolution.
 - **Zero Target Runtime Dependencies**: Distributed as a portable single-file Windows executable (`dist/IP-Sentinel-AI.exe`). The target Windows machine does **NOT** require Python, Node.js, Java, pip, Docker, or any database server.
-- **Local TTL Caching**: Includes a thread-safe, file-backed JSON cache manager (`CacheManager`) to speed up repeat queries without requiring a database server.
-- **Deterministic Mock Engine**: Preserves `MockIntelProvider` allowing offline verification of lookups, threat scoring, and PDF/HTML report creation.
-- **Fault-Tolerant Resilience**: Provider and subsystem failures (e.g. GeoIP service timeout) are handled gracefully without aborting the overall investigation.
-- **60 FPS Responsive GUI**: All network queries and ReportLab PDF rendering execute asynchronously in background thread pools (`QThreadPool` / `QRunnable`), keeping the PySide6 UI 100% fluid.
-- **Strict Security**: Safe pure-Python HTTPS/DNS lookups, zero hardcoded credentials, zero shell command execution, and automated log secret redaction.
+- **Secure Secret Storage**: API keys are securely loaded from `%LOCALAPPDATA%\IPSentinelAI\credentials.json` or environment variables without hardcoded secrets. Includes UI connection testing for AbuseIPDB and VirusTotal.
+- **Local TTL Caching**: Thread-safe, file-backed JSON cache manager (`CacheManager`) to speed up repeat queries.
+- **Deterministic Mock Engine**: Preserves `MockIntelProvider` for offline testing and air-gapped forensic report generation.
+- **Fault-Tolerant Resilience**: Provider failures (e.g., HTTP 401, 429, timeout) are gracefully handled as provider status indicators (`NOT_CONFIGURED`, `RATE_LIMITED`, `ERROR`) without breaking the investigation pipeline.
+- **60 FPS Responsive GUI**: Asynchronous multi-threading via `QThreadPool` / `QRunnable` keeps PySide6 UI smooth during live network lookups and PDF generation.
+- **Forensic HTML & PDF Reports**: Includes Jinja2 HTML templates and ReportLab Platypus PDF reports featuring Phase 3 Threat Reputation Feeds, Evidence Summary Matrix, Evidence Table, Risk Score & Threat Level, and Mandatory Disclaimers.
 
 ---
 
@@ -91,7 +102,7 @@ python -m ip_sentinel.main --self-test
 
 ## 🧪 Automated Testing
 
-The project contains a comprehensive automated test suite in `tests/` (38 tests) covering configuration, cache manager, RDAP queries, GeoIP/ASN, DNS resolution, custom exceptions, IP utilities, thread-safe log scrubbing, mock providers, investigation service, report generators, worker thread signals, and PySide6 UI views.
+The project contains a comprehensive automated test suite in `tests/` (**51 tests**) covering configuration, cache manager, RDAP queries, GeoIP/ASN, DNS resolution, AbuseIPDB provider, VirusTotal provider, evidence aggregator, risk engine, custom exceptions, IP utilities, thread-safe log scrubbing, mock providers, investigation service, report generators, worker thread signals, and PySide6 UI views.
 
 ```powershell
 # Run full pytest suite
