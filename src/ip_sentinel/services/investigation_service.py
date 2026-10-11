@@ -28,6 +28,7 @@ from ip_sentinel.providers.rdap_provider import RDAPProvider
 from ip_sentinel.providers.virustotal_provider import VirusTotalProvider
 from ip_sentinel.services.dns_service import DNSService
 from ip_sentinel.services.evidence_aggregator import EvidenceAggregator
+from ip_sentinel.services.origin_ip_service import OriginIPService
 from ip_sentinel.services.risk_engine import RiskEngine
 
 logger = logging.getLogger("ip_sentinel.investigation")
@@ -51,6 +52,7 @@ class InvestigationService:
         self.dns_service = DNSService()
         self.evidence_aggregator = EvidenceAggregator()
         self.risk_engine = RiskEngine()
+        self.origin_ip_service = OriginIPService()
 
     def register_provider(self, provider: BaseIntelProvider) -> None:
         """Dynamically register a threat intelligence provider."""

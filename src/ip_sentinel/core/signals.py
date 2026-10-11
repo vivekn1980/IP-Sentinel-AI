@@ -15,6 +15,10 @@ class SignalBus(QObject):
     investigation_completed = Signal(object)  # IPIntelResult object
     investigation_failed = Signal(str, str)  # target_ip, error_message
 
+    # Worker Task Signals
+    worker_started = Signal(str)  # task_name
+    worker_finished = Signal()
+
     # Report Signals
     report_generation_started = Signal(str)  # report_type ("HTML", "PDF")
     report_generation_completed = Signal(str, str)  # report_type, file_path

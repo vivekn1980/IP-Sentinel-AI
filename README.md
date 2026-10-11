@@ -1,137 +1,172 @@
-# IP Sentinel AI — WAF IP Threat Intelligence & Investigation Tool
+# IP Sentinel AI — Threat Intelligence, WAF Forensics & Origin Discovery
 
-> **Phase 4 Release — WAF Behavioral & Attack Analysis Engine**  
-> Portable Standalone Windows Desktop Application for WAF Log Ingestion, Incident Response & Forensics.
+<div align="center">
 
----
+![Python Version](https://img.shields.io/badge/python-3.13-blue.svg)
+![GUI Framework](https://img.shields.io/badge/GUI-PySide6%20%2F%20Qt-green.svg)
+![License](https://img.shields.io/badge/license-MIT-purple.svg)
+![Tests](https://img.shields.io/badge/tests-89%20passed-brightgreen.svg)
+![Platform](https://img.shields.io/badge/platform-Windows%20x64-lightgrey.svg)
+![Self-Test](https://img.shields.io/badge/self--test-10%2F10%20passed-success.svg)
 
-## 🛡️ Executive Summary
+**A professional, standalone Windows cybersecurity desktop application for incident response, WAF log analysis, threat intelligence correlation, and CDN origin IP discovery.**
 
-**IP Sentinel AI** is a production-grade, standalone Windows desktop application built with PySide6 for WAF IP Threat Intelligence gathering, passive WAF log behavioral analysis, incident investigation, risk assessment, and automated forensic report generation (HTML & PDF).
+*Developed By: **Vivek Nigam***
 
-### Key Features (Phase 4)
-- **WAF Behavioral & Attack Analysis Engine**:
-  - **Multi-Format WAF Log Ingestion**: Ingests and parses WAF log files via flexible CSV and JSON/NDJSON parsers (`CSVWAFParser`, `JSONWAFParser`) with extensible architecture for AWS WAF, Cloudflare, ModSecurity, and Akamai.
-  - **Traffic Volume & Rate Telemetry**: Calculates total requests, observation time window, average/peak requests per second & minute, rate distribution, temporal burstiness, and request rate anomalies.
-  - **User-Agent Analysis**: Computes unique UA count, dominant UA, dominant UA ratio, missing UA percentage, and UA diversity.
-  - **URI & Sensitive Endpoint Targeting**: Analyzes unique URI count, repeated URI ratio, 404 URI ratio, and flags probes against sensitive path categories (`CONFIG_DISCOVERY` e.g. `/.env`, `/.git`, `ADMIN_ENUMERATION` e.g. `/admin`, `/phpmyadmin`, `CMS_SCAN` e.g. `/wp-login.php`, `WEB_SCANNER` e.g. `/etc/passwd`, `/shell`, `CREDENTIAL_ENDPOINT` e.g. `/login`, `/oauth/token`).
-  - **HTTP Status Code Breakdown**: Tracks 2xx, 3xx, 4xx, 5xx, 403, 404, and 429 response percentages.
-  - **Request Pattern & Temporal Regularity**: Computes temporal interval regularity scores (0–100), request repetition, and HTTP method GET/POST ratios.
-  - **Evidence-Backed Attack Classification (`AttackClassifier`)**: Classifies traffic into `NORMAL_CLIENT`, `AUTOMATED_BOT`, `MALICIOUS_BOT`, `WEB_SCANNER`, `HTTP_FLOOD`, `CREDENTIAL_ATTACK`, `SUSPICIOUS_AUTOMATION`, or `UNKNOWN` with confidence ratings (0–100), supporting evidence, contradictory evidence, and limitations.
-  - **Multi-Dimensional Behavioral Fingerprint**: Generates qualitative `LOW`/`MEDIUM`/`HIGH` ratings across 9 behavioral dimensions.
-- **WAF Analysis UI View (`WAFAnalysisView`)**:
-  - Dedicated GUI view featuring CSV/JSON log file upload buttons, executive metric summary cards (Total Events, Unique IPs, Time Range, High Risk IPs), interactive sortable IP telemetry table, and one-click **"⚡ Investigate Selected IP"** action.
-- **Live Threat Reputation & Network Intelligence (Phase 2/3 Baseline)**:
-  - AbuseIPDB API v2, VirusTotal API v3, RDAP bootstrap queries, GeoIP/ASN telemetry, and DNS record resolution (PTR, A, AAAA, MX, NS, TXT, CNAME).
-- **Multi-Source Evidence Correlation & Risk Engine**:
-  - Normalizes findings across all subsystems into structured `EvidenceItem` records, calculates severity summaries, and blends WAF behavioral scores with reputation feeds while detecting contradictory evidence.
-- **Forensic HTML & PDF Reports**:
-  - Includes dedicated WAF Behavioral Analysis sections, traffic statistics, behavioral fingerprints, attack classification, evidence matrix, and mandatory behavioral disclaimers.
-- **Zero Target Runtime Dependencies**:
-  - Portable single-file Windows executable (`dist/IP-Sentinel-AI.exe`). No Python, Node.js, Java, Docker, or database server required on target Windows machines.
+</div>
 
 ---
 
-## 📁 Architecture & Data Flow
+## ⚠️ Legal & Ethical Disclaimer
 
-```
-UI (PySide6 QStackedWidget)
-  ↓ (Asynchronous QThreadPool / Worker)
-InvestigationService
-  ├─► RDAPProvider (Passive HTTPS bootstrap lookup)
-  ├─► GeoIPProvider (Passive GeoIP & ASN query)
-  ├─► DNSService (dnspython PTR, A, AAAA, MX, NS, TXT, CNAME)
-  ├─► CacheManager (File & memory TTL cache)
-  └─► BaseIntelProvider (MockIntelProvider / Threat Intel Adapters)
-  ↓
-Normalized Data Models (IPIntelResult, RDAPData, ASNData, GeoIPData, DNSData)
-  ↓
-Report Generators (Jinja2 HTML & ReportLab Platypus PDF)
-```
-
-For complete technical documentation, see [`ARCHITECTURE.md`](file:///d:/PROJECTS/IP%20Sentinel%20AI/ARCHITECTURE.md) and [`SECURITY.md`](file:///d:/PROJECTS/IP%20Sentinel%20AI/SECURITY.md).
+> **IMPORTANT**: **IP Sentinel AI** is developed strictly for **defensive security auditing, authorized penetration testing, and educational research**.  
+> Users are strictly required to ensure they have proper authorization before executing active scans against any target. The author (**Vivek Nigam**) assumes no responsibility or liability for unauthorized or malicious use of this software.
 
 ---
 
-## ⚙️ Development Setup & Running from Source
+## 🌟 Key Capabilities & Architecture
+
+### 1. 🛡️ WAF Behavioral & Attack Analysis Engine
+* **Multi-Format Log Ingestion**: High-throughput parser for AWS WAF, Cloudflare, ModSecurity, and Akamai log files in CSV, JSON, and NDJSON formats.
+* **Telemetry & Rate Analytics**: Computes request volumes, observation windows, burstiness ratios, peak requests/sec, and rate anomaly flags.
+* **User-Agent & Endpoint Profiling**: Analyzes UA diversity, missing UA percentages, and flags probing across sensitive endpoints (`CONFIG_DISCOVERY`, `ADMIN_ENUMERATION`, `CMS_SCAN`, `WEB_SCANNER`, `CREDENTIAL_ENDPOINT`).
+* **Automated Attack Classification**: Classifies attacks into `NORMAL_CLIENT`, `AUTOMATED_BOT`, `MALICIOUS_BOT`, `WEB_SCANNER`, `HTTP_FLOOD`, `CREDENTIAL_ATTACK`, or `SUSPICIOUS_AUTOMATION` with confidence ratings and supporting evidence.
+* **9-Dimensional Behavioral Fingerprint**: Visual radar and status metrics across traffic patterns.
+
+### 2. 🌐 Origin IP & CDN Bypass Engine
+* **CDN IP Range Identification**: Automatically validates resolved IPs against official CIDR ranges for **Cloudflare**, **AWS CloudFront**, **Fastly**, and **Akamai**.
+* **Direct Subdomain Enumeration**: Probes unproxied and administrative subdomains (`direct`, `origin`, `backend`, `cpanel`, `dev`, `vpn`, etc.).
+* **Certificate Transparency Search**: Queries `crt.sh` historical logs to uncover unmasked staging and backend domains.
+* **Favicon MurmurHash3 Fingerprinting**: Computes MMH3 hash of target favicons for Shodan-style asset correlation.
+* **Email Header Parser**: Extracts real mail server and MTA origin IPs from RFC 5322 `Received: from` headers.
+
+### 3. 🕰️ Historical Passive DNS Origin Finder
+* **Multi-Source Aggregation**: Leverages public passive DNS archives (**AlienVault OTX** and **HackerTarget Hostsearch**).
+* **Pre-CDN Adoption Discovery**: Traces DNS record timelines (`first_seen`, `last_seen`) to reveal origin IPs used before adopting CDN edge proxies.
+* **Automated Candidate Filtering**: Flags historical IPs that fall outside CDN ranges as high-confidence origin server candidates.
+
+### 4. 🔌 Port & Service Banner Grabber
+* **Multi-Threaded Concurrent Scanner**: Fast 8-worker thread pool probing standard ports (`21, 22, 80, 443, 3306, 3389, 8080, 8443`) in ~1.5 seconds.
+* **Protocol Banner Extraction**:
+  * **FTP (21)**: RFC 959 server greeting banner.
+  * **SSH (22)**: RFC 4253 protocol identification string.
+  * **HTTP / HTTPS (80, 443, 8080, 8443)**: Server header and TLS cipher negotiation.
+  * **MySQL (3306)**: Native Initial Handshake Packet parsing to extract exact version strings without external drivers.
+  * **RDP (3389)**: Windows Remote Desktop endpoint verification.
+
+### 5. 🔐 SSL/TLS Certificate & Expiry Inspector
+* **Full Certificate Inspection**: Examines Common Name (CN), Subject Alternative Names (SANs), Issuer, Validity Window, Serial Number, and SHA-256 Fingerprint.
+* **Health & Expiration Status**: Live status badges for 🟢 `VALID`, 🟡 `EXPIRING_SOON`, and 🔴 `EXPIRED`.
+
+### 6. 📄 Forensic HTML & PDF Report Generation
+* Generates audit-ready forensic reports powered by Jinja2 and ReportLab Platypus, incorporating threat summaries, network evidence, WAF behavioral telemetry, and disclaimers.
+
+---
+
+## 🚀 Quick Start (Running from Source)
 
 ### Prerequisites
-- Python 3.13 (x64) on Windows
-- Git
+* **Windows 10 / 11 (64-bit)**
+* **Python 3.13+**
+* **Git**
 
-### 1. Virtual Environment & Dependencies Setup
+### Installation
+
 ```powershell
-# Create Python 3.13 virtual environment
-py -3.13 -m venv .venv
+# 1. Clone the repository
+git clone https://github.com/<your-username>/ip-sentinel-ai.git
+cd ip-sentinel-ai
 
-# Activate environment
+# 2. Create and activate a virtual environment
+python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 
-# Install pinned dependencies
+# 3. Install dependencies
 pip install -r requirements.txt
 ```
 
-### 2. Running Application from Source
+### Running the Application
+
 ```powershell
-# Set PYTHONPATH to src directory
+# Set PYTHONPATH to the src directory
 $env:PYTHONPATH="src"
 
-# Launch PySide6 Desktop GUI
+# Launch the Desktop GUI
 python -m ip_sentinel.main
 ```
 
-### 3. CLI Command Options
+### CLI Utilities
+
 ```powershell
-# Check Version
+# Show version information
 python -m ip_sentinel.main --version
 
-# Enable Debug Logging
-python -m ip_sentinel.main --debug
-
-# Headless Initialization Check
-python -m ip_sentinel.main --headless-test
-
-# Diagnostic Self-Test (Returns Exit Code 0 on Success)
+# Run diagnostic self-test (10 engine checks)
 python -m ip_sentinel.main --self-test
+
+# Headless initialization check
+python -m ip_sentinel.main --headless-test
 ```
 
 ---
 
 ## 🧪 Automated Testing
 
-The project contains a comprehensive automated test suite in `tests/` (**69 tests**) covering configuration, cache manager, RDAP queries, GeoIP/ASN, DNS resolution, AbuseIPDB provider, VirusTotal provider, evidence aggregator, risk engine, CSV WAF parser, JSON WAF parser, WAF analysis service, attack classifier, custom exceptions, IP utilities, thread-safe log scrubbing, mock providers, investigation service, report generators, worker thread signals, and PySide6 UI views.
+The project includes an automated test suite covering all services, parsers, and UI components:
 
 ```powershell
-# Run full pytest suite
+# Run the complete test suite
 pytest
 ```
 
+**Results**: `89 passed in ~40s`
+
 ---
 
-## 📦 Packaging Portable Windows Executable (EXE)
+## 📦 Building Standalone Executable (EXE)
 
 To compile the standalone portable binary (`dist/IP-Sentinel-AI.exe`):
 
 ```powershell
-# Run automated build script (cleans workspace, runs pytest, builds EXE)
 python build.py
 ```
 
-The compiled binary will be placed at:
+The build script will:
+1. Clean previous build artifacts.
+2. Run automated unit tests.
+3. Bundle Python and PySide6 into a single portable `.exe` (~54 MB) requiring zero runtime dependencies.
+
+---
+
+## 📁 Repository Structure
+
 ```
-dist/IP-Sentinel-AI.exe
+IP-Sentinel-AI/
+├── src/
+│   └── ip_sentinel/
+│       ├── core/           # Async workers, signals, config, logging
+│       ├── models/         # Data classes for threat, WAF, and origin models
+│       ├── providers/      # RDAP, GeoIP, AbuseIPDB, VirusTotal providers
+│       ├── reports/        # HTML and PDF forensic report generators
+│       ├── services/       # Investigation, WAF analysis, origin discovery services
+│       └── ui/             # PySide6 main window, navigation, and views
+├── resources/
+│   ├── fixtures/           # Sample WAF logs (CSV, JSON, NDJSON)
+│   ├── styles/             # Dark theme Qt stylesheet (QSS)
+│   └── templates/          # Jinja2 forensic report template
+├── tests/                  # 89 automated pytest unit and UI tests
+├── build.py                # Automated build and packaging pipeline
+├── pyinstaller.spec        # PyInstaller specification file
+├── requirements.txt        # Pinned Python package dependencies
+├── LICENSE                 # MIT License
+├── README.md               # Project documentation
+└── SECURITY.md             # Security policy and responsible disclosure
 ```
 
 ---
 
-## 💻 Clean Machine Testing Protocol
+## 📄 License
 
-To verify portable execution on a fresh Windows machine:
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
-1. Copy `dist/IP-Sentinel-AI.exe` to a clean Windows machine without Python, Node.js, pip, Git, or database servers installed.
-2. Double-click `IP-Sentinel-AI.exe`.
-3. Enter a public IP address (e.g. `1.1.1.1` or `8.8.8.8`).
-4. Click **⚡ Analyze IP** to view RDAP, ASN, GeoIP, and DNS telemetry.
-5. Click **📄 Export Report** to generate HTML and PDF forensic reports.
-6. Confirm report files are written cleanly to `Documents\IPSentinelReports\`.
-7. Exit application.
+Developed By: **Vivek Nigam**

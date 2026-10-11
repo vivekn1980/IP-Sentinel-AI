@@ -9,9 +9,9 @@ from ip_sentinel.models.threat_intel import IPIntelResult
 class ReportMetadata:
     """Metadata attached to generated investigation reports."""
     title: str = "WAF IP Threat Intelligence Report"
-    app_version: str = "1.0.0-foundation"
+    app_version: str = "5.0.0-phase5"
     generated_at: str = ""
-    author: str = "IP Sentinel AI Automated System"
+    author: str = "Vivek Nigam (IP Sentinel AI Engine)"
     organization: str = "Security Operations Center"
 
 

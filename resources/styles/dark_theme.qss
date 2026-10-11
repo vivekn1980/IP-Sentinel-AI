@@ -188,3 +188,75 @@ QStatusBar {
     color: #94A3B8;
     border-top: 1px solid #2A3649;
 }
+
+/* Tabs */
+QTabWidget::pane {
+    border: 1px solid #2A3649;
+    border-radius: 8px;
+    background-color: #0F172A;
+    top: -1px;
+}
+
+QTabBar::tab {
+    background-color: #171E28;
+    color: #94A3B8;
+    border: 1px solid #2A3649;
+    border-bottom: none;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    padding: 8px 18px;
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+QTabBar::tab:selected {
+    background-color: #1E293B;
+    color: #00E5FF;
+    border-bottom: 2px solid #00E5FF;
+}
+
+QTabBar::tab:hover:!selected {
+    background-color: #1A2333;
+    color: #F8FAFC;
+}
+
+/* Certificate Badges */
+QLabel.badgeCertValid {
+    background-color: #064E3B;
+    color: #34D399;
+    border: 1px solid #059669;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+QLabel.badgeCertExpiring {
+    background-color: #78350F;
+    color: #FBBF24;
+    border: 1px solid #D97706;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+QLabel.badgeCertExpired {
+    background-color: #7F1D1D;
+    color: #FCA5A5;
+    border: 1px solid #DC2626;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+QLabel.badgeCertError {
+    background-color: #3B0764;
+    color: #F472B6;
+    border: 1px solid #A855F7;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-weight: bold;
+    font-size: 13px;
+}

@@ -8,7 +8,9 @@ def test_main_window_instantiation(qapp):
     svc = InvestigationService()
     win = MainWindow(service=svc)
     assert win.windowTitle().startswith("IP Sentinel AI")
-    assert win.stacked_widget.count() == 6
+    assert win.stacked_widget.count() == 7
+    assert hasattr(win, "dev_label")
+    assert win.dev_label.text() == "Developed By: Vivek Nigam"
 
 
 def test_view_switching(qapp):

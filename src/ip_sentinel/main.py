@@ -139,6 +139,40 @@ def run_self_test() -> int:
 
     check("WAF Behavioral Engine & Log Parsers", test_waf_engine)
 
+    # 8. Origin IP & CDN Discovery Engine test
+    def test_origin_discovery():
+        from ip_sentinel.services.origin_ip_service import OriginIPService
+        origin_svc = OriginIPService()
+        cf_check = origin_svc.check_cdn("104.16.1.1")
+        assert cf_check.is_cdn is True, "CDN range check failed."
+        headers_res = origin_svc.parse_email_headers("Received: from mail.test.com [93.184.216.34]")
+        assert "93.184.216.34" in headers_res.candidate_origin_ips, "Email header parser failed."
+
+    check("Origin IP & CDN Discovery Engine", test_origin_discovery)
+
+    # 9. SSL/TLS Certificate & Expiry Inspector test
+    def test_ssl_certificate_inspector():
+        from ip_sentinel.services.origin_ip_service import OriginIPService
+        origin_svc = OriginIPService()
+        parsed_host, parsed_port = origin_svc._parse_target_host_port("https://example.com:8443")
+        assert parsed_host == "example.com" and parsed_port == 8443, "Target host/port parser failed."
+        dt = origin_svc._parse_cert_date("Dec 21 19:20:01 2026 GMT")
+        assert dt is not None and dt.year == 2026, "Certificate date parser failed."
+        unreachable = origin_svc.inspect_certificate("127.0.0.1", port=59999, timeout=0.5)
+        assert unreachable.status == "ERROR", "Unreachable socket did not report error."
+
+    check("SSL/TLS Certificate & Expiry Inspector", test_ssl_certificate_inspector)
+
+    # 10. Passive DNS & Port Banner Scanner test
+    def test_pdns_and_port_scanner():
+        from ip_sentinel.services.origin_ip_service import OriginIPService
+        port_scan = OriginIPService.scan_ports_and_banners("127.0.0.1", [59998, 59999], timeout=0.3)
+        assert port_scan.ip == "127.0.0.1", "Port scan target IP mismatch."
+        assert len(port_scan.open_ports) == 2, "Port scan did not return all probed ports."
+        assert port_scan.open_ports[0].state in ["CLOSED", "FILTERED"], "Port state unexpected."
+
+    check("Passive DNS & Port Banner Scanner Engine", test_pdns_and_port_scanner)
+
     print("=" * 60)
     print(f"SELF-TEST RESULTS: {passed} PASSED, {failed} FAILED.")
     print("=" * 60)

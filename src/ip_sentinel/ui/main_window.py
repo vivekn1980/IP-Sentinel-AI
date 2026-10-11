@@ -18,6 +18,7 @@ from ip_sentinel.services.investigation_service import InvestigationService
 from ip_sentinel.ui.navigation import SidebarNavigation
 from ip_sentinel.ui.views.dashboard_view import DashboardView
 from ip_sentinel.ui.views.logs_view import LogsView
+from ip_sentinel.ui.views.origin_finder_view import OriginFinderView
 from ip_sentinel.ui.views.query_view import QueryView
 from ip_sentinel.ui.views.reports_view import ReportsView
 from ip_sentinel.ui.views.settings_view import SettingsView
@@ -39,8 +40,11 @@ class MainWindow(QMainWindow):
         self._views = {}
         self._setup_ui()
 
-        # Connect to SignalBus navigation requests
-        SignalBus.instance().navigation_requested.connect(self.switch_view)
+        # Connect to SignalBus navigation & worker requests
+        bus = SignalBus.instance()
+        bus.navigation_requested.connect(self.switch_view)
+        bus.worker_started.connect(lambda name: self.status_bar.showMessage(f"Running background task: {name}..."))
+        bus.worker_finished.connect(lambda: self.status_bar.showMessage("Task completed successfully."))
 
     def _setup_ui(self):
         central_widget = QWidget()
@@ -86,24 +90,30 @@ class MainWindow(QMainWindow):
         self._views["dashboard"] = DashboardView()
         self._views["query"] = QueryView(service=self.service)
         self._views["waf"] = WAFAnalysisView()
+        self._views["origin"] = OriginFinderView(service=self.service.origin_ip_service)
         self._views["reports"] = ReportsView()
         self._views["logs"] = LogsView()
         self._views["settings"] = SettingsView()
 
-        # Connect WAF Analysis signal to IP investigation switch
+        # Connect WAF & Origin Analysis signals to IP investigation switch
         self._views["waf"].investigate_ip_requested.connect(self._handle_waf_investigate_request)
+        self._views["origin"].investigate_ip_requested.connect(self._handle_origin_investigate_request)
 
         for view_name, view_widget in self._views.items():
             self.stacked_widget.addWidget(view_widget)
 
-        right_layout.addWidget(top_bar)
         right_layout.addWidget(self.stacked_widget)
         main_layout.addWidget(right_container, 1)
 
         # 3. Bottom Status Bar
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
-        self.status_bar.showMessage("IP Sentinel AI v3.0.0-phase3 | Ready.")
+        self.status_bar.showMessage("IP Sentinel AI v5.0.0-phase5 | Ready.")
+
+        # Developer Attribution (Right Bottom)
+        self.dev_label = QLabel("Developed By: Vivek Nigam")
+        self.dev_label.setStyleSheet("color: #00E5FF; font-weight: bold; font-size: 11px; padding-right: 12px;")
+        self.status_bar.addPermanentWidget(self.dev_label)
 
     def _handle_waf_investigate_request(self, target_ip: str, waf_analysis):
         """Handle request to investigate an IP selected in WAF Analysis view."""
@@ -112,6 +122,14 @@ class MainWindow(QMainWindow):
         if query_view and hasattr(query_view, "ip_input"):
             query_view.ip_input.setText(target_ip)
             query_view.current_waf_analysis = waf_analysis
+            query_view.start_investigation()
+
+    def _handle_origin_investigate_request(self, target_ip: str):
+        """Handle request to investigate an IP discovered in Origin Finder view."""
+        self.switch_view("query")
+        query_view = self._views.get("query")
+        if query_view and hasattr(query_view, "ip_input"):
+            query_view.ip_input.setText(target_ip)
             query_view.start_investigation()
 
     @Slot(str)
@@ -129,6 +147,7 @@ class MainWindow(QMainWindow):
                 "dashboard": "Security Operations Dashboard",
                 "query": "IP Threat Intelligence Investigation",
                 "waf": "WAF Behavioral & Attack Analysis Engine",
+                "origin": "Origin IP & CDN Discovery Engine",
                 "reports": "Forensic Report Generation Engine",
                 "logs": "Live System Audit Logs",
                 "settings": "Settings & Threat Intelligence Providers",

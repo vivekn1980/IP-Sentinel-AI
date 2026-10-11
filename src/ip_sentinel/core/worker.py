@@ -65,6 +65,10 @@ class Worker(QRunnable):
             self.signals.finished.emit()
             logger.debug(f"Finished background worker execution for {self.fn.__name__}")
 
+    def start(self) -> None:
+        """Submit worker instance to global QThreadPool for execution."""
+        QThreadPool.globalInstance().start(self)
+
 
 class TaskPool:
     """Helper manager around PySide6 global QThreadPool."""
