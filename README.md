@@ -67,7 +67,7 @@
 
 For end users and security analysts who just want to use the application without installing Python or dependencies:
 
-1. Go to the [Releases](https://github.com/viveknigam3003/ip-sentinel-ai/releases) page on GitHub.
+1. Go to the [Releases](https://github.com/vivekn1980/IP-Sentinel-AI/releases) page on GitHub.
 2. Download the precompiled binary: **`IP-Sentinel-AI.exe`** (~54 MB).
 3. **Double-click `IP-Sentinel-AI.exe`** to start using the tool immediately.
 
@@ -108,8 +108,8 @@ If you wish to modify the code or contribute to the project:
 
 ```powershell
 # 1. Clone the repository
-git clone https://github.com/<your-username>/ip-sentinel-ai.git
-cd ip-sentinel-ai
+git clone https://github.com/vivekn1980/IP-Sentinel-AI.git
+cd IP-Sentinel-AI
 
 # 2. Create and activate a virtual environment
 python -m venv .venv
