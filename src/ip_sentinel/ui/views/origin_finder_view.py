@@ -719,56 +719,64 @@ class OriginFinderView(QWidget):
 
         # Render Table 2 (Origin Candidates & Validated)
         self.table_origins.setRowCount(0)
-        for cand in result.candidate_origins:
-            row = self.table_origins.rowCount()
-            self.table_origins.insertRow(row)
+        if not result.candidate_origins:
+            self.table_origins.insertRow(0)
+            msg_item = QTableWidgetItem("🛡️ No Origin Leaks Detected: Target domain enforces strict CDN proxying across all subdomains & historical records.")
+            msg_item.setForeground(Qt.GlobalColor.cyan)
+            msg_item.setTextAlignment(Qt.AlignCenter)
+            self.table_origins.setItem(0, 0, msg_item)
+            self.table_origins.setSpan(0, 0, 1, 5)
+        else:
+            for cand in result.candidate_origins:
+                row = self.table_origins.rowCount()
+                self.table_origins.insertRow(row)
 
-            ip_item = QTableWidgetItem(cand.ip)
-            ip_item.setTextAlignment(Qt.AlignCenter)
+                ip_item = QTableWidgetItem(cand.ip)
+                ip_item.setTextAlignment(Qt.AlignCenter)
 
-            src_item = QTableWidgetItem(cand.discovery_source)
+                src_item = QTableWidgetItem(cand.discovery_source)
 
-            if cand.validated:
-                match_item = QTableWidgetItem("✓ CONFIRMED MATCH")
-                match_item.setForeground(Qt.GlobalColor.green)
-            else:
-                match_item = QTableWidgetItem("UNVERIFIED / FAILED")
-                match_item.setForeground(Qt.GlobalColor.yellow)
+                if cand.validated:
+                    match_item = QTableWidgetItem("✓ CONFIRMED MATCH")
+                    match_item.setForeground(Qt.GlobalColor.green)
+                else:
+                    match_item = QTableWidgetItem("UNVERIFIED / FAILED")
+                    match_item.setForeground(Qt.GlobalColor.yellow)
 
-            match_item.setTextAlignment(Qt.AlignCenter)
+                match_item.setTextAlignment(Qt.AlignCenter)
 
-            resp_item = QTableWidgetItem(cand.response_snippet or "No response")
+                resp_item = QTableWidgetItem(cand.response_snippet or "No response")
 
-            # Actions Cell Widget: Investigate, Cert, and Ports buttons
-            action_widget = QWidget()
-            action_layout = QHBoxLayout(action_widget)
-            action_layout.setContentsMargins(4, 2, 4, 2)
-            action_layout.setSpacing(5)
+                # Actions Cell Widget: Investigate, Cert, and Ports buttons
+                action_widget = QWidget()
+                action_layout = QHBoxLayout(action_widget)
+                action_layout.setContentsMargins(4, 2, 4, 2)
+                action_layout.setSpacing(5)
 
-            btn_inv = QPushButton("🔍 Investigate")
-            btn_inv.setProperty("class", "secondaryButton")
-            btn_inv.setStyleSheet("padding: 2px 6px; font-size: 11px;")
-            btn_inv.clicked.connect(lambda _, ip=cand.ip: self.investigate_ip_requested.emit(ip))
+                btn_inv = QPushButton("🔍 Investigate")
+                btn_inv.setProperty("class", "secondaryButton")
+                btn_inv.setStyleSheet("padding: 2px 6px; font-size: 11px;")
+                btn_inv.clicked.connect(lambda _, ip=cand.ip: self.investigate_ip_requested.emit(ip))
 
-            btn_cert = QPushButton("🔐 Cert")
-            btn_cert.setProperty("class", "secondaryButton")
-            btn_cert.setStyleSheet("padding: 2px 6px; font-size: 11px;")
-            btn_cert.clicked.connect(lambda _, ip=cand.ip: self.inspect_cert_for_target(ip, 443))
+                btn_cert = QPushButton("🔐 Cert")
+                btn_cert.setProperty("class", "secondaryButton")
+                btn_cert.setStyleSheet("padding: 2px 6px; font-size: 11px;")
+                btn_cert.clicked.connect(lambda _, ip=cand.ip: self.inspect_cert_for_target(ip, 443))
 
-            btn_ports = QPushButton("🔌 Ports")
-            btn_ports.setProperty("class", "secondaryButton")
-            btn_ports.setStyleSheet("padding: 2px 6px; font-size: 11px;")
-            btn_ports.clicked.connect(lambda _, ip=cand.ip: self.scan_ports_for_target(ip))
+                btn_ports = QPushButton("🔌 Ports")
+                btn_ports.setProperty("class", "secondaryButton")
+                btn_ports.setStyleSheet("padding: 2px 6px; font-size: 11px;")
+                btn_ports.clicked.connect(lambda _, ip=cand.ip: self.scan_ports_for_target(ip))
 
-            action_layout.addWidget(btn_inv)
-            action_layout.addWidget(btn_cert)
-            action_layout.addWidget(btn_ports)
+                action_layout.addWidget(btn_inv)
+                action_layout.addWidget(btn_cert)
+                action_layout.addWidget(btn_ports)
 
-            self.table_origins.setItem(row, 0, ip_item)
-            self.table_origins.setItem(row, 1, src_item)
-            self.table_origins.setItem(row, 2, match_item)
-            self.table_origins.setItem(row, 3, resp_item)
-            self.table_origins.setCellWidget(row, 4, action_widget)
+                self.table_origins.setItem(row, 0, ip_item)
+                self.table_origins.setItem(row, 1, src_item)
+                self.table_origins.setItem(row, 2, match_item)
+                self.table_origins.setItem(row, 3, resp_item)
+                self.table_origins.setCellWidget(row, 4, action_widget)
 
         # Update Favicon Shodan Info
         if result.favicon_result and result.favicon_result.shodan_query:
