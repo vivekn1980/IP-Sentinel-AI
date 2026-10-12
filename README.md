@@ -63,7 +63,41 @@
 
 ---
 
-## 🚀 Quick Start (Running from Source)
+## ⚡ Download & Run (Standalone EXE — No Python Required)
+
+For end users and security analysts who just want to use the application without installing Python or dependencies:
+
+1. Go to the [Releases](https://github.com/viveknigam3003/ip-sentinel-ai/releases) page on GitHub.
+2. Download the precompiled binary: **`IP-Sentinel-AI.exe`** (~54 MB).
+3. **Double-click `IP-Sentinel-AI.exe`** to start using the tool immediately.
+
+> [!NOTE]
+> **Zero Installation Required**: The single executable contains the embedded Python runtime, PySide6 GUI framework, and all libraries. It runs directly on any 64-bit Windows 10, Windows 11, or Windows Server system without needing administrator privileges.
+
+> [!TIP]
+> **Windows SmartScreen Prompt**:  
+> Since open-source binaries do not have a paid enterprise code-signing certificate, Windows Defender SmartScreen may display:  
+> *"Windows protected your PC (Unknown Publisher)"*  
+> Simply click **More info** → **Run anyway**.
+
+### Standalone EXE Command-Line Flags
+You can also launch `IP-Sentinel-AI.exe` directly from PowerShell / CMD with flags:
+```powershell
+# Run the 10-check diagnostic self-test
+.\IP-Sentinel-AI.exe --self-test
+
+# Launch with verbose debug console output
+.\IP-Sentinel-AI.exe --debug
+
+# Verify binary version
+.\IP-Sentinel-AI.exe --version
+```
+
+---
+
+## 🛠️ Developer Setup (Running from Source)
+
+If you wish to modify the code or contribute to the project:
 
 ### Prerequisites
 * **Windows 10 / 11 (64-bit)**
