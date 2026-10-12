@@ -48,8 +48,12 @@ CDN_CIDRS: Dict[str, List[str]] = {
         "204.246.164.0/22", "204.246.168.0/22", "205.251.192.0/19", "216.137.32.0/19"
     ],
     "Fastly": [
-        "151.101.0.0/16", "140.248.0.0/16", "185.31.16.0/22", "199.27.72.0/21",
-        "199.232.0.0/16", "23.235.32.0/20", "45.33.32.0/20"
+        "23.235.32.0/20", "43.249.72.0/22", "103.244.50.0/24", "103.245.222.0/23",
+        "103.245.224.0/24", "104.156.80.0/20", "140.248.64.0/18", "140.248.128.0/17",
+        "146.75.0.0/17", "151.101.0.0/16", "157.52.64.0/18", "167.82.0.0/17",
+        "167.82.128.0/20", "167.82.160.0/20", "167.82.224.0/20", "172.111.64.0/18",
+        "185.31.16.0/22", "199.27.72.0/21", "199.232.0.0/16",
+        "2a04:4e40::/32", "2a04:4e42::/32"
     ],
     "Imperva / Incapsula": [
         "199.83.128.0/21", "198.143.32.0/19", "149.126.72.0/21", "103.28.248.0/22",
@@ -80,6 +84,26 @@ CDN_CIDRS: Dict[str, List[str]] = {
     "Akamai": [
         "23.32.0.0/11", "23.192.0.0/11", "104.64.0.0/10", "184.24.0.0/13"
     ]
+}
+
+# CNAME keywords identifying CDN vendor edge proxies
+CDN_CNAME_KEYWORDS: Dict[str, str] = {
+    "cloudflare.net": "Cloudflare",
+    "cloudfront.net": "AWS CloudFront",
+    "fastly.net": "Fastly",
+    "fastlylb.net": "Fastly",
+    "akamaiedge.net": "Akamai",
+    "akamai.net": "Akamai",
+    "edgesuite.net": "Akamai",
+    "edgekey.net": "Akamai",
+    "azureedge.net": "Microsoft Azure CDN",
+    "azurefd.net": "Microsoft Azure Front Door",
+    "incapdns.net": "Imperva / Incapsula",
+    "sucuri.net": "Sucuri",
+    "b-cdn.net": "BunnyCDN",
+    "hwcdn.net": "Highwinds / StackPath",
+    "llnwd.net": "Edgio / Limelight",
+    "bitgravity.com": "Tata Communications (BitGravity CDN)",
 }
 
 # Common subdomains that frequently bypass CDN proxies
@@ -178,8 +202,20 @@ class OriginIPService:
             return clean_str.split("/")[0].lower().strip()
 
     @staticmethod
-    def check_cdn(ip_str: str) -> CDNCheckResult:
-        """Check if an IP address belongs to known public CDN CIDR ranges."""
+    def resolve_cname(domain: str) -> Optional[str]:
+        """Resolve CNAME target for a domain if present."""
+        try:
+            import dns.resolver
+            answers = dns.resolver.resolve(domain, "CNAME")
+            for r in answers:
+                return str(r.target).rstrip(".")
+        except Exception:
+            pass
+        return None
+
+    @staticmethod
+    def check_cdn(ip_str: str, domain: Optional[str] = None) -> CDNCheckResult:
+        """Check if an IP address belongs to known public CDN CIDR ranges, CNAME, or PTR."""
         try:
             ip_obj = ipaddress.ip_address(ip_str)
             for cdn_name, cidrs in CDN_CIDRS.items():
@@ -194,7 +230,21 @@ class OriginIPService:
         except ValueError:
             pass
 
-        # Fallback: Reverse DNS (PTR) hostname lookup check
+        # Fallback 1: Domain CNAME inspection if domain was provided
+        if domain:
+            cname_target = OriginIPService.resolve_cname(domain)
+            if cname_target:
+                cname_lower = cname_target.lower()
+                for kw, provider_name in CDN_CNAME_KEYWORDS.items():
+                    if kw in cname_lower:
+                        return CDNCheckResult(
+                            ip=ip_str,
+                            is_cdn=True,
+                            provider=provider_name,
+                            matched_cidr=f"CNAME ({cname_target})",
+                        )
+
+        # Fallback 2: Reverse DNS (PTR) hostname lookup check
         try:
             ptr_name, _, _ = socket.gethostbyaddr(ip_str)
             ptr_lower = ptr_name.lower()
@@ -870,7 +920,7 @@ class OriginIPService:
         is_behind_cdn = False
 
         for ip in resolved_ips:
-            res = self.check_cdn(ip)
+            res = self.check_cdn(ip, domain=domain)
             cdn_results.append(res)
             if res.is_cdn:
                 is_behind_cdn = True

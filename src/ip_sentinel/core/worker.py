@@ -46,23 +46,38 @@ class Worker(QRunnable):
 
     def _emit_progress(self, percent: int, message: str) -> None:
         """Helper callback passed to worker target functions."""
-        self.signals.progress.emit(percent, message)
+        try:
+            self.signals.progress.emit(percent, message)
+        except (RuntimeError, AttributeError):
+            pass
 
     def run(self) -> None:
         """Execute task inside QThreadPool worker thread."""
         logger.debug(f"Starting background worker execution for {self.fn.__name__}")
-        self.signals.started.emit()
+        try:
+            self.signals.started.emit()
+        except (RuntimeError, AttributeError):
+            pass
 
         try:
             res = self.fn(*self.args, **self.kwargs)
-            self.signals.result.emit(res)
+            try:
+                self.signals.result.emit(res)
+            except (RuntimeError, AttributeError):
+                pass
         except Exception as err:
             logger.error(f"Worker task {self.fn.__name__} raised exception: {err}")
             tb_text = traceback.format_exc()
             exctype, val, _ = sys.exc_info()
-            self.signals.error.emit((exctype or Exception, val or err, tb_text))
+            try:
+                self.signals.error.emit((exctype or Exception, val or err, tb_text))
+            except (RuntimeError, AttributeError):
+                pass
         finally:
-            self.signals.finished.emit()
+            try:
+                self.signals.finished.emit()
+            except (RuntimeError, AttributeError):
+                pass
             logger.debug(f"Finished background worker execution for {self.fn.__name__}")
 
     def start(self) -> None:
