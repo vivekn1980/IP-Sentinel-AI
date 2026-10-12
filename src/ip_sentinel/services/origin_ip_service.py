@@ -679,7 +679,7 @@ class OriginIPService:
         try:
             ht_url = f"https://api.hackertarget.com/hostsearch/?q={root_domain}"
             req = urllib.request.Request(ht_url, headers={"User-Agent": "Mozilla/5.0 (IP-Sentinel-AI/5.0.0)"})
-            with urllib.request.urlopen(req, timeout=6.0) as resp:
+            with urllib.request.urlopen(req, timeout=3.5) as resp:
                 if resp.status == 200:
                     lines = resp.read().decode("utf-8", errors="ignore").splitlines()
                     for line in lines:
@@ -717,7 +717,7 @@ class OriginIPService:
                 headers["X-OTX-API-KEY"] = otx_key
 
             req = urllib.request.Request(otx_url, headers=headers)
-            with urllib.request.urlopen(req, timeout=6.0) as resp:
+            with urllib.request.urlopen(req, timeout=3.5) as resp:
                 if resp.status == 200:
                     data = json.loads(resp.read().decode("utf-8"))
                     for entry in data.get("passive_dns", []):
@@ -749,6 +749,55 @@ class OriginIPService:
                                 continue
         except Exception as e:
             logger.debug(f"AlienVault OTX passive DNS lookup skipped or failed for {root_domain}: {e}")
+
+        # 3. Query Certspotter CT Log Archive (Resilient fallback when public APIs rate-limit)
+        try:
+            cs_url = f"https://api.certspotter.com/v1/issuances?domain={root_domain}&include_subdomains=true&expand=dns_names"
+            cs_req = urllib.request.Request(cs_url, headers={"User-Agent": "Mozilla/5.0 (IP-Sentinel-AI/5.0.0)"})
+            with urllib.request.urlopen(cs_req, timeout=5.0) as resp:
+                if resp.status == 200:
+                    cs_data = json.loads(resp.read().decode("utf-8"))
+                    host_dates: Dict[str, Tuple[str, str]] = {}
+                    for entry in cs_data[:35]:
+                        nb = entry.get("not_before", "")[:10]
+                        na = entry.get("not_after", "")[:10]
+                        for dname in entry.get("dns_names", []):
+                            clean_h = dname.strip().lower()
+                            if clean_h and "*" not in clean_h and root_domain in clean_h:
+                                if clean_h not in host_dates and len(host_dates) < 25:
+                                    host_dates[clean_h] = (nb, na)
+
+                    # Parallel DNS resolution across discovered unique hostnames
+                    if host_dates:
+                        with concurrent.futures.ThreadPoolExecutor(max_workers=8) as ex:
+                            fut_to_host = {
+                                ex.submit(OriginIPService.resolve_dns, h): (h, dates)
+                                for h, dates in host_dates.items()
+                            }
+                            for fut in concurrent.futures.as_completed(fut_to_host, timeout=5.0):
+                                try:
+                                    h, (nb, na) = fut_to_host[fut]
+                                    ips = fut.result()
+                                    for h_ip in ips:
+                                        pair = (h, h_ip)
+                                        if pair not in seen_pairs:
+                                            seen_pairs.add(pair)
+                                            cdn_res = OriginIPService.check_cdn(h_ip)
+                                            records.append(
+                                                HistoricalDNSRecord(
+                                                    domain=h,
+                                                    ip=h_ip,
+                                                    first_seen=nb,
+                                                    last_seen=na,
+                                                    source="Certspotter CT Logs",
+                                                    is_cdn=cdn_res.is_cdn,
+                                                    cdn_provider=cdn_res.provider,
+                                                )
+                                            )
+                                except Exception:
+                                    pass
+        except Exception as e:
+            logger.debug(f"Certspotter passive DNS lookup skipped or failed for {root_domain}: {e}")
 
         return records
 
